@@ -15,6 +15,8 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener {
 
     public boolean left;        // flag to move left the player
+    public boolean down;
+    public boolean up;
     public boolean right;       // flag to move right the player
     public boolean shoot;       // flag to shoot
     public boolean p;           // flag to pause the game
@@ -66,6 +68,8 @@ public class KeyManager implements KeyListener {
      */
     public void tick() {
         left = keys[KeyEvent.VK_LEFT];
+        up = keys[KeyEvent.VK_UP];
+            down = keys[KeyEvent.VK_DOWN];
         right = keys[KeyEvent.VK_RIGHT];
         shoot = keys[KeyEvent.VK_SPACE];
         p = keys[KeyEvent.VK_P];

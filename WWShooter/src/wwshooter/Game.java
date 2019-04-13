@@ -46,6 +46,7 @@ public class Game implements Runnable {
     private int alienTickLimit;             // the limit in which the movement is done
     private int alienBombCounter;           // to spawn an alien bomb on a certain time
     private boolean win;                    // when the player won the game
+    private Selector selector;
     
     /**
      * To create title,	width and height and set the game is still not running
@@ -255,9 +256,6 @@ public class Game implements Runnable {
     
     // Restarts the game to the original state
     private void restart() {
-        Assets.backgroundMusic.setLooping(true);
-        Assets.backgroundMusic.setVolume(-20.0f);
-        Assets.backgroundMusic.play();
         setScore(0);
         setLives(3);
         setAlienTickLimit(60);
@@ -312,10 +310,8 @@ public class Game implements Runnable {
         display = new Display(title, width, height);
         display.getJframe().addKeyListener(keyManager);
         Assets.init();
-        Assets.backgroundMusic.setLooping(true);
-        Assets.backgroundMusic.setVolume(-20.0f);
-        Assets.backgroundMusic.play();
         player = new Player(getWidth() / 2 - 24, getHeight() - 64, 48, 48, 5, this);
+        selector = new Selector(getWidth()/3, getHeight()/3, 50,50, 0, this);
         setScore(0);
 
     }
@@ -351,21 +347,13 @@ public class Game implements Runnable {
         stop();
     }
 
-    /**
-     * Creates a Shot instance and triggers the sounds
-     * 
-     */
-    public void playerShooting() {
-        Assets.shot.setVolume(-20.0f);
-        Assets.shot.play();
-    }
 
     /**
      * Ticks all the necessary instances
      */
     private void tick() {
         keyManager.tick();
-        
+        selector.tick();
         // Sets the game paused and unpaused
         if (getKeyManager().p && getKeyManager().isPressable()) {
             setPause(!isPaused());
@@ -413,14 +401,6 @@ public class Game implements Runnable {
         // When the game ends, sets the flags to true or false, and waits for
         // the player to press space to restart
         if (gameEnded) {
-            Assets.backgroundMusic.stop();
-            if(win && !sounded){
-                Assets.jingleWin.play();
-                sounded = true;
-            } else if(!win && !sounded){
-                Assets.jingleDeath.play();
-                sounded = true;
-            } 
             if (getKeyManager().space) {
                 restart();
                 getKeyManager().setPressable(false);
@@ -445,32 +425,15 @@ public class Game implements Runnable {
             g = bs.getDrawGraphics();
             // Draws background, score and limit
             g.drawImage(Assets.background, 0, 0, width, height, null);
-            g.setFont(new Font("Dialog", Font.BOLD, 24));
-            g.setColor(Color.WHITE);
-            g.drawString("Score: " + getScore(), 12, 24);
-            g.setColor(Color.white);
-            g.drawLine(0, getHeight() - 2 * getPlayer().getHeight(), getWidth(), getHeight() - 2 * getPlayer().getHeight());
+            g.drawImage(Assets.title, width/2 - width/12 - 80, height/2 - 300, width/3, height/6, null);
+            g.drawImage(Assets.newGameButton, width/2 - width/12, height/2 - height/6, width/6, height/12, null);
+            g.drawImage(Assets.continueButton, width/2 - width/12 , height/2 - height/6 + 100, width/6, height/12, null);
+            g.drawImage(Assets.settingsButton, width/2 - width/12 , height/2 - height/6 + 200, width/6, height/12, null);
+            selector.render(g);
+            
             
             // Draws the player
             player.render(g);
-
-            // Draws the lives
-            for (int i = 0; i < lives; i++) {
-                    g.drawImage(Assets.life, getWidth() - 40 - 32 * i, 4, 32, 32, null); // EL -5 es estetico
-            }
-
-            // If the game is paused, it draws the paused modal
-            if (isPaused()) {
-                g.drawImage(Assets.pause, 0, 0, width, height, null);
-            }
-            
-            // If the game ends, it draws a win or loose screen
-            if(gameEnded && !win){
-                g.drawImage(Assets.gameOverScreen, 0, 0, width, height, null);
-            }
-            else if (gameEnded && win) {
-                g.drawImage(Assets.gameWonScreen, 0, 0, width, height, null);
-            }
             bs.show();
             g.dispose();
         }

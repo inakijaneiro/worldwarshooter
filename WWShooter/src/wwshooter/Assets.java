@@ -14,50 +14,29 @@ import java.awt.image.BufferedImage;
 public class Assets {
 
     public static BufferedImage background;     // to store background image
-    public static BufferedImage player;         // to store the player image
-    public static BufferedImage alien;          // to store the alien image
-    public static BufferedImage alien2;         // to store the second alien image
-    public static BufferedImage spritesheet;    // to store the spritesheet    
-    public static BufferedImage playerShot;     // to store the player's shot
-    public static BufferedImage alienShot;      // to store the alien's shot
-    public static BufferedImage pause;          // to store the pause image
-    public static BufferedImage gameOverScreen; // to store the game over image
-    public static BufferedImage gameWonScreen;  // to store the game won image
-    public static BufferedImage life;           // to store the life image
-    public static SoundClip shot;               // to store the shooting sound
-    public static SoundClip enemyDestroyed;     // to store the enemy destroyed sound
-    public static SoundClip shotDestroyed;      // to store the shot destroyed sound
-    public static SoundClip backgroundMusic;    // to store the background music
-    public static SoundClip jingleDeath;        // to store death jingle
-    public static SoundClip jingleWin;          // to store win jingle
-    public static SoundClip lifeLost;           // to store life lost sound
+    public static BufferedImage continueButton; // to store the continue button
+    public static BufferedImage newGameButton;  // to store the new game button
+    public static BufferedImage settingsButton; // to store the settings button
+    public static BufferedImage selector; // to store the settings button
+    public static BufferedImage title;          // to store the title
+
+
 
     /**
      * Initializes the images of the game
      */
     public static void init() {
         // Images
-        background = ImageLoader.loadImage("/images/background.jpg");
-        spritesheet = ImageLoader.loadImage("/images/spritesheet.png");
-        pause = ImageLoader.loadImage("/images/pause.png");
-        gameOverScreen = ImageLoader.loadImage("/images/gameOver.png");
-        gameWonScreen = ImageLoader.loadImage("/images/gameWon.png");
+        background = ImageLoader.loadImage("/images/Background.png");
+        continueButton = ImageLoader.loadImage("/images/Continue.png");
+        newGameButton = ImageLoader.loadImage("/images/NewGame.png");
+        settingsButton = ImageLoader.loadImage("/images/Settings.png");
+        selector = ImageLoader.loadImage("/images/Selector.png");
+        title = ImageLoader.loadImage("/images/Title.png");
+
+
         
         // Sounds
-        shot = new SoundClip("/sounds/shoot.wav");
-        shotDestroyed = new SoundClip("/sounds/shotDestroyed.wav");
-        enemyDestroyed = new SoundClip("/sounds/enemyDestroyed.wav");
-        backgroundMusic = new SoundClip("/sounds/backgroundMusic.wav");
-        jingleDeath = new SoundClip("/sounds/jingleDeath.wav");
-        jingleWin = new SoundClip("/sounds/jingleWin.wav");
-        lifeLost = new SoundClip("/sounds/lifeLost.wav");
-
-        player = spritesheet.getSubimage(144, 7, 15, 15);
-        alien = spritesheet.getSubimage(168, 80, 16, 16);
-        alien2 = spritesheet.getSubimage(145, 80, 16, 16);
-        playerShot = spritesheet.getSubimage(358, 3, 3, 8);
-        alienShot = spritesheet.getSubimage(350, 145, 3, 10);
-        life = spritesheet.getSubimage(49, 9, 15, 14);
     }
 
 }

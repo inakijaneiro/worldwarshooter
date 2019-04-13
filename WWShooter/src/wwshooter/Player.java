@@ -96,7 +96,7 @@ public class Player extends Item{
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
+        //g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
     }
     
 }

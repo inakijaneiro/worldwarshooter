@@ -16,8 +16,7 @@ public class WWShooter {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-           // TODO code application logic here
-        Game g = new Game("WWShooter", 1000, 720);
+        Game g = new Game("WWShooter", 1280, 720);
         g.start();
     }
     

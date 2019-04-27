@@ -310,7 +310,6 @@ public class Game implements Runnable {
         display = new Display(title, width, height);
         display.getJframe().addKeyListener(keyManager);
         Assets.init();
-        player = new Player(getWidth() / 2 - 24, getHeight() - 64, 48, 48, 5, this);
         selector = new Selector(getWidth()/3, getHeight()/3, 50,50, 0, this);
         setScore(0);
 
@@ -378,26 +377,9 @@ public class Game implements Runnable {
         
         // As the game is not paused or ended everything is getting ticked
         if (!isPaused() && !gameEnded) {
-            player.tick();
-            setAlienMoveCounter(getAlienMoveCounter() + 1);
-            alienBombCounter++;
             
-            // Game ends when the player runs out of lives
-            if(lives == 0){
-                gameEnded = true;
-            }
         }
-            
-        // When the alien counter surpasses the limit, it resets the counter to cero
-        if (getAlienMoveCounter() >= getAlienTickLimit()) {
-            setAlienMoveCounter(0);
-        }
-
-        // Moves ALL aliens down and changes their direction
-        if (moveDown()) {
-            setMoveDown(false);
-
-        }
+        
         // When the game ends, sets the flags to true or false, and waits for
         // the player to press space to restart
         if (gameEnded) {
@@ -433,7 +415,6 @@ public class Game implements Runnable {
             
             
             // Draws the player
-            player.render(g);
             bs.show();
             g.dispose();
         }

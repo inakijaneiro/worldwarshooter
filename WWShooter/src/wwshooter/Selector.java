@@ -14,11 +14,14 @@ import java.awt.Graphics;
 public class Selector extends Item {
     
     private Game game;
+    private int btnHeight;
+    private int spaceBetween;
     
-    
-    public Selector(int x, int y, int width, int height, int speed, Game game){
+    public Selector(int x, int y, int width, int height, Game game, int btnHeight, int spaceBetween){
         super(x, y, width, height);
         this.game = game;
+        this.btnHeight = btnHeight;
+        this.spaceBetween = spaceBetween;
     }
     
     /**
@@ -29,25 +32,23 @@ public class Selector extends Item {
     public Game getGame() {
         return game;
     }
-    
-
 
     @Override
     public void tick() {
         if (getGame().getKeyManager().down && getGame().getKeyManager().isPressable()) {
             getGame().getKeyManager().setPressable(false);
-            setY(getY() + 100);
+            setY(getY() + btnHeight + spaceBetween);
         }
         if (getGame().getKeyManager().up && getGame().getKeyManager().isPressable()) {
             getGame().getKeyManager().setPressable(false);
-               setY(getY() - 100);
+               setY(getY() - btnHeight - spaceBetween);
         }
         
-        if (getY() >= game.getHeight()/2 - game.getHeight()/6 + 200 + game.getHeight()/12){
-            setY(game.getHeight()/3);
+        if (getY() < 372){
+            setY(570);
         }
-        if (getY() <= game.getHeight() - 500){
-            setY(game.getHeight()/3 + 200);
+        if (getY() > 635){
+            setY(372);
         }
         
     }

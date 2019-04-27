@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferStrategy;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -41,6 +42,10 @@ public class Game implements Runnable {
     private Scanner scanner;                // to store the scanner to read a game file
     private boolean win;                    // when the player won the game
     private Level level;
+    private Button newBtn;
+    private Button continueBtn;
+    private Button settingsBtn;
+    private ArrayList<Button> buttons;
     
     /**
      * To create title,	width and height and set the game is still not running
@@ -194,6 +199,14 @@ public class Game implements Runnable {
         display.getJframe().addKeyListener(keyManager);
         Assets.init();
         this.level = new Level(Level.LevelName.MainMenu, this);
+        buttons = new ArrayList();
+        /*
+            Y position = Previous Y postion + height + 20.
+            20 is the separation between buttons.
+        */
+        buttons.add(new Button(width/2 - 232, 350, 464, 90, "newgame"));
+        buttons.add(new Button(width/2 - 232, 460, 464, 90, "continue"));
+        buttons.add(new Button(width/2 - 232, 570, 464, 90, "settings"));
         setScore(0);
 
     }

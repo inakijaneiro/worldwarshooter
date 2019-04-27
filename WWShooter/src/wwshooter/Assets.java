@@ -17,7 +17,8 @@ public class Assets {
     public static BufferedImage continueButton; // to store the continue button
     public static BufferedImage newGameButton;  // to store the new game button
     public static BufferedImage settingsButton; // to store the settings button
-    public static BufferedImage selector; // to store the settings button
+    public static BufferedImage backButton;     // to store the back button
+    public static BufferedImage selector;       // to store the settings button
     public static BufferedImage title;          // to store the title
 
 
@@ -31,12 +32,9 @@ public class Assets {
         continueButton = ImageLoader.loadImage("/images/Continue.png");
         newGameButton = ImageLoader.loadImage("/images/NewGame.png");
         settingsButton = ImageLoader.loadImage("/images/Settings.png");
+        backButton = ImageLoader.loadImage("/images/Back.png");
         selector = ImageLoader.loadImage("/images/Selector.png");
         title = ImageLoader.loadImage("/images/Title.png");
-
-
         
-        // Sounds
     }
-
 }

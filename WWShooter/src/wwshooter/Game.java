@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferStrategy;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -47,6 +48,10 @@ public class Game implements Runnable {
     private int alienBombCounter;           // to spawn an alien bomb on a certain time
     private boolean win;                    // when the player won the game
     private Selector selector;
+    private Button newBtn;
+    private Button continueBtn;
+    private Button settingsBtn;
+    private ArrayList<Button> buttons;
     
     /**
      * To create title,	width and height and set the game is still not running
@@ -310,7 +315,15 @@ public class Game implements Runnable {
         display = new Display(title, width, height);
         display.getJframe().addKeyListener(keyManager);
         Assets.init();
-        selector = new Selector(getWidth()/3, getHeight()/3, 50,50, 0, this);
+        buttons = new ArrayList();
+        /*
+            Y position = Previous Y postion + height + 20.
+            20 is the separation between buttons.
+        */
+        buttons.add(new Button(width/2 - 232, 350, 464, 90, "newgame"));
+        buttons.add(new Button(width/2 - 232, 460, 464, 90, "continue"));
+        buttons.add(new Button(width/2 - 232, 570, 464, 90, "settings"));
+        selector = new Selector(width/2 - 282, 372, 35, 55, this, 90, 20);
         setScore(0);
 
     }
@@ -407,12 +420,11 @@ public class Game implements Runnable {
             g = bs.getDrawGraphics();
             // Draws background, score and limit
             g.drawImage(Assets.background, 0, 0, width, height, null);
-            g.drawImage(Assets.title, width/2 - width/12 - 80, height/2 - 300, width/3, height/6, null);
-            g.drawImage(Assets.newGameButton, width/2 - width/12, height/2 - height/6, width/6, height/12, null);
-            g.drawImage(Assets.continueButton, width/2 - width/12 , height/2 - height/6 + 100, width/6, height/12, null);
-            g.drawImage(Assets.settingsButton, width/2 - width/12 , height/2 - height/6 + 200, width/6, height/12, null);
+            g.drawImage(Assets.title, width/2 - 275, 100, 550, 209, null);
+            for(int i = 0; i < buttons.size(); i++){
+                buttons.get(i).render(g);
+            }
             selector.render(g);
-            
             
             // Draws the player
             bs.show();

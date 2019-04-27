@@ -58,9 +58,7 @@ public class KeyManager implements KeyListener {
         // set false to every key released
         keys[e.getKeyCode()] = false;
         movement = false;
-        if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_SPACE){
-            setPressable(true);
-        }
+        setPressable(true);
     }
     
     /**

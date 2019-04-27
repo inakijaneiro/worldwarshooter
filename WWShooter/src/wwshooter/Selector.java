@@ -34,11 +34,20 @@ public class Selector extends Item {
 
     @Override
     public void tick() {
-        if (getGame().getKeyManager().down) {
-               setY(getY() + 200);
+        if (getGame().getKeyManager().down && getGame().getKeyManager().isPressable()) {
+            getGame().getKeyManager().setPressable(false);
+            setY(getY() + 100);
         }
-        if (getGame().getKeyManager().up) {
-               setY(getY() - 200);
+        if (getGame().getKeyManager().up && getGame().getKeyManager().isPressable()) {
+            getGame().getKeyManager().setPressable(false);
+               setY(getY() - 100);
+        }
+        
+        if (getY() >= game.getHeight()/2 - game.getHeight()/6 + 200 + game.getHeight()/12){
+            setY(game.getHeight()/3);
+        }
+        if (getY() <= game.getHeight() - 500){
+            setY(game.getHeight()/3 + 200);
         }
         
     }

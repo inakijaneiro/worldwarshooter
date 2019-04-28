@@ -14,15 +14,15 @@ import java.util.ArrayList;
  */
 public class Selector extends Item {
 
-    private Game game;
+    private Level level;
     private int btnHeight;
     private int spaceBetween;
     private int position;
     private ArrayList<Button> buttons;
 
-    public Selector(int x, int y, int width, int height, Game game, ArrayList<Button> buttons, int spaceBetween) {
+    public Selector(int x, int y, int width, int height, Level level, ArrayList<Button> buttons, int spaceBetween) {
         super(x, y, width, height);
-        this.game = game;
+        this.level = level;
         this.btnHeight = buttons.get(0).getHeight();
         this.spaceBetween = spaceBetween;
         this.buttons = buttons;
@@ -34,8 +34,8 @@ public class Selector extends Item {
      *
      * @return <code>Game game</code>
      */
-    public Game getGame() {
-        return game;
+    public Level getLevel() {
+        return level;
     }
     
     public int getPosition(){
@@ -44,8 +44,8 @@ public class Selector extends Item {
 
     @Override
     public void tick() {
-        if (getGame().getKeyManager().down && getGame().getKeyManager().isPressable()) {
-            getGame().getKeyManager().setPressable(false);
+        if (getLevel().getKeyManager().down && getLevel().getKeyManager().isPressable()) {
+            getLevel().getKeyManager().setPressable(false);
             if (position + 1 >= 0 && position + 1 < buttons.size()) {
                 position++;
                 setY(buttons.get(position).getY() + getHeight() / 2 - 10);
@@ -54,8 +54,8 @@ public class Selector extends Item {
                 setY(buttons.get(position).getY() + getHeight() / 2 - 10);
             }
         }
-        if (getGame().getKeyManager().up && getGame().getKeyManager().isPressable()) {
-            getGame().getKeyManager().setPressable(false);
+        if (getLevel().getKeyManager().up && getLevel().getKeyManager().isPressable()) {
+            getLevel().getKeyManager().setPressable(false);
             if (position - 1 >= 0) {
                 position--;
                 setY(buttons.get(position).getY() + getHeight() / 2 - 10);

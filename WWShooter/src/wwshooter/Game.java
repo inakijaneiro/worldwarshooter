@@ -323,7 +323,7 @@ public class Game implements Runnable {
         buttons.add(new Button(width/2 - 232, 350, 464, 90, "newgame"));
         buttons.add(new Button(width/2 - 232, 460, 464, 90, "continue"));
         buttons.add(new Button(width/2 - 232, 570, 464, 90, "settings"));
-        selector = new Selector(width/2 - 282, 372, 35, 55, this, 90, 20);
+        selector = new Selector(width/2 - 282, 370, 35, 55, this, buttons, 20);
         setScore(0);
 
     }

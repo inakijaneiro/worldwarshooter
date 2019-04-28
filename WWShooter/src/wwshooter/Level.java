@@ -57,10 +57,11 @@ public class Level {
         switch (level) {
             case MainMenu:
             g.drawImage(Assets.background, 0, 0, width, height, null);
-            g.drawImage(Assets.title, width/2 - width/12 - 80, height/2 - 300, width/3, height/6, null);
-            g.drawImage(Assets.newGameButton, width/2 - width/12, height/2 - height/6, width/6, height/12, null);
-            g.drawImage(Assets.continueButton, width/2 - width/12 , height/2 - height/6 + 100, width/6, height/12, null);
-            g.drawImage(Assets.settingsButton, width/2 - width/12 , height/2 - height/6 + 200, width/6, height/12, null);
+            g.drawImage(Assets.title, width/2 - 275, 100, 550, 209, null);
+            for (int i = 0; i < game.getButtons().size(); i++) {
+                game.getButtons().get(i).render(g);
+            }
+            break;
         }
     }
 

@@ -109,6 +109,14 @@ public class Game implements Runnable {
         this.score = score;
     }
 
+    public ArrayList<Button> getButtons() {
+        return buttons;
+    }
+
+    public void setButtons(ArrayList<Button> buttons) {
+        this.buttons = buttons;
+    }
+
 
     /**
      * Gets lives

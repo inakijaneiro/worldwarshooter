@@ -42,9 +42,8 @@ public class Game implements Runnable {
     private Scanner scanner;                // to store the scanner to read a game file
     private boolean win;                    // when the player won the game
     private Level level;
-    private Button newBtn;
-    private Button continueBtn;
-    private Button settingsBtn;
+    private LinkedList<Bullet> bullets;
+
     
     /**
      * To create title,	width and height and set the game is still not running
@@ -145,6 +144,10 @@ public class Game implements Runnable {
     public void setPause(boolean paused) {
         this.paused = paused;
     }
+
+    public LinkedList<Bullet> getBullets() {
+        return bullets;
+    }
     
     // Restarts the game to the original state
     private void restart() {
@@ -197,13 +200,7 @@ public class Game implements Runnable {
         display.getJframe().addKeyListener(keyManager);
         Assets.init();
         this.level = new Level(Level.LevelName.MainMenu, this);
-        /*
-            Y position = Previous Y postion + height + 20.
-            20 is the separation between buttons.
-        */
-//        buttons.add(new Button(width/2 - 232, 350, 464, 90, "newgame"));
-//        buttons.add(new Button(width/2 - 232, 460, 464, 90, "continue"));
-//        buttons.add(new Button(width/2 - 232, 570, 464, 90, "settings"));
+        bullets = new LinkedList<Bullet>();
         setScore(0);
 
     }
@@ -275,6 +272,12 @@ public class Game implements Runnable {
                 gameEnded = true;
             }
         }
+        
+       for (int i = 0; i < bullets.size(); i++) {
+                //Move bullets
+                bullets.get(i).tick();
+       }
+        
             
         // When the game ends, sets the flags to true or false, and waits for
         // the player to press space to restart
@@ -304,6 +307,11 @@ public class Game implements Runnable {
             // Draws background, score and limit
             level.render(g);
             
+            /* Mover a Level
+            for (int i = 0; i < bullets.size(); i++) {
+                bullets.get(i).render(g);
+            }*/
+
             bs.show();
             g.dispose();
         }

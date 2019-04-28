@@ -17,11 +17,13 @@ public class Player extends Item{
     
     private int speed;
     private Game game;
+    private long lastShot;
     
     public Player(int x, int y, int width, int height, int speed, Game game){
         super(x, y, width, height);
         this.game = game;
         this.speed = speed;
+        lastShot=0;
     }
 
     /**
@@ -87,6 +89,13 @@ public class Player extends Item{
         if(getX() <= 0){
             setX(0);
         }
+        
+        // Shooting with 1 second of delay
+       long timeNow = System.currentTimeMillis();
+       if(getGame().getKeyManager().shoot && (System.currentTimeMillis()- lastShot >= 1000)){
+            lastShot = timeNow;
+            getGame().getBullets().add(new Bullet(getX(),getY(), 7, 7, 5, game));         
+        } 
     }
 
     /**
@@ -96,7 +105,7 @@ public class Player extends Item{
      */
     @Override
     public void render(Graphics g) {
-        //g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
     }
     
 }

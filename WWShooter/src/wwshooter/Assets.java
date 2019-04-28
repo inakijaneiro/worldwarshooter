@@ -20,6 +20,8 @@ public class Assets {
     public static BufferedImage backButton;     // to store the back button
     public static BufferedImage selector;       // to store the settings button
     public static BufferedImage title;          // to store the title
+    public static BufferedImage player;
+    public static BufferedImage bullet;
 
 
 
@@ -35,6 +37,8 @@ public class Assets {
         backButton = ImageLoader.loadImage("/images/Back.png");
         selector = ImageLoader.loadImage("/images/Selector.png");
         title = ImageLoader.loadImage("/images/Title.png");
+        player = ImageLoader.loadImage("/images/samusBall.png");
+        bullet = ImageLoader.loadImage("/images/bullet2.png");
         
     }
 }

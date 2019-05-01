@@ -17,6 +17,7 @@ public class KeyManager implements KeyListener {
     public boolean left;        // flag to move left the player
     public boolean down;
     public boolean up;
+    public boolean enter;       // flag to see if the player has pressed enter
     public boolean right;       // flag to move right the player
     public boolean shoot;       // flag to shoot
     public boolean p;           // flag to pause the game
@@ -75,6 +76,7 @@ public class KeyManager implements KeyListener {
         c = keys[KeyEvent.VK_C];
         r = keys[KeyEvent.VK_R];
         space = keys[KeyEvent.VK_SPACE];
+        enter = keys[KeyEvent.VK_ENTER];
     }
     
 }

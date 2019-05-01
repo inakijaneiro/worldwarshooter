@@ -20,6 +20,7 @@ public class Level {
     private ArrayList<Button> buttons;
     private int width;
     private int height;
+    private int stage;
 
     enum LevelName {
         MainMenu, Level1, Level2
@@ -28,7 +29,6 @@ public class Level {
 
     Level(LevelName levelName, Game game) {
         this.game = game;
-        this.player = new Player(50, 20, 150, 350, 5, game);
         this.level = levelName;
         this.width = game.getWidth();
         this.height = game.getHeight();
@@ -40,11 +40,23 @@ public class Level {
                 buttons.add(new Button(game.getWidth() / 2 - 232, 570, 464, 90, "settings"));
                 selector = new Selector(width / 2 - 282, 370, 35, 55, this, buttons, 20);
                 break;
+            case Level1:
+                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                this.stage = 1;
+                break;
         }
     }
 
     public ArrayList<Button> getButtons() {
         return buttons;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public int getStage() {
+        return stage;
     }
 
     public KeyManager getKeyManager() {
@@ -73,10 +85,18 @@ public class Level {
         this.player = player;
     }
 
+    public void setStage(int stage) {
+        this.stage = stage;
+    }
+    
+    
+
     public void tick() {
         switch (level) {
             case MainMenu:
                 selector.tick();
+                break;
+            case Level1:
                 player.tick();
                 break;
         }
@@ -93,9 +113,11 @@ public class Level {
                 for (int i = 0; i < getButtons().size(); i++) {
                     getButtons().get(i).render(g);
                 }
-                player.render(g);
-
                 selector.render(g);
+                break;
+            case Level1:
+                g.drawImage(Assets.level1Background, 0, 0, width, height, null);
+                player.render(g);
                 break;
         }
     }

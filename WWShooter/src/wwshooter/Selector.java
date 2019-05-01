@@ -17,7 +17,7 @@ public class Selector extends Item {
     private Level level;
     private int btnHeight;
     private int spaceBetween;
-    private int position;
+    private int position; //starts at 0, until n-1
     private ArrayList<Button> buttons;
 
     public Selector(int x, int y, int width, int height, Level level, ArrayList<Button> buttons, int spaceBetween) {
@@ -62,6 +62,11 @@ public class Selector extends Item {
             }else {
                 position = buttons.size() - 1;
                 setY(buttons.get(position).getY() + getHeight() / 2 - 10);
+            }
+        }
+        if (getLevel().getKeyManager().enter) {
+            if (position == 0) {
+                getLevel().getGame().changeLevel(1);
             }
         }
     }

@@ -16,7 +16,7 @@ import java.util.Formatter;
 public class Player extends Item {
 
     private int speed;
-    private Game game;
+    private Level level;
     private long lastShot;
     private Animation currentAnimation;
     private byte direction;
@@ -28,9 +28,9 @@ public class Player extends Item {
     };
     private State state;
 
-    public Player(int x, int y, int width, int height, int speed, Game game) {
+    public Player(int x, int y, int width, int height, int speed, Level level) {
         super(x, y, width, height);
-        this.game = game;
+        this.level = level;
         this.speed = speed;
         this.lastShot = 0;
         this.direction = 1;
@@ -44,8 +44,8 @@ public class Player extends Item {
      *
      * @return <code>Game game</code>
      */
-    public Game getGame() {
-        return game;
+    public Level getLevel() {
+        return level;
     }
 
     /**
@@ -88,9 +88,9 @@ public class Player extends Item {
     public void tick() {
         currentAnimation.tick();
         // Moving player depending on flags
-        boolean goingLeft = getGame().getKeyManager().left;
-        boolean goingRight = getGame().getKeyManager().right;
-        boolean isShooting = getGame().getKeyManager().space;
+        boolean goingLeft = getLevel().getKeyManager().left;
+        boolean goingRight = getLevel().getKeyManager().right;
+        boolean isShooting = getLevel().getKeyManager().space;
         
         if(state != State.RUN && (goingLeft || goingRight)){
                 currentAnimation.setIndex(0);
@@ -117,18 +117,22 @@ public class Player extends Item {
         }
 
         // Collisions with the screen
-        if (getX() + getWidth() >= getGame().getWidth()) {
-            setX(getGame().getWidth() - getWidth());
+        if (getX() + getWidth() >= getLevel().getGame().getWidth()) { // right
+            setX(0);
+            getLevel().setStage(getLevel().getStage() + 1);
+            if (getLevel().getStage() <= 3) {
+                Assets.setLevelBackground(1, getLevel().getStage());
+            }
         }
-        if (getX() <= 0) {
+        if (getX() <= 0) { // left
             setX(0);
         }
 
         // Shooting with 1 second of delay
         long timeNow = System.currentTimeMillis();
-        if (getGame().getKeyManager().shoot && (System.currentTimeMillis() - lastShot >= 1000)) {
+        if (getLevel().getKeyManager().shoot && (System.currentTimeMillis() - lastShot >= 1000)) {
             lastShot = timeNow;
-            getGame().getBullets().add(new Bullet(getX(), getY(), 7, 7, 5, game));
+//            getLevel().getBullets().add(new Bullet(getX(), getY(), 7, 7, 5, game));
         }
     }
 

@@ -26,7 +26,11 @@ public class Assets {
     public static BufferedImage playerRunR[];
     public static BufferedImage playerShoot[];
     public static BufferedImage bullet;
-
+    public static BufferedImage level1Background;
+    
+    public static void setLevelBackground(int level, int stage) {
+        level1Background = ImageLoader.loadImage("/LevelBackgrounds/Level" + level + "_" + stage + ".png");
+    }
 
 
     /**

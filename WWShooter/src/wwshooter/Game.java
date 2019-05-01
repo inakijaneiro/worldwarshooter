@@ -149,6 +149,14 @@ public class Game implements Runnable {
         return bullets;
     }
     
+    public void changeLevel(int level) {
+        this.level = null;
+        if (level == 1) {
+            this.level = new Level(Level.LevelName.Level1, this);
+            Assets.setLevelBackground(1, 1);
+        }
+    }
+    
     // Restarts the game to the original state
     private void restart() {
         setScore(0);

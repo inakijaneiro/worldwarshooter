@@ -21,7 +21,6 @@ public class Level {
     private int width;
     private int height;
 
-
     enum LevelName {
         MainMenu, Level1, Level2
     }
@@ -29,7 +28,7 @@ public class Level {
 
     Level(LevelName levelName, Game game) {
         this.game = game;
-        this.player = new Player(game.getWidth() / 2 - 24, game.getHeight() - 64, 48, 48, 5, game);
+        this.player = new Player(50, 20, 150, 350, 5, game);
         this.level = levelName;
         this.width = game.getWidth();
         this.height = game.getHeight();
@@ -39,20 +38,23 @@ public class Level {
                 buttons.add(new Button(game.getWidth() / 2 - 232, 350, 464, 90, "newgame"));
                 buttons.add(new Button(game.getWidth() / 2 - 232, 460, 464, 90, "continue"));
                 buttons.add(new Button(game.getWidth() / 2 - 232, 570, 464, 90, "settings"));
-                selector = new Selector(width/2 - 282, 370, 35, 55, this, buttons, 20);
+                selector = new Selector(width / 2 - 282, 370, 35, 55, this, buttons, 20);
                 break;
         }
     }
-    
+
     public ArrayList<Button> getButtons() {
         return buttons;
     }
-    public KeyManager getKeyManager(){
+
+    public KeyManager getKeyManager() {
         return game.getKeyManager();
     }
+
     public void setButtons(ArrayList<Button> buttons) {
         this.buttons = buttons;
     }
+
     /**
      * Gets the Player instance
      *
@@ -72,9 +74,10 @@ public class Level {
     }
 
     public void tick() {
-        switch(level){
+        switch (level) {
             case MainMenu:
                 selector.tick();
+                player.tick();
                 break;
         }
 
@@ -90,6 +93,8 @@ public class Level {
                 for (int i = 0; i < getButtons().size(); i++) {
                     getButtons().get(i).render(g);
                 }
+                player.render(g);
+
                 selector.render(g);
                 break;
         }

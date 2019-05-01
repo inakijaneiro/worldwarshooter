@@ -20,7 +20,11 @@ public class Assets {
     public static BufferedImage backButton;     // to store the back button
     public static BufferedImage selector;       // to store the settings button
     public static BufferedImage title;          // to store the title
-    public static BufferedImage player;
+    public static BufferedImage playerIdle[];
+    public static BufferedImage playerIdleR[];
+    public static BufferedImage playerRun[];
+    public static BufferedImage playerRunR[];
+    public static BufferedImage playerShoot[];
     public static BufferedImage bullet;
 
 
@@ -37,8 +41,28 @@ public class Assets {
         backButton = ImageLoader.loadImage("/images/Back.png");
         selector = ImageLoader.loadImage("/images/Selector.png");
         title = ImageLoader.loadImage("/images/Title.png");
-        player = ImageLoader.loadImage("/images/samusBall.png");
         bullet = ImageLoader.loadImage("/images/bullet2.png");
+        playerIdle = new BufferedImage[8];
+        playerIdleR = new BufferedImage[8];
+        playerRun = new BufferedImage[6];
+        playerRunR = new BufferedImage[6];
+        playerShoot = new BufferedImage[6];
+        
+        for(int i = 0; i < playerIdle.length; i++){
+            String path = "/player_sprite/Idle" + i + ".png";
+            playerIdle[i] = ImageLoader.loadImage(path);
+            path = "/player_sprite/IdleR" + i + ".png";
+            playerIdleR[i] = ImageLoader.loadImage(path);
+        }
+        
+        for(int i = 0; i < playerRun.length; i++){
+            String path = "/player_sprite/Run" + i + ".png";
+            playerRun[i] = ImageLoader.loadImage(path);
+            path = "/player_sprite/RunR" + i + ".png";
+            playerRunR[i] = ImageLoader.loadImage(path);
+            path = "/player_sprite/Shoot" + i + ".png";
+            playerShoot[i] = ImageLoader.loadImage(path);
+        }
         
     }
 }

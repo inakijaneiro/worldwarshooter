@@ -20,6 +20,7 @@ public class Player extends Item {
     private long lastShot;
     private Animation currentAnimation;
     private int originalWidth;
+    private boolean shootingOffset;
     public enum State {
         RUN,
         IDLE,
@@ -41,6 +42,7 @@ public class Player extends Item {
         this.originalWidth = width;
         currentAnimation = new Animation(Assets.playerIdle, 60);
         this.state = State.IDLE;
+        this.shootingOffset = false;
     }
 
     /**
@@ -118,14 +120,27 @@ public class Player extends Item {
             currentAnimation.setFrames(Assets.playerRun);
         } else if (isShooting) {
             if (state != State.SHOOT) {
+                if(direction == Direction.LEFT){
+                    setX(getX() - (int)(originalWidth*0.8));
+                    shootingOffset = true;
+                }
                 currentAnimation.setIndex(0);
                 state = State.SHOOT;
                 // Since the animations have different widths, it adjusts.
                 setWidth(originalWidth * 2 - (int) (originalWidth*0.2));
             }
-            currentAnimation.setFrames(Assets.playerShoot);
+            if(direction == Direction.LEFT){
+                currentAnimation.setFrames(Assets.playerShootR);
+            }else{
+                currentAnimation.setFrames(Assets.playerShoot);
+            }
+            
         } else {
             // When no key is pressed goes back to idle state and adjusts width
+            if(shootingOffset){
+                setX(getX() + (int)(originalWidth*0.8));
+                shootingOffset = false;
+            }
             state = State.IDLE;
             setWidth(originalWidth);
             if (direction == Direction.RIGHT) {

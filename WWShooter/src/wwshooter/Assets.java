@@ -25,13 +25,13 @@ public class Assets {
     public static BufferedImage playerRun[];
     public static BufferedImage playerRunR[];
     public static BufferedImage playerShoot[];
+    public static BufferedImage playerShootR[];
     public static BufferedImage bullet;
     public static BufferedImage level1Background;
-    
+
     public static void setLevelBackground(int level, int stage) {
         level1Background = ImageLoader.loadImage("/LevelBackgrounds/Level" + level + "_" + stage + ".png");
     }
-
 
     /**
      * Initializes the images of the game
@@ -51,22 +51,25 @@ public class Assets {
         playerRun = new BufferedImage[6];
         playerRunR = new BufferedImage[6];
         playerShoot = new BufferedImage[6];
-        
-        for(int i = 0; i < playerIdle.length; i++){
+        playerShootR = new BufferedImage[6];
+
+        for (int i = 0; i < playerIdle.length; i++) {
             String path = "/player_sprite/Idle" + i + ".png";
             playerIdle[i] = ImageLoader.loadImage(path);
             path = "/player_sprite/IdleR" + i + ".png";
             playerIdleR[i] = ImageLoader.loadImage(path);
         }
-        
-        for(int i = 0; i < playerRun.length; i++){
+
+        for (int i = 0; i < playerRun.length; i++) {
             String path = "/player_sprite/Run" + i + ".png";
             playerRun[i] = ImageLoader.loadImage(path);
             path = "/player_sprite/RunR" + i + ".png";
             playerRunR[i] = ImageLoader.loadImage(path);
             path = "/player_sprite/Shoot" + i + ".png";
             playerShoot[i] = ImageLoader.loadImage(path);
+            path = "/player_sprite/ShootR" + i + ".png";
+            playerShootR[i] = ImageLoader.loadImage(path);
         }
-        
+
     }
 }

@@ -109,9 +109,6 @@ public class Level {
         switch (level) {
             case MainMenu:
                 selector.tick();
-                break;
-            case Level1:
-                player.tick();
                 if(isSettingsMenu() && getKeyManager().right && getKeyManager().isPressable()){
                     if(getGame().getVolume() >= 10){
                         getGame().setVolume(10);
@@ -153,6 +150,9 @@ public class Level {
                     setSettingsMenu(false);
                     getKeyManager().setPressable(false);
                 }
+                break;
+            case Level1:
+                player.tick();
                 break;
         }
 

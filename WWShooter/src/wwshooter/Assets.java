@@ -28,6 +28,8 @@ public class Assets {
     public static BufferedImage playerShootR[];
     public static BufferedImage bullet;
     public static BufferedImage level1Background;
+    public static BufferedImage musicController;
+    public static BufferedImage volumePill;
 
     public static void setLevelBackground(int level, int stage) {
         level1Background = ImageLoader.loadImage("/LevelBackgrounds/Level" + level + "_" + stage + ".png");
@@ -46,6 +48,8 @@ public class Assets {
         selector = ImageLoader.loadImage("/images/Selector.png");
         title = ImageLoader.loadImage("/images/Title.png");
         bullet = ImageLoader.loadImage("/images/bullet2.png");
+        musicController = ImageLoader.loadImage("/images/MusicController.png");
+        volumePill = ImageLoader.loadImage("/images/VolumePill.png");
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];
         playerRun = new BufferedImage[6];

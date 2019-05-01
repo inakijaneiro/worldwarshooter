@@ -21,6 +21,7 @@ public class Level {
     private int width;
     private int height;
     private int stage;
+    private boolean settingsMenu;
 
     enum LevelName {
         MainMenu, Level1, Level2
@@ -45,14 +46,23 @@ public class Level {
                 this.stage = 1;
                 break;
         }
-    }
-
-    public ArrayList<Button> getButtons() {
-        return buttons;
+        this.settingsMenu = false;
     }
 
     public Game getGame() {
         return game;
+    }
+    
+    public boolean isSettingsMenu() {
+        return settingsMenu;
+    }
+
+    public void setSettingsMenu(boolean settingsMenu) {
+        this.settingsMenu = settingsMenu;
+    }
+    
+    public ArrayList<Button> getButtons() {
+        return buttons;
     }
 
     public int getStage() {
@@ -65,6 +75,10 @@ public class Level {
 
     public void setButtons(ArrayList<Button> buttons) {
         this.buttons = buttons;
+    }
+
+    public Selector getSelector() {
+        return selector;
     }
 
     /**
@@ -98,6 +112,47 @@ public class Level {
                 break;
             case Level1:
                 player.tick();
+                if(isSettingsMenu() && getKeyManager().right && getKeyManager().isPressable()){
+                    if(getGame().getVolume() >= 10){
+                        getGame().setVolume(10);
+                    }else{
+                        getGame().setVolume(getGame().getVolume()+1);
+                    }
+                    getKeyManager().setPressable(false);
+                }
+                
+                if(isSettingsMenu() && getKeyManager().left && getKeyManager().isPressable()){
+                    if(getGame().getVolume() <= 1){
+                        getGame().setVolume(1);
+                    }else{
+                        getGame().setVolume(getGame().getVolume()-1);
+                    }
+                    getKeyManager().setPressable(false);
+                }
+                
+                if (!isSettingsMenu() && getSelector().getPosition() == 2 && getKeyManager().space && getKeyManager().isPressable()) {
+                    getButtons().get(0).setVisible(false);
+                    getButtons().get(1).setVisible(false);
+                    getButtons().get(2).setType("back");
+
+                    getSelector().getButtons().get(0).setVisible(false);
+                    getSelector().getButtons().get(1).setVisible(false);
+                    getSelector().getButtons().get(2).setType("back");
+
+                    setSettingsMenu(true);
+                    getKeyManager().setPressable(false);
+                } else if (isSettingsMenu() && getSelector().getPosition() == 2 && getKeyManager().space && getKeyManager().isPressable()) {
+                    getButtons().get(0).setVisible(true);
+                    getButtons().get(1).setVisible(true);
+                    getButtons().get(2).setType("settings");
+
+                    getSelector().getButtons().get(0).setVisible(true);
+                    getSelector().getButtons().get(1).setVisible(true);
+                    getSelector().getButtons().get(2).setType("settings");
+
+                    setSettingsMenu(false);
+                    getKeyManager().setPressable(false);
+                }
                 break;
         }
 
@@ -114,6 +169,12 @@ public class Level {
                     getButtons().get(i).render(g);
                 }
                 selector.render(g);
+                if(isSettingsMenu()){
+                    g.drawImage(Assets.musicController, width / 2 - 200, 380, 400, 100, null);
+                    for(int i = 0; i < getGame().getVolume(); i++){
+                        g.drawImage(Assets.volumePill, width / 2 - 159 + i * 32, 440, 30, 30, null);
+                    }
+                }
                 break;
             case Level1:
                 g.drawImage(Assets.level1Background, 0, 0, width, height, null);

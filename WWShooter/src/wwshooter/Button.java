@@ -14,10 +14,28 @@ import java.awt.Graphics;
 public class Button extends Item {
     
     private String type;
+    private boolean visible;
 
     public Button(int x, int y, int width, int height, String type) {
         super(x, y, width, height);
         this.type = type;
+        this.visible = true;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
     
     @Override
@@ -27,19 +45,21 @@ public class Button extends Item {
 
     @Override
     public void render(Graphics g) {
-        switch(this.type){
-            case "newgame":
-                g.drawImage(Assets.newGameButton, getX(), getY(), getWidth(), getHeight(), null);
-                break;
-            case "continue":
-                g.drawImage(Assets.continueButton, getX(), getY(), getWidth(), getHeight(), null);
-                break;
-            case "settings":
-                g.drawImage(Assets.settingsButton, getX(), getY(), getWidth(), getHeight(), null);
-                break;
-            case "back":
-                g.drawImage(Assets.backButton, getX(), getY(), getWidth(), getHeight(), null);
-                break;
+        if (isVisible()) {
+            switch (this.type) {
+                case "newgame":
+                    g.drawImage(Assets.newGameButton, getX(), getY(), getWidth(), getHeight(), null);
+                    break;
+                case "continue":
+                    g.drawImage(Assets.continueButton, getX(), getY(), getWidth(), getHeight(), null);
+                    break;
+                case "settings":
+                    g.drawImage(Assets.settingsButton, getX(), getY(), getWidth(), getHeight(), null);
+                    break;
+                case "back":
+                    g.drawImage(Assets.backButton, getX(), getY(), getWidth(), getHeight(), null);
+                    break;
+            }
         }
     }
     

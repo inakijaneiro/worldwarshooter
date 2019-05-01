@@ -43,6 +43,7 @@ public class Game implements Runnable {
     private boolean win;                    // when the player won the game
     private Level level;
     private LinkedList<Bullet> bullets;
+    private int volume;
 
     
     /**
@@ -59,6 +60,7 @@ public class Game implements Runnable {
         this.running = false;
         this.keyManager = new KeyManager();
         this.lives = 3;
+        this.volume = 10;
     }
 
     /**
@@ -147,6 +149,14 @@ public class Game implements Runnable {
 
     public LinkedList<Bullet> getBullets() {
         return bullets;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
     
     public void changeLevel(int level) {

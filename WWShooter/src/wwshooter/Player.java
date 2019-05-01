@@ -19,21 +19,25 @@ public class Player extends Item {
     private Level level;
     private long lastShot;
     private Animation currentAnimation;
-    private byte direction;
     private int originalWidth;
-    public enum State{
+    public enum State {
         RUN,
         IDLE,
         SHOOT
     };
+    public enum Direction{
+        LEFT,
+        RIGHT
+    };
     private State state;
+    private Direction direction;
 
     public Player(int x, int y, int width, int height, int speed, Level level) {
         super(x, y, width, height);
         this.level = level;
         this.speed = speed;
         this.lastShot = 0;
-        this.direction = 1;
+        this.direction = Direction.RIGHT;
         this.originalWidth = width;
         currentAnimation = new Animation(Assets.playerIdle, 60);
         this.state = State.IDLE;
@@ -87,31 +91,46 @@ public class Player extends Item {
     @Override
     public void tick() {
         currentAnimation.tick();
-        // Moving player depending on flags
+        // Declaration of flags to manage the rest of the behaviour
         boolean goingLeft = getLevel().getKeyManager().left;
         boolean goingRight = getLevel().getKeyManager().right;
         boolean isShooting = getLevel().getKeyManager().space;
         
+        // Checks the player's state and sets the animation index accordingly,
+        // to avoid out-of-bounds error 
         if(state != State.RUN && (goingLeft || goingRight)){
                 currentAnimation.setIndex(0);
+
         }
-        if(goingLeft || goingRight){
+        if (goingLeft || goingRight) {
             state = State.RUN;
+            // Since the animations have different widths, it adjusts.
+            setWidth(originalWidth + (int) (originalWidth*0.1));
         }
+        
         if (goingLeft) {
-            this.direction = -1;
+            this.direction = Direction.LEFT;
             setX(getX() - getSpeed());
             currentAnimation.setFrames(Assets.playerRunR);
         } else if (goingRight) {
-            this.direction = 1;
+            this.direction = Direction.RIGHT;
             setX(getX() + getSpeed());
             currentAnimation.setFrames(Assets.playerRun);
+        } else if (isShooting) {
+            if (state != State.SHOOT) {
+                currentAnimation.setIndex(0);
+                state = State.SHOOT;
+                // Since the animations have different widths, it adjusts.
+                setWidth(originalWidth * 2 - (int) (originalWidth*0.2));
+            }
+            currentAnimation.setFrames(Assets.playerShoot);
         } else {
-            if (direction > 0) {
-                state = State.IDLE;
+            // When no key is pressed goes back to idle state and adjusts width
+            state = State.IDLE;
+            setWidth(originalWidth);
+            if (direction == Direction.RIGHT) {
                 currentAnimation.setFrames(Assets.playerIdle);
             } else {
-                state = State.IDLE;
                 currentAnimation.setFrames(Assets.playerIdleR);
             }
         }

@@ -127,7 +127,7 @@ public class Level {
                     getKeyManager().setPressable(false);
                 }
                 
-                if (!isSettingsMenu() && getSelector().getPosition() == 2 && getKeyManager().space && getKeyManager().isPressable()) {
+                if (!isSettingsMenu() && getSelector().getPosition() == 2 && (getKeyManager().space || getKeyManager().enter) && getKeyManager().isPressable()) {
                     getButtons().get(0).setVisible(false);
                     getButtons().get(1).setVisible(false);
                     getButtons().get(2).setType("back");
@@ -138,7 +138,7 @@ public class Level {
 
                     setSettingsMenu(true);
                     getKeyManager().setPressable(false);
-                } else if (isSettingsMenu() && getSelector().getPosition() == 2 && getKeyManager().space && getKeyManager().isPressable()) {
+                } else if (isSettingsMenu() && getSelector().getPosition() == 2 && (getKeyManager().space || getKeyManager().enter) && getKeyManager().isPressable()) {
                     getButtons().get(0).setVisible(true);
                     getButtons().get(1).setVisible(true);
                     getButtons().get(2).setType("settings");

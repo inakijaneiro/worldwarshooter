@@ -70,7 +70,7 @@ public class Selector extends Item {
                 }
             }
         }
-        if (getLevel().getKeyManager().enter) {
+        if (getLevel().getKeyManager().enter || getLevel().getKeyManager().space) {
             if (position == 0) {
                 getLevel().getGame().changeLevel(1);
             }

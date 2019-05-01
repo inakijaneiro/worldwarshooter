@@ -24,6 +24,7 @@ public class Level {
     private int stage;
     private boolean settingsMenu;
     private LinkedList<Bullet> bullets;
+    private ArrayList<Enemy> enemies;
 
     enum LevelName {
         MainMenu, Level1, Level2
@@ -37,6 +38,7 @@ public class Level {
         this.height = game.getHeight();
         this.buttons = new ArrayList<Button>();
         this.bullets = new LinkedList<Bullet>();
+        this.enemies = new ArrayList<Enemy>();
         switch (levelName) {
             case MainMenu:
                 buttons.add(new Button(game.getWidth() / 2 - 232, 350, 464, 90, "newgame"));
@@ -46,6 +48,7 @@ public class Level {
                 break;
             case Level1:
                 this.player = new Player(0, height - 350, 150, 350, 5, this);
+                enemies.add(new Enemy(width - 150, height - 350, 150, 350, 5, this));
                 this.stage = 1;
                 break;
         }
@@ -165,10 +168,13 @@ public class Level {
                     if (bullet.getX() + bullet.getWidth() >= getGame().getWidth() || bullet.getX() <= 0) {
                         bullets.remove(i);
                     }
+                    for (Enemy enemy : enemies) {
+                        enemy.tick();
+                    }
+                    break;
                 }
-                break;
-        }
 
+        }
     }
 
     public void render(Graphics g) {
@@ -195,9 +201,11 @@ public class Level {
                 for (int i = 0; i < bullets.size(); i++) {
                     //Render bullets
                     bullets.get(i).render(g);
+                    for (Enemy enemy : enemies) {
+                        enemy.render(g);
+                    }
+                    break;
                 }
-                break;
         }
     }
-
 }

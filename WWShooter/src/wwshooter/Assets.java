@@ -26,6 +26,8 @@ public class Assets {
     public static BufferedImage playerRunR[];
     public static BufferedImage playerShoot[];
     public static BufferedImage playerShootR[];
+    public static BufferedImage firstEnemyRun[];
+    public static BufferedImage firstEnemyRunR[];
     public static BufferedImage bullet;
     public static BufferedImage level1Background;
     public static BufferedImage musicController;
@@ -58,6 +60,8 @@ public class Assets {
         playerRunR = new BufferedImage[6];
         playerShoot = new BufferedImage[6];
         playerShootR = new BufferedImage[6];
+        firstEnemyRun = new BufferedImage[6];
+        firstEnemyRunR = new BufferedImage[6];
 
         for (int i = 0; i < playerIdle.length; i++) {
             String path = "/player_sprite/Idle" + i + ".png";
@@ -66,7 +70,7 @@ public class Assets {
             playerIdleR[i] = ImageLoader.loadImage(path);
         }
 
-        for (int i = 0; i < playerRun.length; i++) {
+        for (int i = 0; i < 6; i++) {
             String path = "/player_sprite/Run" + i + ".png";
             playerRun[i] = ImageLoader.loadImage(path);
             path = "/player_sprite/RunR" + i + ".png";
@@ -75,6 +79,12 @@ public class Assets {
             playerShoot[i] = ImageLoader.loadImage(path);
             path = "/player_sprite/ShootR" + i + ".png";
             playerShootR[i] = ImageLoader.loadImage(path);
+            
+            // Enemy
+            path = "/enemy_sprite/Terrorist1Run" + i + ".png";
+            firstEnemyRun[i] = ImageLoader.loadImage(path);
+            path = "/enemy_sprite/Terrorist1RunR" + i + ".png";
+            firstEnemyRun[i] = ImageLoader.loadImage(path);
         }
 
     }

@@ -42,7 +42,6 @@ public class Game implements Runnable {
     private Scanner scanner;                // to store the scanner to read a game file
     private boolean win;                    // when the player won the game
     private Level level;
-    private LinkedList<Bullet> bullets;
     private int volume;
 
     
@@ -147,10 +146,6 @@ public class Game implements Runnable {
         this.paused = paused;
     }
 
-    public LinkedList<Bullet> getBullets() {
-        return bullets;
-    }
-
     public int getVolume() {
         return volume;
     }
@@ -218,7 +213,6 @@ public class Game implements Runnable {
         display.getJframe().addKeyListener(keyManager);
         Assets.init();
         this.level = new Level(Level.LevelName.MainMenu, this);
-        bullets = new LinkedList<Bullet>();
         setScore(0);
 
     }
@@ -291,10 +285,7 @@ public class Game implements Runnable {
             }
         }
         
-       for (int i = 0; i < bullets.size(); i++) {
-                //Move bullets
-                bullets.get(i).tick();
-       }
+       
         
             
         // When the game ends, sets the flags to true or false, and waits for

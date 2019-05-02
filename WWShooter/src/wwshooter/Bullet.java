@@ -13,15 +13,20 @@ import java.awt.Graphics;
  */
 public class Bullet extends Item{
     
-    private Game game;
+    private Level level;
     private int speed;
     private boolean visible;
+    public enum Direction {
+        LEFT, RIGHT
+    }
+    private Direction direction;
     
-    public Bullet(int x, int y,int width, int height, int speed, Game game){
+    public Bullet(int x, int y,int width, int height, int speed, Level level, Direction direction){
         super(x, y, width, height);
-        this.game = game;
+        this.level = level;
         this.speed = speed;
         this.visible = false;
+        this.direction = direction;
     }
 
     public boolean isVisible() {
@@ -35,10 +40,19 @@ public class Bullet extends Item{
     public int getSpeed() {
         return speed;
     }
+    
+    public Level getLevel() {
+        return level;
+    }
 
     @Override
     public void tick() {
-        setX(getX()+getSpeed());            
+        if (direction == Direction.RIGHT) {
+            setX(getX()+getSpeed()); 
+        }
+        else if (direction == Direction.LEFT) {
+            setX(getX() - getSpeed());
+        }
     }
 
     @Override

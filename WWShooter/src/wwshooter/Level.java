@@ -7,6 +7,7 @@ package wwshooter;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -22,6 +23,7 @@ public class Level {
     private int height;
     private int stage;
     private boolean settingsMenu;
+    private LinkedList<Bullet> bullets;
 
     enum LevelName {
         MainMenu, Level1, Level2
@@ -34,6 +36,7 @@ public class Level {
         this.width = game.getWidth();
         this.height = game.getHeight();
         this.buttons = new ArrayList<Button>();
+        this.bullets = new LinkedList<Bullet>();
         switch (levelName) {
             case MainMenu:
                 buttons.add(new Button(game.getWidth() / 2 - 232, 350, 464, 90, "newgame"));
@@ -52,7 +55,11 @@ public class Level {
     public Game getGame() {
         return game;
     }
-    
+
+    public LinkedList<Bullet> getBullets() {
+        return bullets;
+    }
+
     public boolean isSettingsMenu() {
         return settingsMenu;
     }
@@ -60,7 +67,7 @@ public class Level {
     public void setSettingsMenu(boolean settingsMenu) {
         this.settingsMenu = settingsMenu;
     }
-    
+
     public ArrayList<Button> getButtons() {
         return buttons;
     }
@@ -102,31 +109,29 @@ public class Level {
     public void setStage(int stage) {
         this.stage = stage;
     }
-    
-    
 
     public void tick() {
         switch (level) {
             case MainMenu:
                 selector.tick();
-                if(isSettingsMenu() && getKeyManager().right && getKeyManager().isPressable()){
-                    if(getGame().getVolume() >= 10){
+                if (isSettingsMenu() && getKeyManager().right && getKeyManager().isPressable()) {
+                    if (getGame().getVolume() >= 10) {
                         getGame().setVolume(10);
-                    }else{
-                        getGame().setVolume(getGame().getVolume()+1);
+                    } else {
+                        getGame().setVolume(getGame().getVolume() + 1);
                     }
                     getKeyManager().setPressable(false);
                 }
-                
-                if(isSettingsMenu() && getKeyManager().left && getKeyManager().isPressable()){
-                    if(getGame().getVolume() <= 1){
+
+                if (isSettingsMenu() && getKeyManager().left && getKeyManager().isPressable()) {
+                    if (getGame().getVolume() <= 1) {
                         getGame().setVolume(1);
-                    }else{
-                        getGame().setVolume(getGame().getVolume()-1);
+                    } else {
+                        getGame().setVolume(getGame().getVolume() - 1);
                     }
                     getKeyManager().setPressable(false);
                 }
-                
+
                 if (!isSettingsMenu() && getSelector().getPosition() == 2 && (getKeyManager().space || getKeyManager().enter) && getKeyManager().isPressable()) {
                     getButtons().get(0).setVisible(false);
                     getButtons().get(1).setVisible(false);
@@ -153,6 +158,14 @@ public class Level {
                 break;
             case Level1:
                 player.tick();
+                for (int i = 0; i < bullets.size(); i++) {
+                    Bullet bullet = bullets.get(i);
+                    //Move bullets
+                    bullet.tick();
+                    if (bullet.getX() + bullet.getWidth() >= getGame().getWidth() || bullet.getX() <= 0) {
+                        bullets.remove(i);
+                    }
+                }
                 break;
         }
 
@@ -169,9 +182,9 @@ public class Level {
                     getButtons().get(i).render(g);
                 }
                 selector.render(g);
-                if(isSettingsMenu()){
+                if (isSettingsMenu()) {
                     g.drawImage(Assets.musicController, width / 2 - 200, 380, 400, 100, null);
-                    for(int i = 0; i < getGame().getVolume(); i++){
+                    for (int i = 0; i < getGame().getVolume(); i++) {
                         g.drawImage(Assets.volumePill, width / 2 - 159 + i * 32, 440, 30, 30, null);
                     }
                 }
@@ -179,6 +192,10 @@ public class Level {
             case Level1:
                 g.drawImage(Assets.level1Background, 0, 0, width, height, null);
                 player.render(g);
+                for (int i = 0; i < bullets.size(); i++) {
+                    //Render bullets
+                    bullets.get(i).render(g);
+                }
                 break;
         }
     }

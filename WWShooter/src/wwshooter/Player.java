@@ -164,9 +164,15 @@ public class Player extends Item {
 
         // Shooting with 1 second of delay
         long timeNow = System.currentTimeMillis();
-        if (getLevel().getKeyManager().shoot && (System.currentTimeMillis() - lastShot >= 1000)) {
+        if (getLevel().getKeyManager().shoot && (System.currentTimeMillis() - lastShot >= 500)) {
             lastShot = timeNow;
-//            getLevel().getBullets().add(new Bullet(getX(), getY(), 7, 7, 5, game));
+            if (direction == Direction.RIGHT) {
+                getLevel().getBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight()/2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
+            }
+            else if (direction == Direction.LEFT) {
+                getLevel().getBullets().add(new Bullet(getX() + 50, getY() + getHeight()/2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
+            }
+            
         }
     }
 

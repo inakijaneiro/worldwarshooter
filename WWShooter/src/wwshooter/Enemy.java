@@ -39,7 +39,7 @@ public class Enemy extends Item {
         this.level = level;
         this.speed = speed;
         this.originalWidth = width;
-        this.currentAnimation = new Animation(Assets.firstEnemyRunR, 80);
+        this.currentAnimation = new Animation(Assets.firstEnemyRunR, 100);
         this.player = getLevel().getPlayer();
         this.direction = direction == 'l' ? Direction.LEFT : Direction.RIGHT;
         this.shootingOffset = false;
@@ -82,7 +82,7 @@ public class Enemy extends Item {
             }
             // Shooting with 1 second of delay
             long timeNow = System.currentTimeMillis();
-            if ((System.currentTimeMillis() - lastShot >= 500)) {
+            if ((System.currentTimeMillis() - lastShot >= 1000)) {
                 lastShot = timeNow;
                 if (direction == Direction.RIGHT) {
                     getLevel().getBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));

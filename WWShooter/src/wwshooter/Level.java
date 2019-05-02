@@ -65,6 +65,9 @@ public class Level {
         return bullets;
     }
 
+    public LinkedList<Bullet> getEnemyBullets(){
+        return enemyBullets;
+    }
     public boolean isSettingsMenu() {
         return settingsMenu;
     }
@@ -177,6 +180,9 @@ public class Level {
                         }
                     }
                 }
+                for(Bullet bullet: enemyBullets){
+                    bullet.tick();
+                }
                 for (Enemy enemy : enemies) {
                     enemy.tick();
                 }
@@ -212,6 +218,9 @@ public class Level {
                 }
                 for (Enemy enemy : enemies) {
                     enemy.render(g);
+                }
+                for(Bullet bullet : enemyBullets){
+                    bullet.render(g);
                 }
                 break;
         }

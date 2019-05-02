@@ -85,9 +85,9 @@ public class Enemy extends Item {
             if ((System.currentTimeMillis() - lastShot >= 1000)) {
                 lastShot = timeNow;
                 if (direction == Direction.RIGHT) {
-                    getLevel().getBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
+                    getLevel().getEnemyBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
                 } else if (direction == Direction.LEFT) {
-                    getLevel().getBullets().add(new Bullet(getX() + 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
+                    getLevel().getEnemyBullets().add(new Bullet(getX() + 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
                 }
 
             }

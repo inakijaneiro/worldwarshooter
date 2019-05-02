@@ -168,13 +168,13 @@ public class Level {
                     if (bullet.getX() + bullet.getWidth() >= getGame().getWidth() || bullet.getX() <= 0) {
                         bullets.remove(i);
                     }
-                    for (Enemy enemy : enemies) {
-                        enemy.tick();
-                    }
-                    break;
                 }
-
+                for (Enemy enemy : enemies) {
+                    enemy.tick();
+                }
+                break;
         }
+
     }
 
     public void render(Graphics g) {
@@ -201,11 +201,11 @@ public class Level {
                 for (int i = 0; i < bullets.size(); i++) {
                     //Render bullets
                     bullets.get(i).render(g);
-                    for (Enemy enemy : enemies) {
-                        enemy.render(g);
-                    }
-                    break;
                 }
+                for (Enemy enemy : enemies) {
+                    enemy.render(g);
+                }
+                break;
         }
     }
 }

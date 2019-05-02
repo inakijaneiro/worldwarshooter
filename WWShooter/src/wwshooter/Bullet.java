@@ -6,6 +6,7 @@
 package wwshooter;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -43,6 +44,27 @@ public class Bullet extends Item{
     
     public Level getLevel() {
         return level;
+    }
+    
+    /**
+     * Creates a Circle object and simulates the "hit box" of the ball
+     *
+     * @return new Circle
+     */
+    public Rectangle getHitbox() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+    }
+    
+    /**
+     * Checks if there was a collision with another instance and returns a
+     * boolean
+     *
+     * @param obj
+     * @return <code>boolean</code>
+     */
+    public boolean intersecta(Object obj) {
+        return (obj instanceof Enemy && getHitbox().intersects(((Enemy) (obj)).getHitbox())
+                || obj instanceof Player && getHitbox().intersects(((Player) (obj)).getHitbox()));
     }
 
     @Override

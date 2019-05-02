@@ -168,6 +168,12 @@ public class Level {
                     if (bullet.getX() + bullet.getWidth() >= getGame().getWidth() || bullet.getX() <= 0) {
                         bullets.remove(i);
                     }
+                    for (int j = 0; j < enemies.size(); j++) {
+                        if (bullet.intersecta(enemies.get(j))) {
+                            enemies.remove(j);
+                            bullets.remove(j);
+                        }
+                    }
                 }
                 for (Enemy enemy : enemies) {
                     enemy.tick();

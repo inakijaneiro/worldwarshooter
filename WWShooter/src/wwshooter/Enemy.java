@@ -6,6 +6,7 @@
 package wwshooter;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -45,6 +46,15 @@ public class Enemy extends Item {
 
     public Level getLevel() {
         return this.level;
+    }
+    
+    /**
+     * Creates a Circle object and simulates the "hit box" of the ball
+     *
+     * @return new Circle
+     */
+    public Rectangle getHitbox() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     @Override

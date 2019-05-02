@@ -50,7 +50,9 @@ public class Level {
                 break;
             case Level1:
                 this.player = new Player(0, height - 350, 150, 350, 5, this);
-                enemies.add(new Enemy(width + 300, height - 350, 150, 350, this, 'l'));
+                for (int i = 1; i <= 5; i++) {
+                    enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
+                }
                 this.stage = 1;
                 break;
         }
@@ -70,6 +72,10 @@ public class Level {
     }
     public boolean isSettingsMenu() {
         return settingsMenu;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
     public void setSettingsMenu(boolean settingsMenu) {

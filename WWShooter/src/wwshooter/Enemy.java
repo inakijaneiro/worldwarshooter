@@ -18,6 +18,7 @@ public class Enemy extends Item {
     private int speed;
     private Animation currentAnimation;
     private Player player;
+    private long lastShot;
     private int originalWidth;
     private boolean shootingOffset;
 
@@ -71,18 +72,29 @@ public class Enemy extends Item {
         if (isShooting) {
             if (direction == Direction.LEFT) {
                 currentAnimation.setFrames(Assets.firstEnemyShootR);
-                if(!shootingOffset){
-                    setWidth(originalWidth + (int)(originalWidth*0.4));
-                    setX(getX() - (int)(originalWidth*0.4));
+                if (!shootingOffset) {
+                    setWidth(originalWidth + (int) (originalWidth * 0.4));
+                    setX(getX() - (int) (originalWidth * 0.4));
                 }
                 shootingOffset = true;
             } else {
                 setWidth(originalWidth);
             }
+            // Shooting with 1 second of delay
+            long timeNow = System.currentTimeMillis();
+            if ((System.currentTimeMillis() - lastShot >= 500)) {
+                lastShot = timeNow;
+                if (direction == Direction.RIGHT) {
+                    getLevel().getBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
+                } else if (direction == Direction.LEFT) {
+                    getLevel().getBullets().add(new Bullet(getX() + 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
+                }
+
+            }
             isShooting = false;
         } else {
             if (shootingOffset) {
-                setX(getX() + (int)(originalWidth*0.4));
+                setX(getX() + (int) (originalWidth * 0.4));
                 shootingOffset = false;
             }
             setWidth(originalWidth);

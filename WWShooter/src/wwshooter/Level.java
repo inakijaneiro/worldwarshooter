@@ -24,6 +24,7 @@ public class Level {
     private int stage;
     private boolean settingsMenu;
     private LinkedList<Bullet> bullets;
+    private LinkedList<Bullet> enemyBullets;
     private ArrayList<Enemy> enemies;
 
     enum LevelName {
@@ -38,6 +39,7 @@ public class Level {
         this.height = game.getHeight();
         this.buttons = new ArrayList<Button>();
         this.bullets = new LinkedList<Bullet>();
+        this.enemyBullets = new LinkedList<Bullet>();
         this.enemies = new ArrayList<Enemy>();
         switch (levelName) {
             case MainMenu:

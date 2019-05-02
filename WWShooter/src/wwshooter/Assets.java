@@ -30,6 +30,7 @@ public class Assets {
     public static BufferedImage level1Background;
     public static BufferedImage musicController;
     public static BufferedImage volumePill;
+    public static BufferedImage lives;
 
     public static void setLevelBackground(int level, int stage) {
         level1Background = ImageLoader.loadImage("/LevelBackgrounds/Level" + level + "_" + stage + ".png");
@@ -50,6 +51,7 @@ public class Assets {
         bullet = ImageLoader.loadImage("/images/bullet2.png");
         musicController = ImageLoader.loadImage("/images/MusicController.png");
         volumePill = ImageLoader.loadImage("/images/VolumePill.png");
+        lives = ImageLoader.loadImage("/images/helmet.png");
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];
         playerRun = new BufferedImage[6];

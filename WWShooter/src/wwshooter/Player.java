@@ -184,6 +184,9 @@ public class Player extends Item {
     @Override
     public void render(Graphics g) {
         g.drawImage(currentAnimation.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        for(int i = 0; i < getLevel().getGame().getLives(); i++){
+            g.drawImage(Assets.lives, 1000 + 90 * i, 10, 80, 80, null);
+        }
     }
 
 }

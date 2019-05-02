@@ -43,12 +43,17 @@ public class Level {
         this.enemies = new ArrayList<Enemy>();
         switch (levelName) {
             case MainMenu:
+                Assets.menuMusic.setLooping(true);
+                Assets.menuMusic.play();
                 buttons.add(new Button(game.getWidth() / 2 - 232, 350, 464, 90, "newgame"));
                 buttons.add(new Button(game.getWidth() / 2 - 232, 460, 464, 90, "continue"));
                 buttons.add(new Button(game.getWidth() / 2 - 232, 570, 464, 90, "settings"));
                 selector = new Selector(width / 2 - 282, 370, 35, 55, this, buttons, 20);
                 break;
             case Level1:
+                Assets.menuMusic.stop();
+                Assets.backgroundMusic.setLooping(true);
+                Assets.backgroundMusic.play();
                 this.player = new Player(0, height - 350, 150, 350, 5, this);
                 for (int i = 1; i <= 5; i++) {
                     enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
@@ -181,6 +186,7 @@ public class Level {
                     }
                     for (int j = 0; j < enemies.size(); j++) {
                         if (bullet.intersecta(enemies.get(j))) {
+                            Assets.enemyHurt.play();
                             enemies.remove(j);
                             bullets.remove(j);
                         }

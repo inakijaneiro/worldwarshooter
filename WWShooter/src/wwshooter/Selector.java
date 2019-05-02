@@ -51,6 +51,8 @@ public class Selector extends Item {
         if (getButtons().get(0).isVisible()) {
             if (getLevel().getKeyManager().down && getLevel().getKeyManager().isPressable()) {
                 getLevel().getKeyManager().setPressable(false);
+                Assets.selectorSound.setVolume(-10);
+                Assets.selectorSound.play();
                 if (position + 1 >= 0 && position + 1 < buttons.size()) {
                     position++;
                     setY(buttons.get(position).getY() + getHeight() / 2 - 10);
@@ -61,6 +63,8 @@ public class Selector extends Item {
             }
             if (getLevel().getKeyManager().up && getLevel().getKeyManager().isPressable()) {
                 getLevel().getKeyManager().setPressable(false);
+                Assets.selectorSound.setVolume(-10);
+                Assets.selectorSound.play();
                 if (position - 1 >= 0) {
                     position--;
                     setY(buttons.get(position).getY() + getHeight() / 2 - 10);
@@ -70,7 +74,8 @@ public class Selector extends Item {
                 }
             }
         }
-        if (getLevel().getKeyManager().enter || getLevel().getKeyManager().space) {
+        if ((getLevel().getKeyManager().enter || getLevel().getKeyManager().space) && getLevel().getKeyManager().isPressable()) {
+            Assets.selectSound.play();            
             if (position == 0) {
                 getLevel().getGame().changeLevel(1);
             }

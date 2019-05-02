@@ -48,7 +48,7 @@ public class Level {
                 break;
             case Level1:
                 this.player = new Player(0, height - 350, 150, 350, 5, this);
-                enemies.add(new Enemy(width - 150, height - 350, 150, 350, 5, this));
+                enemies.add(new Enemy(width + 300, height - 350, 150, 350, this, 'l'));
                 this.stage = 1;
                 break;
         }

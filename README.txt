@@ -1,6 +1,3 @@
-# worldwarshooter
-World War Shooter for Game Development class.
-
 Este juego se remonta en la Segunda Guerra Mundial. El objetivo es moverse por los niveles derrotando a los enemigos y al mismo tiempo entender el contexto histórico de tan importante evento.
 Lo que funcionó:
 - Música de menú y del juego.

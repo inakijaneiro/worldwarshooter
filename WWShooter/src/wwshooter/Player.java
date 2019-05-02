@@ -166,6 +166,7 @@ public class Player extends Item {
         long timeNow = System.currentTimeMillis();
         if (getLevel().getKeyManager().shoot && (System.currentTimeMillis() - lastShot >= 500)) {
             lastShot = timeNow;
+            Assets.shotSound.play();
             if (direction == Direction.RIGHT) {
                 getLevel().getBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight()/2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
             }

@@ -35,6 +35,13 @@ public class Assets {
     public static BufferedImage musicController;
     public static BufferedImage volumePill;
     public static BufferedImage lives;
+    
+    public static SoundClip menuMusic;
+    public static SoundClip backgroundMusic;
+    public static SoundClip selectorSound;
+    public static SoundClip selectSound;
+    public static SoundClip shotSound;
+    public static SoundClip enemyHurt;
 
     public static void setLevelBackground(int level, int stage) {
         level1Background = ImageLoader.loadImage("/LevelBackgrounds/Level" + level + "_" + stage + ".png");
@@ -90,6 +97,12 @@ public class Assets {
             path = "/enemy_sprite/Terrorist1ShootR" + i + ".png";
             firstEnemyShootR[i] = ImageLoader.loadImage(path);
         }
-
+        
+        menuMusic = new SoundClip("/sounds/menuMusic.wav");
+        backgroundMusic = new SoundClip("/sounds/backgroundMusic.wav");
+        selectorSound = new SoundClip("/sounds/selectorSound.wav");
+        selectSound = new SoundClip("/sounds/selectSound.wav");
+        shotSound = new SoundClip("/sounds/shotSound.wav");
+        enemyHurt = new SoundClip("/sounds/enemyHurt.wav");
     }
 }

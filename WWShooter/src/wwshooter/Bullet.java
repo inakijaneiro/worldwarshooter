@@ -21,7 +21,16 @@ public class Bullet extends Item{
         LEFT, RIGHT
     }
     private Direction direction;
-    
+    /**
+     * Constructor for the class Bullet
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param speed
+     * @param level
+     * @param direction 
+     */
     public Bullet(int x, int y,int width, int height, int speed, Level level, Direction direction){
         super(x, y, width, height);
         this.level = level;
@@ -29,19 +38,31 @@ public class Bullet extends Item{
         this.visible = false;
         this.direction = direction;
     }
-
+    /**
+     * Method to check if the bullet is visible
+     * @return <code>boolean</code>
+     */
     public boolean isVisible() {
         return visible;
     } 
-
+    /**
+     * Sets visible
+     * @param visible 
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
-
+    /**
+     * Get speed
+     * @return <code> int speed </code>
+     */
     public int getSpeed() {
         return speed;
     }
-    
+    /**
+     * Get level
+     * @return <code> Level level </code>
+     */
     public Level getLevel() {
         return level;
     }
@@ -66,7 +87,9 @@ public class Bullet extends Item{
         return (obj instanceof Enemy && getHitbox().intersects(((Enemy) (obj)).getHitbox())
                 || obj instanceof Player && getHitbox().intersects(((Player) (obj)).getHitbox()));
     }
-
+    /**
+     * Main tick of the bullet
+     */
     @Override
     public void tick() {
         if (direction == Direction.RIGHT) {
@@ -76,7 +99,10 @@ public class Bullet extends Item{
             setX(getX() - getSpeed());
         }
     }
-
+    /**
+     * Render method for the bullet
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
             g.drawImage(Assets.bullet, getX(),getY(), getWidth(), getHeight(), null); 

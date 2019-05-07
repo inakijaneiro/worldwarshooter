@@ -145,15 +145,24 @@ public class Game implements Runnable {
     public void setPause(boolean paused) {
         this.paused = paused;
     }
-
+    /**
+     * Gets the volume of the game
+     * @return 
+     */
     public int getVolume() {
         return volume;
     }
-
+    /**
+     * Sets the volume of the game
+     * @param volume 
+     */
     public void setVolume(int volume) {
         this.volume = volume;
     }
-    
+    /**
+     * Method to change level
+     * @param level 
+     */
     public void changeLevel(int level) {
         this.level = null;
         if (level == 1) {
@@ -162,7 +171,9 @@ public class Game implements Runnable {
         }
     }
     
-    // Restarts the game to the original state
+    /**
+     * Method restart to reset the game
+     */
     private void restart() {
         setScore(0);
         setLives(3);
@@ -299,7 +310,9 @@ public class Game implements Runnable {
             }
         }
     }
-
+    /**
+     * Main render method of the game
+     */
     private void render() {
         //get the buffer from the display
         bs = display.getCanvas().getBufferStrategy();

@@ -27,6 +27,7 @@ public class Assets {
     public static BufferedImage playerShoot[];
     public static BufferedImage playerShootR[];
     public static BufferedImage playerCrouch[];
+    public static BufferedImage playerCrouchR[];
     public static BufferedImage firstEnemyRun[];
     public static BufferedImage firstEnemyRunR[];
     public static BufferedImage firstEnemyShoot[];
@@ -73,12 +74,14 @@ public class Assets {
         playerShoot = new BufferedImage[6];
         playerShootR = new BufferedImage[6];
         playerCrouch = new BufferedImage[1];
+        playerCrouchR = new BufferedImage[1];
         firstEnemyIdle = new BufferedImage[8];
         firstEnemyRun = new BufferedImage[6];
         firstEnemyRunR = new BufferedImage[6];
         firstEnemyShootR = new BufferedImage[6];
 
         playerCrouch[0] = ImageLoader.loadImage("/player_sprite/Crouch1.png");
+        playerCrouchR[0] = ImageLoader.loadImage("/player_sprite/CrouchR1.png");
 
         for (int i = 0; i < playerIdle.length; i++) {
             String path = "/player_sprite/Idle" + i + ".png";

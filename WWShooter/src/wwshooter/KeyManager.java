@@ -84,5 +84,4 @@ public class KeyManager implements KeyListener {
         space = keys[KeyEvent.VK_SPACE];
         enter = keys[KeyEvent.VK_ENTER];
     }
-    
 }

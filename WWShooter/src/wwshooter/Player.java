@@ -36,14 +36,16 @@ public class Player extends Item {
     };
     private State state;
     private Direction direction;
+
     /**
      * Main constructor for the player
+     *
      * @param x
      * @param y
      * @param width
      * @param height
      * @param speed
-     * @param level 
+     * @param level
      */
     public Player(int x, int y, int width, int height, int speed, Level level) {
         super(x, y, width, height);
@@ -75,9 +77,11 @@ public class Player extends Item {
     public int getSpeed() {
         return speed;
     }
+
     /**
      * Method to get the Hitbox
-     * @return 
+     *
+     * @return
      */
     public Rectangle getHitbox() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
@@ -155,15 +159,20 @@ public class Player extends Item {
         } else if (isCrouching) {
             if (state != State.CROUCH) {
                 currentAnimation.setIndex(0);
-                setY(getY() + (int)(originalHeight / 2));
+                setY(getY() + (int) (originalHeight / 2));
+                if (direction == Direction.LEFT) {
+                    setX(getX() - (int) (originalWidth / 2));
+                }
                 animationOffset = true;
             }
+            setWidth((int) (originalWidth * 2));
+            setHeight((int) (originalHeight / 1.75));
             if (direction == Direction.LEFT) {
+                currentAnimation.setFrames(Assets.playerCrouchR);
+            } else {
+                currentAnimation.setFrames(Assets.playerCrouch);
             }
-            setWidth((int)(originalWidth * 2));
-            setHeight((int)(originalHeight / 1.75));
             state = State.CROUCH;
-            currentAnimation.setFrames(Assets.playerCrouch);
         } else {
             // When no key is pressed goes back to idle state and adjusts width
             if (animationOffset) {
@@ -171,7 +180,10 @@ public class Player extends Item {
                 if (state == State.SHOOT) {
                     setX(getX() + (int) (originalWidth * 0.8));
                 } else if (state == State.CROUCH) {
-                    setY(getY() - (int)(originalHeight / 2));
+                    if (direction == Direction.LEFT) {
+                        setX(getX() + (int)(originalWidth / 2));
+                    }
+                    setY(getY() - (int) (originalHeight / 2));
                 }
             }
             state = State.IDLE;

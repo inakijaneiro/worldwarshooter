@@ -31,6 +31,7 @@ public class Assets {
     public static BufferedImage firstEnemyRunR[];
     public static BufferedImage firstEnemyShoot[];
     public static BufferedImage firstEnemyShootR[];
+    public static BufferedImage firstEnemyIdle[];
     public static BufferedImage bullet;
     public static BufferedImage level1Background;
     public static BufferedImage musicController;
@@ -72,6 +73,7 @@ public class Assets {
         playerShoot = new BufferedImage[6];
         playerShootR = new BufferedImage[6];
         playerCrouch = new BufferedImage[1];
+        firstEnemyIdle = new BufferedImage[8];
         firstEnemyRun = new BufferedImage[6];
         firstEnemyRunR = new BufferedImage[6];
         firstEnemyShootR = new BufferedImage[6];
@@ -102,6 +104,8 @@ public class Assets {
             firstEnemyRunR[i] = ImageLoader.loadImage(path);
             path = "/enemy_sprite/Terrorist1ShootR" + i + ".png";
             firstEnemyShootR[i] = ImageLoader.loadImage(path);
+            path = "/enemy_sprite/Terrorist1Idle" + i + ".png";
+            firstEnemyIdle[i] = ImageLoader.loadImage(path);
         }
 
         menuMusic = new SoundClip("/sounds/menuMusic.wav");

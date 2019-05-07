@@ -38,6 +38,7 @@ public class Assets {
     public static BufferedImage musicController;
     public static BufferedImage volumePill;
     public static BufferedImage lives;
+    public static BufferedImage pause;
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -66,6 +67,7 @@ public class Assets {
         musicController = ImageLoader.loadImage("/images/MusicController.png");
         volumePill = ImageLoader.loadImage("/images/VolumePill.png");
         lives = ImageLoader.loadImage("/images/helmet.png");
+        pause = ImageLoader.loadImage("/images/pause.png");
 
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];

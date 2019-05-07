@@ -20,13 +20,17 @@ public class Player extends Item {
     private long lastShot;
     private Animation currentAnimation;
     private int originalWidth;
-    private boolean shootingOffset;
+    private int originalHeight;
+    private boolean animationOffset;
+
     public enum State {
         RUN,
         IDLE,
-        SHOOT
+        SHOOT,
+        CROUCH
     };
-    public enum Direction{
+
+    public enum Direction {
         LEFT,
         RIGHT
     };
@@ -48,9 +52,10 @@ public class Player extends Item {
         this.lastShot = 0;
         this.direction = Direction.RIGHT;
         this.originalWidth = width;
+        this.originalHeight = height;
         currentAnimation = new Animation(Assets.playerIdle, 60);
         this.state = State.IDLE;
-        this.shootingOffset = false;
+        this.animationOffset = false;
     }
 
     /**
@@ -108,19 +113,20 @@ public class Player extends Item {
         boolean goingLeft = getLevel().getKeyManager().left;
         boolean goingRight = getLevel().getKeyManager().right;
         boolean isShooting = getLevel().getKeyManager().space;
-        
+        boolean isCrouching = getLevel().getKeyManager().down;
+
         // Checks the player's state and sets the animation index accordingly,
         // to avoid out-of-bounds error 
-        if(state != State.RUN && (goingLeft || goingRight)){
-                currentAnimation.setIndex(0);
+        if (state != State.RUN && (goingLeft || goingRight)) {
+            currentAnimation.setIndex(0);
 
         }
         if (goingLeft || goingRight) {
             state = State.RUN;
             // Since the animations have different widths, it adjusts.
-            setWidth(originalWidth + (int) (originalWidth*0.1));
+            setWidth(originalWidth + (int) (originalWidth * 0.1));
         }
-        
+
         if (goingLeft) {
             this.direction = Direction.LEFT;
             setX(getX() - getSpeed());
@@ -131,29 +137,46 @@ public class Player extends Item {
             currentAnimation.setFrames(Assets.playerRun);
         } else if (isShooting) {
             if (state != State.SHOOT) {
-                if(direction == Direction.LEFT){
-                    setX(getX() - (int)(originalWidth*0.8));
-                    shootingOffset = true;
+                if (direction == Direction.LEFT) {
+                    setX(getX() - (int) (originalWidth * 0.8));
+                    animationOffset = true;
                 }
                 currentAnimation.setIndex(0);
                 state = State.SHOOT;
                 // Since the animations have different widths, it adjusts.
-                setWidth(originalWidth * 2 - (int) (originalWidth*0.2));
+                setWidth(originalWidth * 2 - (int) (originalWidth * 0.2));
             }
-            if(direction == Direction.LEFT){
+            if (direction == Direction.LEFT) {
                 currentAnimation.setFrames(Assets.playerShootR);
-            }else{
+            } else {
                 currentAnimation.setFrames(Assets.playerShoot);
             }
-            
+
+        } else if (isCrouching) {
+            if (state != State.CROUCH) {
+                currentAnimation.setIndex(0);
+                setY(getY() + (int)(originalHeight / 2));
+                animationOffset = true;
+            }
+            if (direction == Direction.LEFT) {
+            }
+            setWidth((int)(originalWidth * 2));
+            setHeight((int)(originalHeight / 1.75));
+            state = State.CROUCH;
+            currentAnimation.setFrames(Assets.playerCrouch);
         } else {
             // When no key is pressed goes back to idle state and adjusts width
-            if(shootingOffset){
-                setX(getX() + (int)(originalWidth*0.8));
-                shootingOffset = false;
+            if (animationOffset) {
+                animationOffset = false;
+                if (state == State.SHOOT) {
+                    setX(getX() + (int) (originalWidth * 0.8));
+                } else if (state == State.CROUCH) {
+                    setY(getY() - (int)(originalHeight / 2));
+                }
             }
             state = State.IDLE;
             setWidth(originalWidth);
+            setHeight(originalHeight);
             if (direction == Direction.RIGHT) {
                 currentAnimation.setFrames(Assets.playerIdle);
             } else {
@@ -183,12 +206,11 @@ public class Player extends Item {
             lastShot = timeNow;
             Assets.shotSound.play();
             if (direction == Direction.RIGHT) {
-                getLevel().getBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight()/2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
+                getLevel().getBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
+            } else if (direction == Direction.LEFT) {
+                getLevel().getBullets().add(new Bullet(getX() + 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
             }
-            else if (direction == Direction.LEFT) {
-                getLevel().getBullets().add(new Bullet(getX() + 50, getY() + getHeight()/2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
-            }
-            
+
         }
     }
 
@@ -200,7 +222,7 @@ public class Player extends Item {
     @Override
     public void render(Graphics g) {
         g.drawImage(currentAnimation.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
-        for(int i = 0; i < getLevel().getGame().getLives(); i++){
+        for (int i = 0; i < getLevel().getGame().getLives(); i++) {
             g.drawImage(Assets.lives, 1000 + 90 * i, 10, 80, 80, null);
         }
     }

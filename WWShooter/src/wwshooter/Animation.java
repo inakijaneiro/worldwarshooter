@@ -67,8 +67,12 @@ public class Animation {
         this.index = index;
     }
     
-
-    
+    /**
+     * Sets the speed of the animation
+     */
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
     /**
      * Ticker for the class
      */

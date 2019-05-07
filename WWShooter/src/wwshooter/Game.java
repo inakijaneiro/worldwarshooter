@@ -42,7 +42,7 @@ public class Game implements Runnable {
     private Scanner scanner;                // to store the scanner to read a game file
     private boolean win;                    // when the player won the game
     private Level level;
-    private int volume;
+    private float volume;
 
     
     /**
@@ -59,7 +59,7 @@ public class Game implements Runnable {
         this.running = false;
         this.keyManager = new KeyManager();
         this.lives = 3;
-        this.volume = 10;
+        this.volume = -10;
     }
 
     /**
@@ -149,15 +149,16 @@ public class Game implements Runnable {
      * Gets the volume of the game
      * @return 
      */
-    public int getVolume() {
+    public float getVolume() {
         return volume;
     }
     /**
      * Sets the volume of the game
      * @param volume 
      */
-    public void setVolume(int volume) {
+    public void setVolume(float volume) {
         this.volume = volume;
+        Assets.setVolume(volume);
     }
     /**
      * Method to change level
@@ -225,7 +226,7 @@ public class Game implements Runnable {
         Assets.init();
         this.level = new Level(Level.LevelName.MainMenu, this);
         setScore(0);
-
+        Assets.setVolume(-10);
     }
 
     @Override

@@ -115,4 +115,13 @@ public class Assets {
         shotSound = new SoundClip("/sounds/shotSound.wav");
         enemyHurt = new SoundClip("/sounds/enemyHurt.wav");
     }
+    
+    public static void setVolume(float volume){
+        menuMusic.setVolume(volume);
+        backgroundMusic.setVolume(volume);
+        selectorSound.setVolume(volume);
+        selectSound.setVolume(volume);
+        shotSound.setVolume(volume);
+        enemyHurt.setVolume(volume);
+    }
 }

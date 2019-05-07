@@ -177,19 +177,19 @@ public class Level {
             case MainMenu:
                 selector.tick();
                 if (isSettingsMenu() && getKeyManager().right && getKeyManager().isPressable()) {
-                    if (getGame().getVolume() >= 10) {
-                        getGame().setVolume(10);
+                    if (getGame().getVolume() >= 0) {
+                        getGame().setVolume(0);
                     } else {
-                        getGame().setVolume(getGame().getVolume() + 1);
+                        getGame().setVolume(getGame().getVolume() + 2);
                     }
                     getKeyManager().setPressable(false);
                 }
 
                 if (isSettingsMenu() && getKeyManager().left && getKeyManager().isPressable()) {
-                    if (getGame().getVolume() <= 1) {
-                        getGame().setVolume(1);
+                    if (getGame().getVolume() <= -20) {
+                        getGame().setVolume(-20);
                     } else {
-                        getGame().setVolume(getGame().getVolume() - 1);
+                        getGame().setVolume(getGame().getVolume() - 2);
                     }
                     getKeyManager().setPressable(false);
                 }
@@ -264,7 +264,7 @@ public class Level {
                 selector.render(g);
                 if (isSettingsMenu()) {
                     g.drawImage(Assets.musicController, width / 2 - 200, 380, 400, 100, null);
-                    for (int i = 0; i < getGame().getVolume(); i++) {
+                    for (int i = 0; i < 10 - getGame().getVolume() / -2; i++) {
                         g.drawImage(Assets.volumePill, width / 2 - 159 + i * 32, 440, 30, 30, null);
                     }
                 }

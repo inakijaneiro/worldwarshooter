@@ -188,7 +188,7 @@ public class Level {
                         if (bullet.intersecta(enemies.get(j))) {
                             Assets.enemyHurt.play();
                             enemies.remove(j);
-                            bullets.remove(j);
+                            bullets.remove(i);
                         }
                     }
                 }

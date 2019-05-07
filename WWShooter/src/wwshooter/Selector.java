@@ -37,15 +37,23 @@ public class Selector extends Item {
     public Level getLevel() {
         return level;
     }
-    
+    /**
+     * Method to get the position
+     * @return 
+     */
     public int getPosition(){
         return position;
     }
-
+    /**
+     * Method to get the Buttons
+     * @return 
+     */
     public ArrayList<Button> getButtons() {
         return buttons;
     }
-    
+    /**
+     * Tick method for the selector
+     */
     @Override
     public void tick() {
         if (getButtons().get(0).isVisible()) {
@@ -81,7 +89,10 @@ public class Selector extends Item {
             }
         }
     }
-
+    /**
+     * Main render method
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.selector, getX(), getY(), getWidth(), getHeight(), null);

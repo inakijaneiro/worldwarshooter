@@ -33,7 +33,15 @@ public class Enemy extends Item {
     };
     private State state;
     private Direction direction;
-
+    /**
+     * Main constructor of enemy
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param level
+     * @param direction 
+     */
     public Enemy(int x, int y, int width, int height, Level level, char direction) {
         super(x, y, width, height);
         this.level = level;
@@ -44,7 +52,10 @@ public class Enemy extends Item {
         this.direction = direction == 'l' ? Direction.LEFT : Direction.RIGHT;
         this.shootingOffset = false;
     }
-
+    /**
+     * Get's the level the enemy is in
+     * @return 
+     */
     public Level getLevel() {
         return this.level;
     }
@@ -57,7 +68,9 @@ public class Enemy extends Item {
     public Rectangle getHitbox() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-
+    /**
+     * Main tick method of the enemy
+     */
     @Override
     public void tick() {
         boolean isShooting = false;
@@ -102,7 +115,10 @@ public class Enemy extends Item {
         }
 
     }
-
+    /**
+     * Render method of the enemy
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
         g.drawImage(currentAnimation.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);

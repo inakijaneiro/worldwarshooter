@@ -32,7 +32,15 @@ public class Player extends Item {
     };
     private State state;
     private Direction direction;
-
+    /**
+     * Main constructor for the player
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param speed
+     * @param level 
+     */
     public Player(int x, int y, int width, int height, int speed, Level level) {
         super(x, y, width, height);
         this.level = level;
@@ -62,7 +70,10 @@ public class Player extends Item {
     public int getSpeed() {
         return speed;
     }
-
+    /**
+     * Method to get the Hitbox
+     * @return 
+     */
     public Rectangle getHitbox() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }

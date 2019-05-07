@@ -26,6 +26,7 @@ public class Assets {
     public static BufferedImage playerRunR[];
     public static BufferedImage playerShoot[];
     public static BufferedImage playerShootR[];
+    public static BufferedImage playerCrouch[];
     public static BufferedImage firstEnemyRun[];
     public static BufferedImage firstEnemyRunR[];
     public static BufferedImage firstEnemyShoot[];
@@ -35,7 +36,7 @@ public class Assets {
     public static BufferedImage musicController;
     public static BufferedImage volumePill;
     public static BufferedImage lives;
-    
+
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
     public static SoundClip selectorSound;
@@ -63,15 +64,20 @@ public class Assets {
         musicController = ImageLoader.loadImage("/images/MusicController.png");
         volumePill = ImageLoader.loadImage("/images/VolumePill.png");
         lives = ImageLoader.loadImage("/images/helmet.png");
+
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];
         playerRun = new BufferedImage[6];
         playerRunR = new BufferedImage[6];
         playerShoot = new BufferedImage[6];
         playerShootR = new BufferedImage[6];
+        playerCrouch = new BufferedImage[1];
         firstEnemyRun = new BufferedImage[6];
         firstEnemyRunR = new BufferedImage[6];
         firstEnemyShootR = new BufferedImage[6];
+
+        playerCrouch[0] = ImageLoader.loadImage("/player_sprite/Crouch1.png");
+
         for (int i = 0; i < playerIdle.length; i++) {
             String path = "/player_sprite/Idle" + i + ".png";
             playerIdle[i] = ImageLoader.loadImage(path);
@@ -88,7 +94,7 @@ public class Assets {
             playerShoot[i] = ImageLoader.loadImage(path);
             path = "/player_sprite/ShootR" + i + ".png";
             playerShootR[i] = ImageLoader.loadImage(path);
-            
+
             // Enemy
             path = "/enemy_sprite/Terrorist1Run" + i + ".png";
             firstEnemyRun[i] = ImageLoader.loadImage(path);
@@ -97,7 +103,7 @@ public class Assets {
             path = "/enemy_sprite/Terrorist1ShootR" + i + ".png";
             firstEnemyShootR[i] = ImageLoader.loadImage(path);
         }
-        
+
         menuMusic = new SoundClip("/sounds/menuMusic.wav");
         backgroundMusic = new SoundClip("/sounds/backgroundMusic.wav");
         selectorSound = new SoundClip("/sounds/selectorSound.wav");

@@ -229,9 +229,11 @@ public class Level {
                     }
                     for (int j = 0; j < enemies.size(); j++) {
                         if (bullet.intersecta(enemies.get(j))) {
+                            System.out.println("Hello");
                             Assets.enemyHurt.play();
                             enemies.remove(j);
                             bullets.remove(i);
+                            break;
                         }
                     }
                 }

@@ -31,7 +31,11 @@ public class Level {
         MainMenu, Level1, Level2
     }
     LevelName level;
-
+    /**
+     * Main constructor of the level
+     * @param levelName
+     * @param game 
+     */
     Level(LevelName levelName, Game game) {
         this.game = game;
         this.level = levelName;
@@ -63,46 +67,80 @@ public class Level {
         }
         this.settingsMenu = false;
     }
-
+    /**
+     * Get game method
+     * @return <code> Game </code> game
+     */
     public Game getGame() {
         return game;
     }
-
+    /**
+     * Method to get the bullets of the level
+     * @return <code>LikedList</code> bullets
+     */
     public LinkedList<Bullet> getBullets() {
         return bullets;
     }
-
+    /**
+     * Method to get the enemy bullets
+     * @return <code>LinkedList</code> enemyBullets
+     */
     public LinkedList<Bullet> getEnemyBullets(){
         return enemyBullets;
     }
+    /**
+     * Boolean to check if the player is on the settings menu
+     * @return 
+     */
     public boolean isSettingsMenu() {
         return settingsMenu;
     }
-
+    /**
+     * Access to the Linked List of the enemies
+     * @return 
+     */
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
-
+    /**
+     * Set the settingsMenu boolean
+     * @param settingsMenu 
+     */
     public void setSettingsMenu(boolean settingsMenu) {
         this.settingsMenu = settingsMenu;
     }
-
+    /**
+     * Get the buttons in the main menu
+     * @return 
+     */
     public ArrayList<Button> getButtons() {
         return buttons;
     }
-
+    /**
+     * Method to get the current stage
+     * @return 
+     */
     public int getStage() {
         return stage;
     }
-
+    /**
+     * Method to get the Key Manager
+     * @return 
+     */
     public KeyManager getKeyManager() {
         return game.getKeyManager();
     }
-
+    /**
+     * Method to set the buttons Linked List
+     * @param buttons 
+     */
     public void setButtons(ArrayList<Button> buttons) {
         this.buttons = buttons;
     }
-
+    /**
+     * Method to get the selector
+     * @return 
+     */
     public Selector getSelector() {
         return selector;
     }
@@ -124,11 +162,16 @@ public class Level {
     public void setPlayer(Player player) {
         this.player = player;
     }
-
+    /**
+     * Method to get the stage
+     * @param stage 
+     */
     public void setStage(int stage) {
         this.stage = stage;
     }
-
+    /**
+     * Main tick method of the level
+     */
     public void tick() {
         switch (level) {
             case MainMenu:
@@ -202,7 +245,10 @@ public class Level {
         }
 
     }
-
+    /**
+     * Render method for the level
+     * @param g 
+     */
     public void render(Graphics g) {
         int width = game.getWidth();
         int height = game.getHeight();

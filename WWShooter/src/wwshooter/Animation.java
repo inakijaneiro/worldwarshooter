@@ -51,7 +51,10 @@ public class Animation {
     public void setFrames(BufferedImage[] frames) {
         this.frames = frames;
     }
-    
+    /**
+     * Get's the index of the animation
+     * @return <code>index</code>
+     */
     public int getIndex(){
         return this.index;
     }

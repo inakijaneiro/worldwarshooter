@@ -63,8 +63,8 @@ public class KeyManager implements KeyListener {
         if(movement && keys[e.getKeyCode()]){
             keys[e.getKeyCode()] = false;
             movement = false;
-            setPressable(true);
         }  
+        setPressable(true);
         
     }
     
@@ -74,7 +74,7 @@ public class KeyManager implements KeyListener {
     public void tick() {
         left = keys[KeyEvent.VK_LEFT];
         up = keys[KeyEvent.VK_UP];
-            down = keys[KeyEvent.VK_DOWN];
+        down = keys[KeyEvent.VK_DOWN];
         right = keys[KeyEvent.VK_RIGHT];
         shoot = keys[KeyEvent.VK_SPACE];
         p = keys[KeyEvent.VK_P];

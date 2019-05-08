@@ -29,7 +29,7 @@ public class Level {
     private Animation arrowAnimation;
 
     enum LevelName {
-        MainMenu, Level1, Level2
+        MainMenu, Level1, Level2, Chapter1, Chapter2, Chapter3
     }
     LevelName level;
 
@@ -289,6 +289,14 @@ public class Level {
                     enemy.tick();
                 }
                 break;
+            case Chapter1:
+            case Chapter2:
+            case Chapter3:
+                if ((getKeyManager().space || getKeyManager().enter) && getKeyManager().isPressable()){
+                    getKeyManager().setPressable(false);
+                    getGame().changeLevel();
+                }
+                break;
         }
         if (level != Level.LevelName.MainMenu) {
             arrowAnimation.tick();
@@ -335,6 +343,16 @@ public class Level {
                     bullet.render(g);
                 }
                 break;
+            case Chapter1:
+                g.drawImage(Assets.chapter1, 0, 0, width, height, null);
+                break;
+            case Chapter2:
+                g.drawImage(Assets.chapter2, 0, 0, width, height, null);
+                break;
+            case Chapter3:
+                g.drawImage(Assets.chapter3, 0, 0, width, height, null);
+                break;
+                
         }
     }
 }

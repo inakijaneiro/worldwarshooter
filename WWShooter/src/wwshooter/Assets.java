@@ -44,6 +44,9 @@ public class Assets {
     public static BufferedImage healthBar1;
     public static BufferedImage healthBar2;
     public static BufferedImage healthBar3;
+    public static BufferedImage chapter1;
+    public static BufferedImage chapter2;
+    public static BufferedImage chapter3;
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -76,6 +79,9 @@ public class Assets {
         healthBar1 = ImageLoader.loadImage("/images/barra1.png");
         healthBar2 = ImageLoader.loadImage("/images/barra2.png");
         healthBar3 = ImageLoader.loadImage("/images/barra3.png");
+        chapter1 = ImageLoader.loadImage("/chapters/ChapterI.png");
+        chapter2 = ImageLoader.loadImage("/chapters/ChapterII.png");
+        chapter3 = ImageLoader.loadImage("/chapters/ChapterIII.png");
 
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];

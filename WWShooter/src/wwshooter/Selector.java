@@ -83,9 +83,10 @@ public class Selector extends Item {
             }
         }
         if ((getLevel().getKeyManager().enter || getLevel().getKeyManager().space) && getLevel().getKeyManager().isPressable()) {
-            Assets.selectSound.play();            
+            Assets.selectSound.play();    
+            getLevel().getKeyManager().setPressable(false);
             if (position == 0) {
-                getLevel().getGame().changeLevel(1);
+                getLevel().getGame().changeLevel();
             }
         }
     }

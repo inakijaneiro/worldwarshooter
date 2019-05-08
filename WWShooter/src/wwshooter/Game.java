@@ -304,7 +304,7 @@ public class Game implements Runnable {
         
         // Saves the game
         if (getKeyManager().g) {
-            changeLevel();
+            save();
         }
         
         // Loads a game

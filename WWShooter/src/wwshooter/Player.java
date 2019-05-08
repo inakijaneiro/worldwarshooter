@@ -176,7 +176,6 @@ public class Player extends Item {
                     animationOffset = false;
                 } 
                 else if (direction == Direction.LEFT) {
-                    System.out.println("Estatuto 2");
                     if (state != State.CROUCH) {
                         setX(getX() - (int) (originalWidth * 0.8));
                         animationOffset = true;

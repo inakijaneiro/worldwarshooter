@@ -59,6 +59,7 @@ public class Level {
                 break;
             case Level1:
             case Level2:
+            case Level3:
                 Assets.menuMusic.stop();
                 Assets.backgroundMusic.setLooping(true);
                 Assets.backgroundMusic.play();
@@ -68,13 +69,13 @@ public class Level {
                 }
                 this.stage = 1;
                 break;
-            case Level3:
-                Assets.menuMusic.stop();
-                Assets.backgroundMusic.setLooping(true);
-                Assets.backgroundMusic.play();
-                this.player = new Player(0, height - 350, 150, 350, 5, this);
-                this.stage = 1;
-                break;
+//            case Level3:
+//                Assets.menuMusic.stop();
+//                Assets.backgroundMusic.setLooping(true);
+//                Assets.backgroundMusic.play();
+//                this.player = new Player(0, height - 350, 150, 350, 5, this);
+//                this.stage = 1;
+//                break;
 
         }
         this.settingsMenu = false;
@@ -258,6 +259,7 @@ public class Level {
                 break;
             case Level1:
             case Level2:
+            case Level3:
                 player.tick();
                 for (int i = 0; i < bullets.size(); i++) {
                     Bullet bullet = bullets.get(i);
@@ -300,9 +302,10 @@ public class Level {
                     enemy.tick();
                 }
                 break;
-            case Level3:
-                player.tick();
-                break;
+//            case Level3:
+//                player.tick();
+//                
+//                break;
             case Chapter1:
             case Chapter2:
             case Chapter3:
@@ -342,6 +345,7 @@ public class Level {
                 break;
             case Level1:
             case Level2:
+            case Level3:
                 g.drawImage(Assets.level1Background, 0, 0, width, height, null);
                 if (enemies.isEmpty()) {
                     g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
@@ -358,13 +362,13 @@ public class Level {
                     bullet.render(g);
                 }
                 break;
-            case Level3:
-                g.drawImage(Assets.level1Background, 0, 0, width, height, null);
-                player.render(g);
-                if (enemies.isEmpty()) {
-                    g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
-                }
-                break;
+//            case Level3:
+//                g.drawImage(Assets.level1Background, 0, 0, width, height, null);
+//                player.render(g);
+//                if (enemies.isEmpty()) {
+//                    g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
+//                }
+//                break;
             case Chapter1:
                 g.drawImage(Assets.chapter1, 0, 0, width, height, null);
                 break;

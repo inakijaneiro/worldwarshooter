@@ -77,13 +77,6 @@ public class Level {
                 this.rocketLaunchers.add(new RocketLauncher(-300, height - 350, 150, 350, this, 'r'));
                 this.stage = 1;
                 break;
-//            case Level3:
-//                Assets.menuMusic.stop();
-//                Assets.backgroundMusic.setLooping(true);
-//                Assets.backgroundMusic.play();
-//                this.player = new Player(0, height - 350, 150, 350, 5, this);
-//                this.stage = 1;
-//                break;
 
         }
         this.settingsMenu = false;
@@ -102,6 +95,8 @@ public class Level {
         this.bullets = new LinkedList<Bullet>();
         this.enemyBullets = new LinkedList<Bullet>();
         this.enemies = new ArrayList<Enemy>();
+        this.rocketLaunchers = new ArrayList<RocketLauncher>();
+        this.rockets = new LinkedList<Bullet>();
         
         setStage(stage);
         
@@ -233,6 +228,14 @@ public class Level {
      */
     public Selector getSelector() {
         return selector;
+    }
+
+    public ArrayList<RocketLauncher> getRocketLaunchers() {
+        return rocketLaunchers;
+    }
+
+    public void setRocketLaunchers(ArrayList<RocketLauncher> rocketLaunchers) {
+        this.rocketLaunchers = rocketLaunchers;
     }
 
     /**

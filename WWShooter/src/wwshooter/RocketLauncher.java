@@ -7,6 +7,7 @@ package wwshooter;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Formatter;
 
 /**
  *
@@ -80,6 +81,40 @@ public class RocketLauncher extends Item {
      */
     public Rectangle getHitbox() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
+    }
+    
+        /**
+     * Writes it's data in the saving file
+     *
+     * @param file
+     */
+    public void save(Formatter file) {
+        file.format("%s%s%s%s", getX() + " ", getY() + " ", getWidth() + " ", getHeight() + " ");
+        if (direction == Direction.LEFT) {
+            file.format("%s", 1 + " ");
+        } else if (direction == Direction.RIGHT) {
+            file.format("%s", 2 + " ");
+        }
+    }
+
+    /**
+     * Loads it's necessary data from a file
+     *
+     * @param x
+     * @param y
+     */
+    public void load(int x, int y, int w, int h, int s) {
+        setX(x);
+        setY(y);
+        setWidth(w);
+        setHeight(h);
+        
+        if (s == 1) {
+            direction = Direction.LEFT;
+        } else if (s == 2) {
+            direction = Direction.RIGHT;
+        }
+        
     }
 
     @Override

@@ -246,6 +246,14 @@ public class Game implements Runnable {
                     for (Bullet bullet : level.getBullets()) {
                         bullet.save(file);
                     }
+                    file.format("%s", level.getEnemyBullets().size() + " ");
+                    for (Bullet enemyBullet : level.getEnemyBullets()) {
+                        enemyBullet.save(file);
+                    }
+                    file.format("%s", level.getRocketLaunchers().size() + " ");
+                    for (RocketLauncher rocketLauncher : level.getRocketLaunchers()) {
+                        rocketLauncher.save(file);
+                    }
                     break;                    
             }
             file.format("%s%s", lives + " ", health + " ");
@@ -316,6 +324,31 @@ public class Game implements Runnable {
                 } else if (w == 2) {
                     level.getBullets().add(new Bullet(x, y, 7, 7, 5, level, Bullet.Direction.RIGHT));
                 }              
+            }
+            size = scanner.nextInt();
+            for (int i = 0; i < size; i++) {
+                x = scanner.nextInt();
+                y = scanner.nextInt();
+                w = scanner.nextInt();
+                if (w == 1) {
+                    level.getEnemyBullets().add(new Bullet(x, y, 7, 7, 5, level, Bullet.Direction.LEFT));
+                } else if (w == 2) {
+                    level.getEnemyBullets().add(new Bullet(x, y, 7, 7, 5, level, Bullet.Direction.RIGHT));
+                }              
+            }
+            size = scanner.nextInt();
+            for (int i = 0; i < size; i++) {
+                x = scanner.nextInt();
+                y = scanner.nextInt();
+                w = scanner.nextInt();
+                h = scanner.nextInt();
+                s = scanner.nextInt();
+
+                if (s == 1){
+                   level.getRocketLaunchers().add(new RocketLauncher(x, y, w, h, level, 'l'));
+                } else if (s == 2) {
+                    level.getRocketLaunchers().add(new RocketLauncher(x, y, w, h, level, 'r'));
+                }
             }
             x = scanner.nextInt();
             y = scanner.nextInt();

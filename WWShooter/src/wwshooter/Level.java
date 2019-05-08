@@ -26,15 +26,18 @@ public class Level {
     private LinkedList<Bullet> bullets;
     private LinkedList<Bullet> enemyBullets;
     private ArrayList<Enemy> enemies;
+    private Animation arrowAnimation;
 
     enum LevelName {
         MainMenu, Level1, Level2
     }
     LevelName level;
+
     /**
      * Main constructor of the level
+     *
      * @param levelName
-     * @param game 
+     * @param game
      */
     Level(LevelName levelName, Game game) {
         this.game = game;
@@ -66,80 +69,103 @@ public class Level {
                 break;
         }
         this.settingsMenu = false;
+        this.arrowAnimation = new Animation(Assets.nextArrow, 90);
     }
+
     /**
      * Get game method
+     *
      * @return <code> Game </code> game
      */
     public Game getGame() {
         return game;
     }
+
     /**
      * Method to get the bullets of the level
+     *
      * @return <code>LikedList</code> bullets
      */
     public LinkedList<Bullet> getBullets() {
         return bullets;
     }
+
     /**
      * Method to get the enemy bullets
+     *
      * @return <code>LinkedList</code> enemyBullets
      */
-    public LinkedList<Bullet> getEnemyBullets(){
+    public LinkedList<Bullet> getEnemyBullets() {
         return enemyBullets;
     }
+
     /**
      * Boolean to check if the player is on the settings menu
-     * @return 
+     *
+     * @return
      */
     public boolean isSettingsMenu() {
         return settingsMenu;
     }
+
     /**
      * Access to the Linked List of the enemies
-     * @return 
+     *
+     * @return
      */
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
+
     /**
      * Set the settingsMenu boolean
-     * @param settingsMenu 
+     *
+     * @param settingsMenu
      */
     public void setSettingsMenu(boolean settingsMenu) {
         this.settingsMenu = settingsMenu;
     }
+
     /**
      * Get the buttons in the main menu
-     * @return 
+     *
+     * @return
      */
     public ArrayList<Button> getButtons() {
         return buttons;
     }
+
     /**
      * Method to get the current stage
-     * @return 
+     *
+     * @return
      */
     public int getStage() {
         return stage;
     }
+
     /**
      * Method to get the Key Manager
-     * @return 
+     *
+     * @return
      */
     public KeyManager getKeyManager() {
         return game.getKeyManager();
     }
+
     /**
      * Method to set the buttons Linked List
-     * @param buttons 
+     *
+     * @param buttons
      */
     public void setButtons(ArrayList<Button> buttons) {
         this.buttons = buttons;
     }
+
     /**
      * Method to get the selector
-     * @return 
+     *
+     * @return
      */
     public Selector getSelector() {
         return selector;
@@ -162,13 +188,16 @@ public class Level {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
     /**
      * Method to get the stage
-     * @param stage 
+     *
+     * @param stage
      */
     public void setStage(int stage) {
         this.stage = stage;
     }
+
     /**
      * Main tick method of the level
      */
@@ -236,7 +265,7 @@ public class Level {
                         }
                     }
                 }
-                for(Bullet bullet: enemyBullets){
+                for (Bullet bullet : enemyBullets) {
                     bullet.tick();
                 }
                 for (Enemy enemy : enemies) {
@@ -244,11 +273,15 @@ public class Level {
                 }
                 break;
         }
-
+        if (level != Level.LevelName.MainMenu) {
+            arrowAnimation.tick();
+        }
     }
+
     /**
      * Render method for the level
-     * @param g 
+     *
+     * @param g
      */
     public void render(Graphics g) {
         int width = game.getWidth();
@@ -270,6 +303,9 @@ public class Level {
                 break;
             case Level1:
                 g.drawImage(Assets.level1Background, 0, 0, width, height, null);
+                if (enemies.isEmpty()) {
+                    g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
+                }
                 player.render(g);
                 for (int i = 0; i < bullets.size(); i++) {
                     //Render bullets
@@ -278,7 +314,7 @@ public class Level {
                 for (Enemy enemy : enemies) {
                     enemy.render(g);
                 }
-                for(Bullet bullet : enemyBullets){
+                for (Bullet bullet : enemyBullets) {
                     bullet.render(g);
                 }
                 break;

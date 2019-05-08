@@ -375,6 +375,7 @@ public class Level {
                             Assets.enemyHurt.play();
                             rocketLaunchers.remove(j);
                             bullets.remove(i);
+                            break;
                         }
                     }
                 }
@@ -395,6 +396,7 @@ public class Level {
                         if (bulletEnemy.getX() <= target && bulletEnemy.getX() >= target - 10) {
                             getGame().setHealth(getGame().getHealth() - 1);
                             enemyBullets.remove(i);
+                            break;
                         }
                     }
                 }
@@ -405,6 +407,7 @@ public class Level {
                         if (rocket.getX() <= target && rocket.getX() >= target - 10) {
                             getGame().setHealth(getGame().getHealth() - 2);
                             rockets.remove(i);
+                            break;
                         }
                     }
                 }

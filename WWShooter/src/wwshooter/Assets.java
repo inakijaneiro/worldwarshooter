@@ -63,13 +63,17 @@ public class Assets {
     public static BufferedImage tank[];
     public static BufferedImage notSaved;
     public static BufferedImage saving[];
-
+    public static BufferedImage gameOver;
+    public static BufferedImage win;
+    
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
     public static SoundClip selectorSound;
     public static SoundClip selectSound;
     public static SoundClip shotSound;
     public static SoundClip enemyHurt;
+    public static SoundClip youWon;
+    public static SoundClip gameEnded;
 
     public static void setLevelBackground(int level, int stage) {
         level1Background = ImageLoader.loadImage("/LevelBackgrounds/Level" + level + "_" + stage + ".png");
@@ -102,6 +106,8 @@ public class Assets {
         chapter2 = ImageLoader.loadImage("/chapters/ChapterII.png");
         chapter3 = ImageLoader.loadImage("/chapters/ChapterIII.png");
         notSaved = ImageLoader.loadImage("/images/notSaved.png");
+        gameOver = ImageLoader.loadImage("/images/GameOver.png");
+        win = ImageLoader.loadImage("/images/YouWon.png");
 
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];
@@ -203,6 +209,8 @@ public class Assets {
         selectSound = new SoundClip("/sounds/selectSound.wav");
         shotSound = new SoundClip("/sounds/shotSound.wav");
         enemyHurt = new SoundClip("/sounds/enemyHurt.wav");
+        youWon = new SoundClip("/sounds/youWon.wav");
+        gameEnded = new SoundClip("/sounds/gameOver.wav");
     }
     
     public static void setVolume(float volume){

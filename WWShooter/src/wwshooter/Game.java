@@ -44,7 +44,10 @@ public class Game implements Runnable {
     private boolean win;                    // when the player won the game
     private Level level;
     private float volume;
+    private boolean fileNotFound;
+    private int fileNotFoundCounter; 
     public int levelNumber;
+    
 
     
     /**
@@ -199,6 +202,10 @@ public class Game implements Runnable {
                 this.level = new Level(Level.LevelName.Level3, this);
                 Assets.setLevelBackground(3,1);
                 break;
+            default:
+                win = true;
+                gameEnded = true;
+                break;
         }
     }
     
@@ -206,15 +213,16 @@ public class Game implements Runnable {
      * Method restart to reset the game
      */
     private void restart() {
-        setScore(0);
         setLives(3);
+        level = null;
+        this.level = new Level(Level.LevelName.MainMenu, this);
     }
     
     /**
      * Calls every save method from the classes and writes the score and lives
      * on a file
      */
-    private void save(){
+    public void save(){
         
         // Generates a new game.txt
         try{
@@ -266,7 +274,7 @@ public class Game implements Runnable {
      * Reads the saved-game file and uses the load methods of the classes to
      * restore the saved game
      */
-    private void load() {
+    public void load() {
         try {
             int x, y, w, h, s, size;
             String type;
@@ -357,6 +365,8 @@ public class Game implements Runnable {
             // Se cargan las instancias respetando el orden en que fuerno guardadas, verlo en save();
             
         } catch (Exception e) {
+
+            fileNotFound = true;
             System.out.println("Hubo un problema con  carga.");
         }
 
@@ -424,13 +434,13 @@ public class Game implements Runnable {
         
         // Loads a game
         if (getKeyManager().c) {
-            load();
+            changeLevel();
         }
         
         // Restarts the game
-        if (getKeyManager().r) {
-            restart();
-        }
+//        if (getKeyManager().r) {
+//            restart();
+//        }
         
         
         // As the game is not paused or ended everything is getting ticked
@@ -466,8 +476,10 @@ public class Game implements Runnable {
         // When the game ends, sets the flags to true or false, and waits for
         // the player to press space to restart
         if (gameEnded) {
-            if (getKeyManager().space) {
+            if (getKeyManager().space || getKeyManager().enter) {
                 restart();
+                Assets.youWon.stop();
+                Assets.gameEnded.stop();
                 getKeyManager().setPressable(false);
                 gameEnded = false;
                 win = false;
@@ -490,32 +502,50 @@ public class Game implements Runnable {
             display.getCanvas().createBufferStrategy(3);
         } else {
             g = bs.getDrawGraphics();
-            // Draws background, score and limit
-            level.render(g);
-            
-            if (isPaused()) {
-                g.drawImage(Assets.pause, 0, 0, 1280, 720, null);
-                g.drawImage(Assets.musicController, width / 2 - 200, 380, 400, 100, null);
-                for (int i = 0; i < 10 - getVolume() / -2; i++) {
-                    g.drawImage(Assets.volumePill, width / 2 - 159 + i * 32, 440, 30, 30, null);
-                }
-            }
+            if (!gameEnded) {
+                // Draws background, score and limit
+                level.render(g);
 
-            /* Mover a Level
-            for (int i = 0; i < bullets.size(); i++) {
-                bullets.get(i).render(g);
-            }*/
-            //If Level3 is added, needs to be added to the if
-            if(level.level == Level.LevelName.Level1 || level.level == Level.LevelName.Level2){
-               if(health==3){
-                    g.drawImage(Assets.healthBar1, 20, 20, 160, 50, null);
-               }
-               else if(health==2){
-                   g.drawImage(Assets.healthBar2, 20, 20, 160, 50, null);
-               }
-               else{
-                   g.drawImage(Assets.healthBar3, 20, 20, 160, 50, null);
-               }
+                if (isPaused()) {
+                    g.drawImage(Assets.pause, 0, 0, 1280, 720, null);
+                    g.drawImage(Assets.musicController, width / 2 - 200, 380, 400, 100, null);
+                    for (int i = 0; i < 10 - getVolume() / -2; i++) {
+                        g.drawImage(Assets.volumePill, width / 2 - 159 + i * 32, 440, 30, 30, null);
+                    }
+                }
+
+                if (fileNotFound) {
+                     g.drawImage(Assets.notSaved, 0, 0, 1280, 720, null);
+                     fileNotFoundCounter++;
+                }
+                if (fileNotFoundCounter >= 180) {
+                    fileNotFound = false;
+                    fileNotFoundCounter = 0;
+                }
+
+                /* Mover a Level
+                for (int i = 0; i < bullets.size(); i++) {
+                    bullets.get(i).render(g);
+                }*/
+                //If Level3 is added, needs to be added to the if
+                if(level.level == Level.LevelName.Level1 || level.level == Level.LevelName.Level2 || level.level == Level.LevelName.Level3){
+                   if(health==3){
+                        g.drawImage(Assets.healthBar1, 20, 20, 160, 50, null);
+                   }
+                   else if(health==2){
+                       g.drawImage(Assets.healthBar2, 20, 20, 160, 50, null);
+                   }
+                   else{
+                       g.drawImage(Assets.healthBar3, 20, 20, 160, 50, null);
+                   }
+                }
+            } else {
+                Assets.menuMusic.stop();
+                if (win) {
+                    g.drawImage(Assets.win, 0, 0, 1280, 720, null);
+                } else {
+                   g.drawImage(Assets.gameOver, 0, 0, 1280, 720, null); 
+                }
             }
             bs.show();
             g.dispose();

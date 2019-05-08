@@ -87,6 +87,8 @@ public class Selector extends Item {
             if (position == 0) {
                 getLevel().getKeyManager().setPressable(false);
                 getLevel().getGame().changeLevel();
+            } else if (position == 1) {
+                getLevel().getGame().load();
             }
         }
     }

@@ -97,6 +97,9 @@ public class Level {
         this.enemies = new ArrayList<Enemy>();
         this.rocketLaunchers = new ArrayList<RocketLauncher>();
         this.rockets = new LinkedList<Bullet>();
+        this.saving = new Animation(Assets.saving, 240);
+        saving.setTimeToAnimate(120);
+        saving.setCurrTimer(120);
         
         setStage(stage);
         

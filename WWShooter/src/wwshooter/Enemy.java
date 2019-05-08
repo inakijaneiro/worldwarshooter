@@ -96,127 +96,74 @@ public class Enemy extends Item {
     @Override
     public void tick() {
         currentAnimation.tick();
-
         if (Math.abs(player.getX() - getX()) < 500 && isInBounds()) {
+            if (player.getX() - getX() > 0) {
+                direction = Direction.RIGHT;
+            } else {
+                direction = Direction.LEFT;
+            }
+
             if (player.getState() != Player.State.CROUCH) {
-                if(state != State.SHOOT){
+                if (state != State.SHOOT) {
+                    if (direction == Direction.LEFT) {
+                        setX(getX() - (int) (originalWidth * 0.4));
+                    }
                     setWidth(originalWidth + (int) (originalWidth * 0.4));
-                    setX(getX() - (int)(originalWidth * 0.4));
                     currentAnimation.setIndex(0);
                     shootingOffset = true;
                     state = State.SHOOT;
                 }
-            } else{
-                if(shootingOffset){
+            } else {
+                if (shootingOffset) {
                     setWidth(originalWidth);
-                    setX(getX() + (int)(originalWidth * 0.4));
+                    if (direction == Direction.LEFT) {
+                        setX(getX() + (int) (originalWidth * 0.4));
+                    }
                     shootingOffset = false;
                 }
-                if(direction == Direction.RIGHT){
+                if (direction == Direction.RIGHT) {
                     currentAnimation.setFrames(Assets.firstEnemyIdle);
-                } else{
+                } else {
                     currentAnimation.setFrames(Assets.firstEnemyIdleR);
                 }
                 state = State.IDLE;
             }
-            
-            if(state == State.SHOOT){
-                if(direction == Direction.RIGHT){
+
+            if (state == State.SHOOT) {
+                if (direction == Direction.RIGHT) {
                     currentAnimation.setFrames(Assets.firstEnemyShoot);
-                }else {
+                } else {
                     currentAnimation.setFrames(Assets.firstEnemyShootR);
                 }
             }
-            
-        } else{
-            state = State.RUN;
-            if (player.getX() - getX() > 0) {
-                direction = Direction.RIGHT;
+            long timeNow = System.currentTimeMillis();
+            if ((System.currentTimeMillis() - lastShot >= 1000) && state == State.SHOOT) {
+                lastShot = timeNow;
+                if (direction == Direction.RIGHT) {
+                    getLevel().getEnemyBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
+                } else if (direction == Direction.LEFT) {
+                    getLevel().getEnemyBullets().add(new Bullet(getX() + 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
+                }
+
+            }
+
+        } else {
+            if (shootingOffset) {
+                setWidth(originalWidth);
+                if (direction == Direction.LEFT) {
+                    setX(getX() + (int) (originalWidth * 0.4));
+                }
+                shootingOffset = false;
+            }
+            if (direction == Direction.RIGHT) {
+                currentAnimation.setFrames(Assets.firstEnemyRun);
                 setX(getX() + 2);
             } else {
-                direction = Direction.LEFT;
+                currentAnimation.setFrames(Assets.firstEnemyRunR);
                 setX(getX() - 2);
             }
+            state = State.RUN;
         }
-//        if (Math.abs(player.getX() - getX()) < 500 && isInBounds()) {
-//            if (player.getState() != Player.State.CROUCH) {
-//                if (state != State.SHOOT) {
-//                    if (shootingOffset) {
-//                        setX(getX() - (int) (originalWidth * 0.4));
-//                    }
-//                    currentAnimation.setIndex(0);
-//                }
-//                setWidth(originalWidth + (int) (originalWidth * 0.4));
-//                state = State.SHOOT;
-//                isShooting = true;
-//            } else {
-//                if (state == State.SHOOT) {
-//                    setWidth(originalWidth);
-//                }
-//                isShooting = false;
-//                isIdle = true;
-//            }
-//        } else {
-//            if (player.getX() - getX() > 0) {
-//                direction = Direction.RIGHT;
-//                setX(getX() + 2);
-//            } else {
-//                direction = Direction.LEFT;
-//                setX(getX() - 2);
-//            }
-//            isShooting = false;
-//            isIdle = false;
-//            state = State.RUN;
-//        }
-//
-//        if (isShooting) {
-//            state = State.SHOOT;
-//            if (direction == Direction.LEFT) {
-//                currentAnimation.setFrames(Assets.firstEnemyShootR);
-//                if (!shootingOffset) {
-//                    setWidth(originalWidth + (int) (originalWidth * 0.4));
-//                    setX(getX() - (int) (originalWidth * 0.4));
-//                }
-//                shootingOffset = true;
-//            } else if (direction == Direction.RIGHT) {
-//                currentAnimation.setFrames(Assets.firstEnemyShoot);
-//            } else {
-//                setWidth(originalWidth);
-//            }
-//            // Shooting with 1 second of delay
-//            long timeNow = System.currentTimeMillis();
-//            if ((System.currentTimeMillis() - lastShot >= 1000)) {
-//                lastShot = timeNow;
-//                if (direction == Direction.RIGHT) {
-//                    getLevel().getEnemyBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
-//                } else if (direction == Direction.LEFT) {
-//                    getLevel().getEnemyBullets().add(new Bullet(getX() + 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.LEFT));
-//                }
-//
-//            }
-//            isShooting = false;
-//        } else if (isIdle) {
-//
-//            if (state == State.SHOOT) {
-//                currentAnimation.setIndex(0);
-//                setX(getX() + (int) (originalWidth * 0.4));
-//            }
-//            state = State.IDLE;
-//            currentAnimation.setFrames(Assets.firstEnemyIdleR);
-//        } else {
-//            if (shootingOffset) {
-//                setX(getX() + (int) (originalWidth * 0.4));
-//                shootingOffset = false;
-//            }
-//            setWidth(originalWidth);
-//            if (direction == Direction.LEFT) {
-//                currentAnimation.setFrames(Assets.firstEnemyRunR);
-//            } else {
-//                currentAnimation.setFrames(Assets.firstEnemyRun);
-//            }
-//
-//        }
-
     }
 
     /**

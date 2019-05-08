@@ -494,10 +494,6 @@ public class Level {
                     boss.tick();
                 }
                 break;
-//            case Level3:
-//                player.tick();
-//                
-//                break;
             case Chapter1:
             case Chapter2:
             case Chapter3:
@@ -562,15 +558,22 @@ public class Level {
                 for (RocketLauncher rocketLauncher : rocketLaunchers) {
                     rocketLauncher.render(g);
                 }
-                for (Bullet rocket : rockets) {
+                player.render(g);
+                for (int i = 0; i < bullets.size(); i++) {
+                    //Render bullets
+                    bullets.get(i).render(g);
+                }
+                for (Enemy enemy : enemies) {
+                    enemy.render(g);
+                }
+                for (Bullet bullet : enemyBullets) {
+                    bullet.render(g);
+                }
+                for(RocketLauncher rocketLauncher : rocketLaunchers){
+                    rocketLauncher.render(g);
+                }
+                for(Bullet rocket : rockets){
                     rocket.render(g);
-                }
-                if (getKeyManager().g) {
-                    saving.setCurrTimer(0);
-                }
-                if (saving.getCurrTimer() < saving.getTimeToAnimate()) {
-                    g.drawImage(saving.getCurrentFrame(), 1100, 600, 150, 75, null);
-                    saving.setCurrTimer(saving.getCurrTimer() + 1);
                 }
                 if(level == Level.LevelName.Level3 && stage == 3){
                     if(boss.getHealth() > 0){

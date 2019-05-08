@@ -98,6 +98,11 @@ public class Enemy extends Item {
      */
     public void save(Formatter file) {
         file.format("%s%s", getX() + " ", getY() + " ");
+         if (direction == Direction.LEFT) {
+            file.format("%s", 1 + " ");
+        } else if (direction == Direction.RIGHT) {
+            file.format("%s", 2 + " ");
+        }
     }
 
     /**
@@ -106,9 +111,18 @@ public class Enemy extends Item {
      * @param x
      * @param y
      */
-    public void load(int x, int y) {
+    public void load(int x, int y, int w, int h, int s) {
         setX(x);
         setY(y);
+        setWidth(w);
+        setHeight(h);
+        
+        if (s == 1) {
+            direction = Direction.LEFT;
+        } else if (s == 2) {
+            direction = Direction.RIGHT;
+        }
+        
     }
     
 

@@ -286,7 +286,6 @@ public class Game implements Runnable {
             y = scanner.nextInt();
             levelNumber = x;
             level = null;
-            System.out.println(y);
             switch (levelNumber) {
                 case 1:
                     this.level = new Level(x, y, Level.LevelName.Chapter1, this);
@@ -321,7 +320,12 @@ public class Game implements Runnable {
             for (int i = 0; i < size; i++) {
                 x = scanner.nextInt();
                 y = scanner.nextInt();
-                level.getEnemies().add(new Enemy(x, y, 150, 350, level, 'l'));
+                w = scanner.nextInt();
+                if (w == 1) {
+                    level.getEnemies().add(new Enemy(x, y, 150, 350, level, 'l'));
+                } else if (w == 2) {
+                    level.getEnemies().add(new Enemy(x, y, 150, 350, level, 'r'));
+                }
             }
             size = scanner.nextInt();
             for (int i = 0; i < size; i++) {

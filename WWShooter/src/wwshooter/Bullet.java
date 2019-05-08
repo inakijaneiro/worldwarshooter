@@ -95,7 +95,9 @@ public class Bullet extends Item{
      */
     public boolean intersecta(Object obj) {
         return (obj instanceof Enemy && getHitbox().intersects(((Enemy) (obj)).getHitbox())
-                || obj instanceof Player && getHitbox().intersects(((Player) (obj)).getHitbox()));
+                || obj instanceof Player && getHitbox().intersects(((Player) (obj)).getHitbox())
+                || obj instanceof RocketLauncher && getHitbox().intersects(((RocketLauncher) (obj)).getHitbox())
+                );
     }
     /**
      * Main tick of the bullet

@@ -71,8 +71,8 @@ public class Level {
                 for (int i = 1; i <= 5; i++) {
                     enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
                 }
-                this.rocketLaunchers.add(new RocketLauncher(width+300, height - 350, 150, 350, this, 'l'));
-                this.rocketLaunchers.add(new RocketLauncher(-300, height-350, 150, 350, this, 'r'));
+                this.rocketLaunchers.add(new RocketLauncher(width + 300, height - 350, 150, 350, this, 'l'));
+                this.rocketLaunchers.add(new RocketLauncher(-300, height - 350, 150, 350, this, 'r'));
                 this.stage = 1;
                 break;
 //            case Level3:
@@ -114,7 +114,7 @@ public class Level {
     public LinkedList<Bullet> getRockets() {
         return rockets;
     }
-    
+
     /**
      * Method to get the enemy bullets
      *
@@ -276,6 +276,10 @@ public class Level {
             case Level2:
             case Level3:
                 player.tick();
+                if (getGame().getHealth() <= 0) {
+                    getGame().setLives(getGame().getLives() - 1);
+                    getGame().setHealth(3);
+                }
                 for (int i = 0; i < bullets.size(); i++) {
                     Bullet bullet = bullets.get(i);
                     //Move bullets
@@ -292,8 +296,15 @@ public class Level {
                             break;
                         }
                     }
+                    for (int j = 0; j < rocketLaunchers.size(); j++) {
+                        if (bullet.intersecta(rocketLaunchers.get(j))) {
+                            Assets.enemyHurt.play();
+                            rocketLaunchers.remove(j);
+                            bullets.remove(i);
+                        }
+                    }
                 }
-                for(int i = 0; i < rockets.size(); i++){
+                for (int i = 0; i < rockets.size(); i++) {
                     Bullet rocket = rockets.get(i);
                     rocket.tick();
                     if (rocket.getX() + rocket.getWidth() >= getGame().getWidth() || rocket.getX() <= 0) {
@@ -309,12 +320,17 @@ public class Level {
                     if (bulletEnemy.intersecta(player) && !getKeyManager().down) {
                         if (bulletEnemy.getX() <= target && bulletEnemy.getX() >= target - 10) {
                             getGame().setHealth(getGame().getHealth() - 1);
-
-                            if (getGame().getHealth() == 0) {
-                                getGame().setLives(getGame().getLives() - 1);
-                                getGame().setHealth(3);
-                            }
                             enemyBullets.remove(i);
+                        }
+                    }
+                }
+                // Collision of rockets with player
+                for (int i = 0; i < rockets.size(); i++) {
+                    Bullet rocket = rockets.get(i);
+                    if (rocket.intersecta(player) && !getKeyManager().down) {
+                        if (rocket.getX() <= target && rocket.getX() >= target - 10) {
+                            getGame().setHealth(getGame().getHealth() - 2);
+                            rockets.remove(i);
                         }
                     }
                 }
@@ -324,7 +340,7 @@ public class Level {
                 for (Enemy enemy : enemies) {
                     enemy.tick();
                 }
-                for(RocketLauncher rocketLauncher : rocketLaunchers){
+                for (RocketLauncher rocketLauncher : rocketLaunchers) {
                     rocketLauncher.tick();
                 }
                 break;
@@ -387,10 +403,10 @@ public class Level {
                 for (Bullet bullet : enemyBullets) {
                     bullet.render(g);
                 }
-                for(RocketLauncher rocketLauncher : rocketLaunchers){
+                for (RocketLauncher rocketLauncher : rocketLaunchers) {
                     rocketLauncher.render(g);
                 }
-                for(Bullet rocket : rockets){
+                for (Bullet rocket : rockets) {
                     rocket.render(g);
                 }
                 break;

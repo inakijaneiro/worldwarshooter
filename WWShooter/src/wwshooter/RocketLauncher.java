@@ -6,6 +6,7 @@
 package wwshooter;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -70,6 +71,15 @@ public class RocketLauncher extends Item {
             }
         }
         return false;
+    }
+    
+    /**
+     * Creates a Circle object and simulates the "hit box" of the ball
+     *
+     * @return new Circle
+     */
+    public Rectangle getHitbox() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     @Override

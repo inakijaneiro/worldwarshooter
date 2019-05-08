@@ -382,7 +382,8 @@ public class Game implements Runnable {
             for (int i = 0; i < bullets.size(); i++) {
                 bullets.get(i).render(g);
             }*/
-            if(level.level != Level.LevelName.MainMenu){
+            //If Level3 is added, needs to be added to the if
+            if(level.level == Level.LevelName.Level1 || level.level == Level.LevelName.Level2){
                if(health==3){
                     g.drawImage(Assets.healthBar1, 20, 20, 160, 50, null);
                }

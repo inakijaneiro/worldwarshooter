@@ -41,6 +41,9 @@ public class Assets {
     public static BufferedImage lives;
     public static BufferedImage pause;
     public static BufferedImage nextArrow[];
+    public static BufferedImage chapter1;
+    public static BufferedImage chapter2;
+    public static BufferedImage chapter3;
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -70,6 +73,9 @@ public class Assets {
         volumePill = ImageLoader.loadImage("/images/VolumePill.png");
         lives = ImageLoader.loadImage("/images/helmet.png");
         pause = ImageLoader.loadImage("/images/pause.png");
+        chapter1 = ImageLoader.loadImage("/chapters/ChapterI.png");
+        chapter2 = ImageLoader.loadImage("/chapters/ChapterII.png");
+        chapter3 = ImageLoader.loadImage("/chapters/ChapterIII.png");
 
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];

@@ -206,13 +206,21 @@ public class Player extends Item {
 
         // Collisions with the screen
         if (getX() + getWidth() >= getLevel().getGame().getWidth()) { // right
-            setX(0);
-            getLevel().setStage(getLevel().getStage() + 1);
-            if (getLevel().getStage() <= 3) {
-                Assets.setLevelBackground(1, getLevel().getStage());
-                for (int i = 1; i <= 5; i++) {
-                    getLevel().getEnemies().add(new Enemy(getLevel().getGame().getWidth() + 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
+            if (!getLevel().getEnemies().isEmpty()){
+                setX(getLevel().getGame().getWidth() - getWidth());
+            }
+            else {
+                setX(0);
+                getLevel().setStage(getLevel().getStage() + 1);
+                if (getLevel().getStage() <= 3) {
+                    Assets.setLevelBackground(1, getLevel().getStage());
+                    for (int i = 1; i <= 5; i++) {
+                        getLevel().getEnemies().add(new Enemy(getLevel().getGame().getWidth() + 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
 
+                    }
+                }
+                else {
+                    getLevel().getGame().changeLevel();
                 }
             }
         }

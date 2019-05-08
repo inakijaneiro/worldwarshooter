@@ -43,6 +43,7 @@ public class Game implements Runnable {
     private boolean win;                    // when the player won the game
     private Level level;
     private float volume;
+    private int levelNumber;
 
     
     /**
@@ -60,6 +61,7 @@ public class Game implements Runnable {
         this.keyManager = new KeyManager();
         this.lives = 3;
         this.volume = -10;
+        this.levelNumber = 0;
     }
 
     /**
@@ -164,11 +166,23 @@ public class Game implements Runnable {
      * Method to change level
      * @param level 
      */
-    public void changeLevel(int level) {
+    public void changeLevel() {
         this.level = null;
-        if (level == 1) {
-            this.level = new Level(Level.LevelName.Level1, this);
-            Assets.setLevelBackground(1, 1);
+        levelNumber += 1;
+        switch (levelNumber) {
+            case 1:
+                this.level = new Level(Level.LevelName.Chapter1, this);
+                break;
+            case 2:
+                this.level = new Level(Level.LevelName.Level1, this);
+                Assets.setLevelBackground(1, 1);
+                break;
+            case 3:
+                this.level = new Level(Level.LevelName.Chapter2, this);
+                break;
+            case 4:
+                this.level = new Level(Level.LevelName.Level2, this);
+                break;
         }
     }
     

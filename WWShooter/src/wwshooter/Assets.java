@@ -47,6 +47,7 @@ public class Assets {
     public static BufferedImage chapter1;
     public static BufferedImage chapter2;
     public static BufferedImage chapter3;
+    public static BufferedImage tank[];
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -97,6 +98,7 @@ public class Assets {
         firstEnemyRunR = new BufferedImage[6];
         firstEnemyShootR = new BufferedImage[6];
         nextArrow = new BufferedImage[8];
+        tank = new BufferedImage[6];
 
         playerCrouch[0] = ImageLoader.loadImage("/player_sprite/Crouch1.png");
         playerCrouchR[0] = ImageLoader.loadImage("/player_sprite/CrouchR1.png");
@@ -132,6 +134,10 @@ public class Assets {
             firstEnemyRunR[i] = ImageLoader.loadImage(path);
             path = "/enemy_sprite/Terrorist1ShootR" + i + ".png";
             firstEnemyShootR[i] = ImageLoader.loadImage(path);
+            
+            //Tank
+            path = "/tank/tank" + i +".png";
+            tank[i] = ImageLoader.loadImage(path);
         }
         
         for (int i = 0; i < 8; i++) {

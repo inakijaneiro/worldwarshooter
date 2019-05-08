@@ -122,11 +122,10 @@ public class Player extends Item {
     public void tick() {
         currentAnimation.tick();
         // Declaration of flags to manage the rest of the behaviour
-        boolean goingLeft = getLevel().getKeyManager().left;
-        boolean goingRight = getLevel().getKeyManager().right;
         boolean isShooting = getLevel().getKeyManager().space;
         boolean isCrouching = getLevel().getKeyManager().down;
-
+        boolean goingLeft = getLevel().getKeyManager().left && !isCrouching;
+        boolean goingRight = getLevel().getKeyManager().right && !isCrouching;
         // Checks the player's state and sets the animation index accordingly,
         // to avoid out-of-bounds error 
         if (state != State.RUN && (goingLeft || goingRight)) {
@@ -134,6 +133,10 @@ public class Player extends Item {
 
         }
         if (goingLeft || goingRight) {
+            if (state == State.CROUCH) {
+                setHeight(originalHeight);
+                setY(getLevel().getGame().getHeight() - (int) (originalHeight));
+            }
             state = State.RUN;
             // Since the animations have different widths, it adjusts.
             setWidth(originalWidth + (int) (originalWidth * 0.1));

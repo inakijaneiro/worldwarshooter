@@ -51,19 +51,13 @@ public class KeyManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         // set true to every key pressed if a key isnt being pressed
-        if(!movement){
-            keys[e.getKeyCode()] = true;
-            movement = true;
-        } 
+        keys[e.getKeyCode()] = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         // set false to a key only if was pressed 
-        if(movement && keys[e.getKeyCode()]){
-            keys[e.getKeyCode()] = false;
-            movement = false;
-        }  
+        keys[e.getKeyCode()] = false;
         setPressable(true);
         
     }

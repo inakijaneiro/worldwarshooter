@@ -37,6 +37,7 @@ public class Game implements Runnable {
     private boolean gameEnded;              // to store if the game is over
     private int score;                      // to store the score
     private int lives;                      // to store lives;
+    private int health;                     // to store health;
     private KeyManager keyManager;          // to manage the keyboard
     private Formatter file;                 // to store the saved game file.
     private Scanner scanner;                // to store the scanner to read a game file
@@ -60,6 +61,7 @@ public class Game implements Runnable {
         this.keyManager = new KeyManager();
         this.lives = 3;
         this.volume = -10;
+        this.health = 3;
     }
 
     /**
@@ -125,9 +127,15 @@ public class Game implements Runnable {
     public void setLives(int lives) {
         this.lives = lives;
     }
-    
-    
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+    
     /**
      * Gets the game pause status
      *
@@ -356,6 +364,21 @@ public class Game implements Runnable {
                 }
             }
 
+            /* Mover a Level
+            for (int i = 0; i < bullets.size(); i++) {
+                bullets.get(i).render(g);
+            }*/
+            if(level.level != Level.LevelName.MainMenu){
+               if(health==3){
+                    g.drawImage(Assets.healthBar1, 20, 20, 160, 50, null);
+               }
+               else if(health==2){
+                   g.drawImage(Assets.healthBar2, 20, 20, 160, 50, null);
+               }
+               else{
+                   g.drawImage(Assets.healthBar3, 20, 20, 160, 50, null);
+               }
+            }
             bs.show();
             g.dispose();
         }

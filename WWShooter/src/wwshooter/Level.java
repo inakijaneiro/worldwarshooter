@@ -265,6 +265,23 @@ public class Level {
                         }
                     }
                 }
+
+                //Collision of enemy bullets with player
+                int target = player.getX() + player.getWidth()/2;
+                for (int i = 0; i < enemyBullets.size(); i++) {
+                    Bullet bulletEnemy = enemyBullets.get(i);             
+                     if(bulletEnemy.intersecta(player) && !getKeyManager().down){
+                        if (bulletEnemy.getX() <= target && bulletEnemy.getX() >= target - 10) {
+                            getGame().setHealth(getGame().getHealth()-1);
+                            
+                            if(getGame().getHealth()==0){
+                                getGame().setLives(getGame().getLives()-1);
+                                getGame().setHealth(3);
+                            }
+                            enemyBullets.remove(i); 
+                        }
+                     } 
+                }
                 for (Bullet bullet : enemyBullets) {
                     bullet.tick();
                 }

@@ -215,11 +215,11 @@ public class Player extends Item {
 
                 }
             }
-        }
+        }     
         if (getX() <= 0) { // left
             setX(0);
         }
-
+        
         // Shooting with 1 second of delay
         long timeNow = System.currentTimeMillis();
         if (getLevel().getKeyManager().shoot && (System.currentTimeMillis() - lastShot >= 500)) {

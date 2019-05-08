@@ -41,6 +41,9 @@ public class Assets {
     public static BufferedImage lives;
     public static BufferedImage pause;
     public static BufferedImage nextArrow[];
+    public static BufferedImage healthBar1;
+    public static BufferedImage healthBar2;
+    public static BufferedImage healthBar3;
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -70,6 +73,9 @@ public class Assets {
         volumePill = ImageLoader.loadImage("/images/VolumePill.png");
         lives = ImageLoader.loadImage("/images/helmet.png");
         pause = ImageLoader.loadImage("/images/pause.png");
+        healthBar1 = ImageLoader.loadImage("/images/barra1.png");
+        healthBar2 = ImageLoader.loadImage("/images/barra2.png");
+        healthBar3 = ImageLoader.loadImage("/images/barra3.png");
 
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];

@@ -20,6 +20,8 @@ public class Animation {
     private BufferedImage[] frames; // to store every image - frame
     private boolean start;
     public boolean ended;
+    private int timeToAnimate;
+    private int currTimer;
 
     /**
      * Creating the animation with all the frames and the speed for each
@@ -33,6 +35,8 @@ public class Animation {
         index = 0;              // initializing index
         timer = 0;              // initializing timer
         lastTime = System.currentTimeMillis(); // getting the initial time
+        this.currTimer = 0;
+        this.timeToAnimate = 0;
     }
 
     /**
@@ -65,6 +69,22 @@ public class Animation {
      */
     public void setIndex(int index){
         this.index = index;
+    }
+
+    public int getTimeToAnimate() {
+        return timeToAnimate;
+    }
+
+    public void setTimeToAnimate(int timeToAnimate) {
+        this.timeToAnimate = timeToAnimate;
+    }
+    
+    public int getCurrTimer() {
+        return currTimer;
+    }
+
+    public void setCurrTimer(int currTimer) {
+        this.currTimer = currTimer;
     }
     
     /**

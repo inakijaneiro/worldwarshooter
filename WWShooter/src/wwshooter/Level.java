@@ -30,6 +30,7 @@ public class Level {
     private ArrayList<Enemy> enemies;
     private ArrayList<RocketLauncher> rocketLaunchers;
     private Animation arrowAnimation;
+    private Animation saving;
 
     enum LevelName {
         MainMenu, Level1, Level2, Level3, Chapter1, Chapter2, Chapter3
@@ -87,6 +88,9 @@ public class Level {
         }
         this.settingsMenu = false;
         this.arrowAnimation = new Animation(Assets.nextArrow, 90);
+        this.saving = new Animation(Assets.saving, 240);
+        saving.setTimeToAnimate(120);
+        saving.setCurrTimer(120);
     }
     
     Level(int levelNumber, int stage, LevelName levelName, Game game) {
@@ -335,6 +339,7 @@ public class Level {
                     getGame().setLives(getGame().getLives() - 1);
                     getGame().setHealth(3);
                 }
+                saving.tick();
                 for (int i = 0; i < bullets.size(); i++) {
                     Bullet bullet = bullets.get(i);
                     //Move bullets
@@ -463,6 +468,13 @@ public class Level {
                 }
                 for (Bullet rocket : rockets) {
                     rocket.render(g);
+                }
+                if(getKeyManager().g){
+                    saving.setCurrTimer(0);
+                }
+                if(saving.getCurrTimer() < saving.getTimeToAnimate()){
+                    g.drawImage(saving.getCurrentFrame(), 1100, 600, 150, 75, null);
+                    saving.setCurrTimer(saving.getCurrTimer() + 1);
                 }
                 break;
 //            case Level3:

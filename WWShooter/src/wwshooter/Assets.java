@@ -62,6 +62,7 @@ public class Assets {
     public static BufferedImage chapter3;
     public static BufferedImage tank[];
     public static BufferedImage notSaved;
+    public static BufferedImage saving[];
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -127,6 +128,7 @@ public class Assets {
         
         nextArrow = new BufferedImage[8];
         tank = new BufferedImage[6];
+        saving = new BufferedImage[6];
 
         playerCrouch[0] = ImageLoader.loadImage("/player_sprite/Crouch1.png");
         playerCrouchR[0] = ImageLoader.loadImage("/player_sprite/CrouchR1.png");
@@ -183,6 +185,10 @@ public class Assets {
             //Tank
             path = "/tank/tank" + i +".png";
             tank[i] = ImageLoader.loadImage(path);
+            
+            //Saving Popup
+            path = "/images/saving" + i + ".png";
+            saving[i] = ImageLoader.loadImage(path);
         }
         
         for (int i = 0; i < 8; i++) {

@@ -24,7 +24,8 @@ public class Enemy extends Item {
 
     public enum State {
         RUN,
-        SHOOT
+        SHOOT,
+        IDLE
     };
 
     public enum Direction {
@@ -47,6 +48,7 @@ public class Enemy extends Item {
         this.level = level;
         this.speed = speed;
         this.originalWidth = width;
+        this.state = State.RUN;
         this.currentAnimation = new Animation(Assets.firstEnemyRunR, 100);
         this.player = getLevel().getPlayer();
         this.direction = direction == 'l' ? Direction.LEFT : Direction.RIGHT;
@@ -68,21 +70,57 @@ public class Enemy extends Item {
     public Rectangle getHitbox() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
+    
+    /**
+     * Checks if the enemy is inside the stage
+     * @return if enemy inbounds
+     */
+    public boolean isInBounds(){
+        
+        if (getX() + getWidth() <= getLevel().getGame().getWidth()) {
+            if (getX() >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Main tick method of the enemy
      */
     @Override
     public void tick() {
         boolean isShooting = false;
+        boolean isIdle = false;
         currentAnimation.tick();
-        if (Math.abs(player.getX() - getX()) < 700) {
-            isShooting = true;
-        } else {
+        if (Math.abs(player.getX() - getX()) < 700 && isInBounds()) {
+            if (player.getState() != Player.State.CROUCH){
+                if (state != State.SHOOT) {
+                    if (shootingOffset){
+                        setX(getX() - (int) (originalWidth * 0.4));
+                    }
+                    currentAnimation.setIndex(0);
+                }
+                setWidth(originalWidth + (int) (originalWidth * 0.4));
+                state = State.SHOOT;
+                isShooting = true;
+            } 
+            else {
+                if (state == State.SHOOT) {
+                    setWidth(originalWidth);
+                }
+                isShooting = false;
+                isIdle = true;
+            }
+        } 
+        else {
             setX(getX() - 2);
             isShooting = false;
+            isIdle = false;
+            state = State.RUN;
         }
 
         if (isShooting) {
+            state = State.SHOOT;
             if (direction == Direction.LEFT) {
                 currentAnimation.setFrames(Assets.firstEnemyShootR);
                 if (!shootingOffset) {
@@ -105,6 +143,15 @@ public class Enemy extends Item {
 
             }
             isShooting = false;
+        } 
+        else if (isIdle) {
+            
+            if (state == State.SHOOT) {
+                currentAnimation.setIndex(0);
+                setX(getX() + (int) (originalWidth * 0.4));
+            } 
+            state = State.IDLE;
+            currentAnimation.setFrames(Assets.firstEnemyIdleR);
         } else {
             if (shootingOffset) {
                 setX(getX() + (int) (originalWidth * 0.4));

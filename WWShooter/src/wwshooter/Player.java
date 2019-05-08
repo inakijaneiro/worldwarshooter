@@ -84,6 +84,14 @@ public class Player extends Item {
     }
 
     /**
+     * Returns the state of the player
+     * @return state
+     */
+    public State getState() {
+        return state;
+    }
+
+    /**
      * Writes it's data in the saving file
      *
      * @param file
@@ -102,7 +110,7 @@ public class Player extends Item {
         setX(x);
         setY(y);
     }
-
+    
     /**
      * Ticker for the class
      */

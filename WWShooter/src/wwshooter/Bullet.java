@@ -7,6 +7,7 @@ package wwshooter;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Formatter;
 
 /**
  *
@@ -99,6 +100,33 @@ public class Bullet extends Item{
                 || obj instanceof RocketLauncher && getHitbox().intersects(((RocketLauncher) (obj)).getHitbox())
                 );
     }
+    
+    /**
+     * Writes it's data in the saving file
+     *
+     * @param file
+     */
+    public void save(Formatter file) {
+        file.format("%s%s", getX() + " ", getY() + " ");
+        if (direction == Direction.LEFT) {
+            file.format("%s", 1 + " ");
+        } else if (direction == Direction.RIGHT) {
+            file.format("%s", 2 + " ");
+        }
+    }
+
+    /**
+     * Loads it's necessary data from a file
+     *
+     * @param x
+     * @param y
+     */
+    public void load(int x, int y) {
+        setX(x);
+        setY(y);
+    }
+    
+    
     /**
      * Main tick of the bullet
      */

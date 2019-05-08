@@ -101,7 +101,16 @@ public class Player extends Item {
      * @param file
      */
     public void save(Formatter file) {
-        file.format("%s%s", getX() + " ", getY() + " ");
+        file.format("%s%s%s%s", getX() + " ", getY() + " ", getWidth() + " ", getHeight() + " ");
+        if (getState() == State.IDLE){
+            file.format("%s", 1 + " ");
+        } else if (getState() == State.RUN){
+            file.format("%s", 2 + " ");
+        } else if (getState() == State.SHOOT){
+            file.format("%s", 3 + " ");
+        } else if (getState() == State.CROUCH){
+            file.format("%s", 4 + " ");
+        }
     }
 
     /**
@@ -110,9 +119,32 @@ public class Player extends Item {
      * @param x
      * @param y
      */
-    public void load(int x, int y) {
+    public void load(int x, int y, int w, int h, int s) {
         setX(x);
         setY(y);
+        setWidth(w);
+        setHeight(h);
+        switch (s) {
+            case 1: 
+                state = State.IDLE;
+                break;
+            case 2:
+                state = State.RUN;
+                break;
+            case 3:
+                state = State.SHOOT;
+                break;
+            case 4: 
+                if (direction == Direction.LEFT) {
+                    setX(getX() + (int)(originalWidth / 2));
+                }
+                setY(getY() - (int) (originalHeight / 2));
+                state = State.CROUCH;
+                break;
+            default:
+                state = State.IDLE;
+                break;
+        }
     }
     
     /**

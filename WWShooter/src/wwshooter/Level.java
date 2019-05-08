@@ -7,6 +7,7 @@ package wwshooter;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.LinkedList;
 
 /**
@@ -83,6 +84,40 @@ public class Level {
 //                this.stage = 1;
 //                break;
 
+        }
+        this.settingsMenu = false;
+        this.arrowAnimation = new Animation(Assets.nextArrow, 90);
+    }
+    
+    Level(int levelNumber, int stage, LevelName levelName, Game game) {
+        this.game = game;
+        this.level = levelName;
+        this.width = game.getWidth();
+        this.height = game.getHeight();
+        this.buttons = new ArrayList<Button>();
+        this.bullets = new LinkedList<Bullet>();
+        this.enemyBullets = new LinkedList<Bullet>();
+        this.enemies = new ArrayList<Enemy>();
+        
+        setStage(stage);
+        
+        switch (levelName) {
+            case MainMenu:
+                Assets.menuMusic.setLooping(true);
+                Assets.menuMusic.play();
+                buttons.add(new Button(game.getWidth() / 2 - 232, 350, 464, 90, "newgame"));
+                buttons.add(new Button(game.getWidth() / 2 - 232, 460, 464, 90, "continue"));
+                buttons.add(new Button(game.getWidth() / 2 - 232, 570, 464, 90, "settings"));
+                selector = new Selector(width / 2 - 282, 370, 35, 55, this, buttons, 20);
+                break;
+            case Level1:
+            case Level2:
+            case Level3:
+                Assets.menuMusic.stop();
+                Assets.backgroundMusic.setLooping(true);
+                Assets.backgroundMusic.play();
+                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                break;
         }
         this.settingsMenu = false;
         this.arrowAnimation = new Animation(Assets.nextArrow, 90);
@@ -222,6 +257,26 @@ public class Level {
     public void setStage(int stage) {
         this.stage = stage;
     }
+    
+    /**
+     * Writes it's data in the saving file
+     *
+     * @param file
+     */
+    public void save(Formatter file) {
+        file.format("%s%s", getGame().levelNumber + " ", getStage() + " ");
+    }
+
+    /**
+     * Loads it's necessary data from a file
+     *
+     * @param x
+     * @param y
+     */
+    public void load(int x, int y) {
+      
+    }
+    
 
     /**
      * Main tick method of the level

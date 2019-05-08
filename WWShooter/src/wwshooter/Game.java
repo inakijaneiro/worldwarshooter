@@ -44,7 +44,7 @@ public class Game implements Runnable {
     private boolean win;                    // when the player won the game
     private Level level;
     private float volume;
-    private int levelNumber;
+    public int levelNumber;
 
     
     /**
@@ -218,15 +218,40 @@ public class Game implements Runnable {
         
         // Generates a new game.txt
         try{
-            file = new Formatter("game.txt");
+            if (level.level !=  Level.LevelName.MainMenu){
+                file = new Formatter("game.txt");
+            }
         } catch (Exception e) {
             System.out.println("Hubo un problema con el guardado");
         }
         /*
         Se guardan todas las instancias llamando el metodo instancia.save();
         */
+        if (level.level !=  Level.LevelName.MainMenu){
+            level.save(file);
+            switch (level.level) {
+                case Chapter1:
+                case Chapter2:
+                case Chapter3:
+                    break;
+                case Level1:
+                case Level2:
+                case Level3:
+                    level.player.save(file);
+                    file.format("%s", level.getEnemies().size() + " ");
+                    for (Enemy enemy: level.getEnemies()) {
+                        enemy.save(file);
+                    }
+                    file.format("%s", level.getBullets().size() + " ");
+                    for (Bullet bullet : level.getBullets()) {
+                        bullet.save(file);
+                    }
+                    break;                    
+            }
+            file.format("%s%s", lives + " ", health + " ");
+            file.close();
+        }
         
-        file.close();
     }
     
     /**
@@ -235,10 +260,67 @@ public class Game implements Runnable {
      */
     private void load() {
         try {
-            int x, y, xspeed, yspeed, width, height;
+            int x, y, w, h, s, size;
             String type;
             scanner = new Scanner(new File("game.txt"));
             
+            // Loads player attributes
+            x = scanner.nextInt();
+            y = scanner.nextInt();
+            levelNumber = x;
+            level = null;
+            System.out.println(y);
+            switch (levelNumber) {
+                case 1:
+                    this.level = new Level(x, y, Level.LevelName.Chapter1, this);
+                    break;
+                case 2:
+                    this.level = new Level(x, y, Level.LevelName.Level1, this);
+                    Assets.setLevelBackground(1, y);
+                    break;
+                case 3:
+                    this.level = new Level(x, y, Level.LevelName.Chapter2, this);
+                    break;
+                case 4:
+                    this.level = new Level(x, y, Level.LevelName.Level2, this);
+                    Assets.setLevelBackground(2, y);
+                    break;
+                case 5:
+                    this.level = new Level(x, y, Level.LevelName.Chapter3, this);
+                    break;
+                case 6:
+                    this.level = new Level(x, y, Level.LevelName.Level3, this);
+                    Assets.setLevelBackground(3,y);
+                    break;
+            }
+            
+            x = scanner.nextInt();
+            y = scanner.nextInt();
+            w = scanner.nextInt();
+            h = scanner.nextInt();
+            s = scanner.nextInt();
+            level.player.load(x, y, w, h, s);
+            size = scanner.nextInt();
+            for (int i = 0; i < size; i++) {
+                x = scanner.nextInt();
+                y = scanner.nextInt();
+                level.getEnemies().add(new Enemy(x, y, 150, 350, level, 'l'));
+            }
+            size = scanner.nextInt();
+            for (int i = 0; i < size; i++) {
+                x = scanner.nextInt();
+                y = scanner.nextInt();
+                w = scanner.nextInt();
+                if (w == 1) {
+                    level.getBullets().add(new Bullet(x, y, 7, 7, 5, level, Bullet.Direction.LEFT));
+                } else if (w == 2) {
+                    level.getBullets().add(new Bullet(x, y, 7, 7, 5, level, Bullet.Direction.RIGHT));
+                }              
+            }
+            x = scanner.nextInt();
+            y = scanner.nextInt();
+            lives = x;
+            health = y;
             // Se cargan las instancias respetando el orden en que fuerno guardadas, verlo en save();
             
         } catch (Exception e) {

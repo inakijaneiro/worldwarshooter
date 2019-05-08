@@ -7,6 +7,7 @@ package wwshooter;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Formatter;
 
 /**
  *
@@ -89,6 +90,27 @@ public class Enemy extends Item {
         }
         return false;
     }
+    
+    /**
+     * Writes it's data in the saving file
+     *
+     * @param file
+     */
+    public void save(Formatter file) {
+        file.format("%s%s", getX() + " ", getY() + " ");
+    }
+
+    /**
+     * Loads it's necessary data from a file
+     *
+     * @param x
+     * @param y
+     */
+    public void load(int x, int y) {
+        setX(x);
+        setY(y);
+    }
+    
 
     /**
      * Main tick method of the enemy

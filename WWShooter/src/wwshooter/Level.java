@@ -255,6 +255,7 @@ public class Level {
                     bullet.tick();
                     if (bullet.getX() + bullet.getWidth() >= getGame().getWidth() || bullet.getX() <= 0) {
                         bullets.remove(i);
+                        break;
                     }
                     for (int j = 0; j < enemies.size(); j++) {
                         if (bullet.intersecta(enemies.get(j))) {

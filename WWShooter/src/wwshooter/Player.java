@@ -122,11 +122,10 @@ public class Player extends Item {
     public void tick() {
         currentAnimation.tick();
         // Declaration of flags to manage the rest of the behaviour
-        boolean goingLeft = getLevel().getKeyManager().left;
-        boolean goingRight = getLevel().getKeyManager().right;
         boolean isShooting = getLevel().getKeyManager().space;
         boolean isCrouching = getLevel().getKeyManager().down;
-
+        boolean goingLeft = getLevel().getKeyManager().left && !isCrouching;
+        boolean goingRight = getLevel().getKeyManager().right && !isCrouching;
         // Checks the player's state and sets the animation index accordingly,
         // to avoid out-of-bounds error 
         if (state != State.RUN && (goingLeft || goingRight)) {
@@ -134,11 +133,16 @@ public class Player extends Item {
 
         }
         if (goingLeft || goingRight) {
+            if (state == State.CROUCH) {
+                setHeight(originalHeight);
+                setY(getLevel().getGame().getHeight() - (int) (originalHeight));
+            }
             state = State.RUN;
             // Since the animations have different widths, it adjusts.
             setWidth(originalWidth + (int) (originalWidth * 0.1));
         }
-
+      
+        
         if (goingLeft) {
             this.direction = Direction.LEFT;
             setX(getX() - getSpeed());
@@ -147,23 +151,6 @@ public class Player extends Item {
             this.direction = Direction.RIGHT;
             setX(getX() + getSpeed());
             currentAnimation.setFrames(Assets.playerRun);
-        } else if (isShooting) {
-            if (state != State.SHOOT) {
-                if (direction == Direction.LEFT) {
-                    setX(getX() - (int) (originalWidth * 0.8));
-                    animationOffset = true;
-                }
-                currentAnimation.setIndex(0);
-                state = State.SHOOT;
-                // Since the animations have different widths, it adjusts.
-                setWidth(originalWidth * 2 - (int) (originalWidth * 0.2));
-            }
-            if (direction == Direction.LEFT) {
-                currentAnimation.setFrames(Assets.playerShootR);
-            } else {
-                currentAnimation.setFrames(Assets.playerShoot);
-            }
-
         } else if (isCrouching) {
             if (state != State.CROUCH) {
                 currentAnimation.setIndex(0);
@@ -181,7 +168,32 @@ public class Player extends Item {
                 currentAnimation.setFrames(Assets.playerCrouch);
             }
             state = State.CROUCH;
-        } else {
+        } else if (isShooting) {
+            setHeight(originalHeight);
+            setY(getLevel().getGame().getHeight() - (int) (originalHeight));
+            if (state != State.SHOOT) {
+                if (state == State.CROUCH && direction == Direction.RIGHT) {
+                    animationOffset = false;
+                } 
+                else if (direction == Direction.LEFT) {
+                    System.out.println("Estatuto 2");
+                    if (state != State.CROUCH) {
+                        setX(getX() - (int) (originalWidth * 0.8));
+                        animationOffset = true;
+                    }
+                }
+                currentAnimation.setIndex(0);
+                state = State.SHOOT;
+                // Since the animations have different widths, it adjusts.
+                setWidth(originalWidth * 2 - (int) (originalWidth * 0.2));
+            }
+            if (direction == Direction.LEFT) {
+                currentAnimation.setFrames(Assets.playerShootR);
+            } else {
+                currentAnimation.setFrames(Assets.playerShoot);
+            }
+
+        }  else {
             // When no key is pressed goes back to idle state and adjusts width
             if (animationOffset) {
                 animationOffset = false;
@@ -230,7 +242,7 @@ public class Player extends Item {
         
         // Shooting with 1 second of delay
         long timeNow = System.currentTimeMillis();
-        if (getLevel().getKeyManager().shoot && (System.currentTimeMillis() - lastShot >= 500)) {
+        if (state == State.SHOOT && (System.currentTimeMillis() - lastShot >= 500)) {
             lastShot = timeNow;
             Assets.shotSound.play();
             if (direction == Direction.RIGHT) {

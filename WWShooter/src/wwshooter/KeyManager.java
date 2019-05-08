@@ -25,7 +25,7 @@ public class KeyManager implements KeyListener {
     public boolean c;           // flag to load the game
     public boolean r;           // flag to restart the game
     public boolean space;       // flag to restart the game when finished
-    public boolean movement;    // flag to denote the player has pressed/released a key
+    public boolean somethingPressed;    // flag to denote the player has pressed/released a key
     private boolean pressable;  // flag to do a one time press that has lasting effect
     
     private boolean keys[]; // to store all the flags for every key
@@ -34,6 +34,14 @@ public class KeyManager implements KeyListener {
         keys = new boolean[256];
         
         this.pressable = true;
+    }
+    
+    public boolean somethingIsPressed() {
+        return somethingPressed;
+    }
+    
+    public void setSomethingPressed(boolean somethingPressed) {
+        this.somethingPressed = somethingPressed;
     }
 
     public boolean isPressable() {
@@ -51,19 +59,15 @@ public class KeyManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         // set true to every key pressed if a key isnt being pressed
-        if(!movement){
-            keys[e.getKeyCode()] = true;
-            movement = true;
-        } 
+        keys[e.getKeyCode()] = true;
+        somethingPressed = true;
+        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         // set false to a key only if was pressed 
-        if(movement && keys[e.getKeyCode()]){
-            keys[e.getKeyCode()] = false;
-            movement = false;
-        }  
+        keys[e.getKeyCode()] = false;
         setPressable(true);
         
     }

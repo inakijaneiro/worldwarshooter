@@ -256,7 +256,7 @@ public class Player extends Item {
             if (!getLevel().getEnemies().isEmpty()){
                 setX(getLevel().getGame().getWidth() - getWidth());
             } else {
-                setX(0);
+                setX(150);
                 getLevel().setStage(getLevel().getStage() + 1);
                 if (getLevel().getStage() <= 3) {
                     if (getLevel().level == Level.LevelName.Level1) {

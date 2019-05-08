@@ -437,11 +437,11 @@ public class Game implements Runnable {
             save();
         }
         
-        // Loads a game
-        if (getKeyManager().c) {
-            changeLevel();
-        }
-        
+//        // Loads a game
+//        if (getKeyManager().c) {
+//            changeLevel();
+//        }
+//        
         // Restarts the game
 //        if (getKeyManager().r) {
 //            restart();
@@ -527,11 +527,7 @@ public class Game implements Runnable {
                     fileNotFound = false;
                     fileNotFoundCounter = 0;
                 }
-
-                /* Mover a Level
-                for (int i = 0; i < bullets.size(); i++) {
-                    bullets.get(i).render(g);
-                }*/
+                
                 //If Level3 is added, needs to be added to the if
                 if(level.level == Level.LevelName.Level1 || level.level == Level.LevelName.Level2 || level.level == Level.LevelName.Level3){
                    if(health==3){

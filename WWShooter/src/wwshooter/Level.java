@@ -58,6 +58,7 @@ public class Level {
                 selector = new Selector(width / 2 - 282, 370, 35, 55, this, buttons, 20);
                 break;
             case Level1:
+            case Level2:
                 Assets.menuMusic.stop();
                 Assets.backgroundMusic.setLooping(true);
                 Assets.backgroundMusic.play();
@@ -248,6 +249,7 @@ public class Level {
                 }
                 break;
             case Level1:
+            case Level2:
                 player.tick();
                 for (int i = 0; i < bullets.size(); i++) {
                     Bullet bullet = bullets.get(i);
@@ -328,6 +330,7 @@ public class Level {
                 }
                 break;
             case Level1:
+            case Level2:
                 g.drawImage(Assets.level1Background, 0, 0, width, height, null);
                 if (enemies.isEmpty()) {
                     g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);

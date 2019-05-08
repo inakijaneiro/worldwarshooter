@@ -225,7 +225,11 @@ public class Player extends Item {
                 setX(0);
                 getLevel().setStage(getLevel().getStage() + 1);
                 if (getLevel().getStage() <= 3) {
-                    Assets.setLevelBackground(1, getLevel().getStage());
+                    if (getLevel().level == Level.LevelName.Level1) {
+                        Assets.setLevelBackground(1, getLevel().getStage());
+                    } else if (getLevel().level == Level.LevelName.Level2) {
+                        Assets.setLevelBackground(2, getLevel().getStage());
+                    }
                     for (int i = 1; i <= 5; i++) {
                         getLevel().getEnemies().add(new Enemy(getLevel().getGame().getWidth() + 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
 

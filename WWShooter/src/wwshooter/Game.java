@@ -190,6 +190,7 @@ public class Game implements Runnable {
                 break;
             case 4:
                 this.level = new Level(Level.LevelName.Level2, this);
+                Assets.setLevelBackground(2, 1);
                 break;
         }
     }
@@ -296,7 +297,7 @@ public class Game implements Runnable {
         
         // Saves the game
         if (getKeyManager().g) {
-            save();
+            changeLevel();
         }
         
         // Loads a game

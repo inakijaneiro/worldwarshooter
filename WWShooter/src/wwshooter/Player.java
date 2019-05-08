@@ -281,13 +281,13 @@ public class Player extends Item {
                     } else if (getLevel().level == Level.LevelName.Level3) {
                         Assets.setLevelBackground(3, getLevel().getStage());
                         for (int i = 1; i <= 6; i++) {
-                            getLevel().getEnemies().add(new Enemy(width + 300 * i, height - 350, 150, 350, getLevel(), 'l'));
+                            getLevel().getEnemies().add(new Enemy(getLevel().getGame().getWidth() + 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
                         }
                         for (int i = 1; i <= 6; i++) {
-                            getLevel().getEnemies().add(new Enemy(- 300 * i, height - 350, 150, 350, getLevel(), 'r'));
+                            getLevel().getEnemies().add(new Enemy(- 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'r'));
                         }
-                        getLevel().getRocketLaunchers().add(new RocketLauncher(width + 300, height - 350, 150, 350, getLevel(), 'l'));
-                        getLevel().getRocketLaunchers().add(new RocketLauncher(-300, height - 350, 150, 350, getLevel(), 'r'));
+                        getLevel().getRocketLaunchers().add(new RocketLauncher(getLevel().getGame().getWidth() + 300, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
+                        getLevel().getRocketLaunchers().add(new RocketLauncher(-300, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'r'));
                     }
                 } else {
                     getLevel().getGame().changeLevel();

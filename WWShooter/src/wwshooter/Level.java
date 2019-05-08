@@ -68,7 +68,7 @@ public class Level {
                 Assets.menuMusic.stop();
                 Assets.backgroundMusic.setLooping(true);
                 Assets.backgroundMusic.play();
-                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                this.player = new Player(150, height - 350, 150, 350, 5, this);
                 for (int i = 1; i <= 5; i++) {
                     enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
                 }
@@ -78,7 +78,7 @@ public class Level {
                 this.stage = 1;
                 break;
             case Level2:
-                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                this.player = new Player(150, height - 350, 150, 350, 5, this);
                 for (int i = 1; i <= 5; i++) {
                     enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
                 }
@@ -90,7 +90,7 @@ public class Level {
                 this.stage = 1;
                 break;
             case Level3:
-                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                this.player = new Player(150, height - 350, 150, 350, 5, this);
                 for (int i = 1; i <= 6; i++) {
                     enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
                 }
@@ -144,7 +144,7 @@ public class Level {
                 Assets.menuMusic.stop();
                 Assets.backgroundMusic.setLooping(true);
                 Assets.backgroundMusic.play();
-                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                this.player = new Player(150, height - 350, 150, 350, 5, this);
                 break;
         }
         this.settingsMenu = false;
@@ -444,7 +444,6 @@ public class Level {
                         if (bullet.intersecta(rocketLaunchers.get(j))) {
                             Assets.enemyHurt.play();
                             rocketLaunchers.remove(j);
-                            bullets.remove(i);
                             break;
                         }
                     }

@@ -29,7 +29,7 @@ public class Level {
     private Animation arrowAnimation;
 
     enum LevelName {
-        MainMenu, Level1, Level2, Chapter1, Chapter2, Chapter3
+        MainMenu, Level1, Level2, Level3, Chapter1, Chapter2, Chapter3
     }
     LevelName level;
 
@@ -68,6 +68,14 @@ public class Level {
                 }
                 this.stage = 1;
                 break;
+            case Level3:
+                Assets.menuMusic.stop();
+                Assets.backgroundMusic.setLooping(true);
+                Assets.backgroundMusic.play();
+                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                this.stage = 1;
+                break;
+
         }
         this.settingsMenu = false;
         this.arrowAnimation = new Animation(Assets.nextArrow, 90);
@@ -270,20 +278,20 @@ public class Level {
                 }
 
                 //Collision of enemy bullets with player
-                int target = player.getX() + player.getWidth()/2;
+                int target = player.getX() + player.getWidth() / 2;
                 for (int i = 0; i < enemyBullets.size(); i++) {
-                    Bullet bulletEnemy = enemyBullets.get(i);             
-                     if(bulletEnemy.intersecta(player) && !getKeyManager().down){
+                    Bullet bulletEnemy = enemyBullets.get(i);
+                    if (bulletEnemy.intersecta(player) && !getKeyManager().down) {
                         if (bulletEnemy.getX() <= target && bulletEnemy.getX() >= target - 10) {
-                            getGame().setHealth(getGame().getHealth()-1);
-                            
-                            if(getGame().getHealth()==0){
-                                getGame().setLives(getGame().getLives()-1);
+                            getGame().setHealth(getGame().getHealth() - 1);
+
+                            if (getGame().getHealth() == 0) {
+                                getGame().setLives(getGame().getLives() - 1);
                                 getGame().setHealth(3);
                             }
-                            enemyBullets.remove(i); 
+                            enemyBullets.remove(i);
                         }
-                     } 
+                    }
                 }
                 for (Bullet bullet : enemyBullets) {
                     bullet.tick();
@@ -292,10 +300,13 @@ public class Level {
                     enemy.tick();
                 }
                 break;
+            case Level3:
+                player.tick();
+                break;
             case Chapter1:
             case Chapter2:
             case Chapter3:
-                if ((getKeyManager().space || getKeyManager().enter) && getKeyManager().isPressable()){
+                if ((getKeyManager().space || getKeyManager().enter) && getKeyManager().isPressable()) {
                     getKeyManager().setPressable(false);
                     getGame().changeLevel();
                 }
@@ -347,6 +358,13 @@ public class Level {
                     bullet.render(g);
                 }
                 break;
+            case Level3:
+                g.drawImage(Assets.level1Background, 0, 0, width, height, null);
+                player.render(g);
+                if (enemies.isEmpty()) {
+                    g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
+                }
+                break;
             case Chapter1:
                 g.drawImage(Assets.chapter1, 0, 0, width, height, null);
                 break;
@@ -356,7 +374,7 @@ public class Level {
             case Chapter3:
                 g.drawImage(Assets.chapter3, 0, 0, width, height, null);
                 break;
-                
+
         }
     }
 }

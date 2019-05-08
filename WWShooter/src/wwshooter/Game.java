@@ -192,6 +192,13 @@ public class Game implements Runnable {
                 this.level = new Level(Level.LevelName.Level2, this);
                 Assets.setLevelBackground(2, 1);
                 break;
+            case 5:
+                this.level = new Level(Level.LevelName.Chapter3, this);
+                break;
+            case 6:
+                this.level = new Level(Level.LevelName.Level3, this);
+                Assets.setLevelBackground(3,1);
+                break;
         }
     }
     

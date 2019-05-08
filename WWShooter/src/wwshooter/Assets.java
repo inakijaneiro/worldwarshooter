@@ -40,6 +40,7 @@ public class Assets {
     public static BufferedImage volumePill;
     public static BufferedImage lives;
     public static BufferedImage pause;
+    public static BufferedImage nextArrow[];
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -83,6 +84,7 @@ public class Assets {
         firstEnemyRun = new BufferedImage[6];
         firstEnemyRunR = new BufferedImage[6];
         firstEnemyShootR = new BufferedImage[6];
+        nextArrow = new BufferedImage[8];
 
         playerCrouch[0] = ImageLoader.loadImage("/player_sprite/Crouch1.png");
         playerCrouchR[0] = ImageLoader.loadImage("/player_sprite/CrouchR1.png");
@@ -118,6 +120,12 @@ public class Assets {
             firstEnemyRunR[i] = ImageLoader.loadImage(path);
             path = "/enemy_sprite/Terrorist1ShootR" + i + ".png";
             firstEnemyShootR[i] = ImageLoader.loadImage(path);
+        }
+        
+        for (int i = 0; i < 8; i++) {
+            //Arrow
+            String path = "/images/arrow" + (i+ 1) + ".png";
+            nextArrow[i] = ImageLoader.loadImage(path);
         }
 
         menuMusic = new SoundClip("/sounds/menuMusic.wav");

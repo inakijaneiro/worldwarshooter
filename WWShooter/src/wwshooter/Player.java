@@ -89,6 +89,7 @@ public class Player extends Item {
 
     /**
      * Returns the state of the player
+     *
      * @return state
      */
     public State getState() {
@@ -102,13 +103,13 @@ public class Player extends Item {
      */
     public void save(Formatter file) {
         file.format("%s%s%s%s", getX() + " ", getY() + " ", getWidth() + " ", getHeight() + " ");
-        if (getState() == State.IDLE){
+        if (getState() == State.IDLE) {
             file.format("%s", 1 + " ");
-        } else if (getState() == State.RUN){
+        } else if (getState() == State.RUN) {
             file.format("%s", 2 + " ");
-        } else if (getState() == State.SHOOT){
+        } else if (getState() == State.SHOOT) {
             file.format("%s", 3 + " ");
-        } else if (getState() == State.CROUCH){
+        } else if (getState() == State.CROUCH) {
             file.format("%s", 4 + " ");
         }
     }
@@ -125,7 +126,7 @@ public class Player extends Item {
         setWidth(w);
         setHeight(h);
         switch (s) {
-            case 1: 
+            case 1:
                 state = State.IDLE;
                 break;
             case 2:
@@ -134,9 +135,9 @@ public class Player extends Item {
             case 3:
                 state = State.SHOOT;
                 break;
-            case 4: 
+            case 4:
                 if (direction == Direction.LEFT) {
-                    setX(getX() + (int)(originalWidth / 2));
+                    setX(getX() + (int) (originalWidth / 2));
                 }
                 setY(getY() - (int) (originalHeight / 2));
                 state = State.CROUCH;
@@ -146,7 +147,7 @@ public class Player extends Item {
                 break;
         }
     }
-    
+
     /**
      * Ticker for the class
      */
@@ -173,8 +174,7 @@ public class Player extends Item {
             // Since the animations have different widths, it adjusts.
             setWidth(originalWidth + (int) (originalWidth * 0.1));
         }
-      
-        
+
         if (goingLeft) {
             this.direction = Direction.LEFT;
             setX(getX() - getSpeed());
@@ -206,8 +206,7 @@ public class Player extends Item {
             if (state != State.SHOOT) {
                 if (state == State.CROUCH && direction == Direction.RIGHT) {
                     animationOffset = false;
-                } 
-                else if (direction == Direction.LEFT) {
+                } else if (direction == Direction.LEFT) {
                     if (state != State.CROUCH) {
                         setX(getX() - (int) (originalWidth * 0.8));
                         animationOffset = true;
@@ -224,7 +223,7 @@ public class Player extends Item {
                 currentAnimation.setFrames(Assets.playerShoot);
             }
 
-        }  else {
+        } else {
             // When no key is pressed goes back to idle state and adjusts width
             if (animationOffset) {
                 animationOffset = false;
@@ -232,7 +231,7 @@ public class Player extends Item {
                     setX(getX() + (int) (originalWidth * 0.8));
                 } else if (state == State.CROUCH) {
                     if (direction == Direction.LEFT) {
-                        setX(getX() + (int)(originalWidth / 2));
+                        setX(getX() + (int) (originalWidth / 2));
                     }
                     setY(getY() - (int) (originalHeight / 2));
                 }
@@ -256,32 +255,49 @@ public class Player extends Item {
             }
             if (!getLevel().getEnemies().isEmpty()){
                 setX(getLevel().getGame().getWidth() - getWidth());
-            }
-            else {
+            } else {
                 setX(0);
                 getLevel().setStage(getLevel().getStage() + 1);
                 if (getLevel().getStage() <= 3) {
                     if (getLevel().level == Level.LevelName.Level1) {
                         Assets.setLevelBackground(1, getLevel().getStage());
+                        for (int i = 1; i <= 5; i++) {
+                            getLevel().getEnemies().add(new Enemy(getLevel().getGame().getWidth() + 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
+                        }
+                        for (int i = 1; i <= 5; i++) {
+                            getLevel().getEnemies().add(new Enemy(- 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'r'));
+                        }
                     } else if (getLevel().level == Level.LevelName.Level2) {
                         Assets.setLevelBackground(2, getLevel().getStage());
-                    } else if(getLevel().level == Level.LevelName.Level3){
-                        Assets.setLevelBackground(3, getLevel().getStage());
-                    }
-                    for (int i = 1; i <= 5; i++) {
-                        getLevel().getEnemies().add(new Enemy(getLevel().getGame().getWidth() + 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
+                        for (int i = 1; i <= 5; i++) {
+                            getLevel().getEnemies().add(new Enemy(getLevel().getGame().getWidth() + 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
+                        }
+                        for (int i = 1; i <= 5; i++) {
+                            getLevel().getEnemies().add(new Enemy(- 300 * i, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'r'));
+                        }
+                        getLevel().getRocketLaunchers().add(new RocketLauncher(getLevel().getGame().getWidth() + 300, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'l'));
+                        getLevel().getRocketLaunchers().add(new RocketLauncher(-300, getLevel().getGame().getHeight() - 350, 150, 350, getLevel(), 'r'));
 
+                    } else if (getLevel().level == Level.LevelName.Level3) {
+                        Assets.setLevelBackground(3, getLevel().getStage());
+                        for (int i = 1; i <= 6; i++) {
+                            getLevel().getEnemies().add(new Enemy(width + 300 * i, height - 350, 150, 350, getLevel(), 'l'));
+                        }
+                        for (int i = 1; i <= 6; i++) {
+                            getLevel().getEnemies().add(new Enemy(- 300 * i, height - 350, 150, 350, getLevel(), 'r'));
+                        }
+                        getLevel().getRocketLaunchers().add(new RocketLauncher(width + 300, height - 350, 150, 350, getLevel(), 'l'));
+                        getLevel().getRocketLaunchers().add(new RocketLauncher(-300, height - 350, 150, 350, getLevel(), 'r'));
                     }
-                }
-                else {
+                } else {
                     getLevel().getGame().changeLevel();
                 }
             }
-        }     
+        }
         if (getX() <= 0) { // left
             setX(0);
         }
-        
+
         // Shooting with 1 second of delay
         long timeNow = System.currentTimeMillis();
         if (state == State.SHOOT && (System.currentTimeMillis() - lastShot >= 500)) {

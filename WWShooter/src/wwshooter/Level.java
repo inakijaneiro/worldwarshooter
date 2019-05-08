@@ -65,14 +65,37 @@ public class Level {
                 selector = new Selector(width / 2 - 282, 370, 35, 55, this, buttons, 20);
                 break;
             case Level1:
-            case Level2:
-            case Level3:
                 Assets.menuMusic.stop();
                 Assets.backgroundMusic.setLooping(true);
                 Assets.backgroundMusic.play();
                 this.player = new Player(0, height - 350, 150, 350, 5, this);
                 for (int i = 1; i <= 5; i++) {
                     enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
+                }
+                for (int i = 1; i <= 5; i++) {
+                    enemies.add(new Enemy(- 300 * i, height - 350, 150, 350, this, 'r'));
+                }
+                this.stage = 1;
+                break;
+            case Level2:
+                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                for (int i = 1; i <= 5; i++) {
+                    enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
+                }
+                for (int i = 1; i <= 5; i++) {
+                    enemies.add(new Enemy(- 300 * i, height - 350, 150, 350, this, 'r'));
+                }
+                this.rocketLaunchers.add(new RocketLauncher(width + 300, height - 350, 150, 350, this, 'l'));
+                this.rocketLaunchers.add(new RocketLauncher(-300, height - 350, 150, 350, this, 'r'));
+                this.stage = 1;
+                break;
+            case Level3:
+                this.player = new Player(0, height - 350, 150, 350, 5, this);
+                for (int i = 1; i <= 6; i++) {
+                    enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
+                }
+                for (int i = 1; i <= 6; i++) {
+                    enemies.add(new Enemy(- 300 * i, height - 350, 150, 350, this, 'r'));
                 }
                 this.rocketLaunchers.add(new RocketLauncher(width + 300, height - 350, 150, 350, this, 'l'));
                 this.rocketLaunchers.add(new RocketLauncher(-300, height - 350, 150, 350, this, 'r'));
@@ -89,7 +112,7 @@ public class Level {
         saving.setTimeToAnimate(120);
         saving.setCurrTimer(120);
     }
-    
+
     Level(int levelNumber, int stage, LevelName levelName, Game game) {
         this.game = game;
         this.level = levelName;
@@ -104,9 +127,8 @@ public class Level {
         this.saving = new Animation(Assets.saving, 240);
         saving.setTimeToAnimate(120);
         saving.setCurrTimer(120);
-        
         setStage(stage);
-        
+
         switch (levelName) {
             case MainMenu:
                 Assets.menuMusic.setLooping(true);
@@ -275,7 +297,7 @@ public class Level {
     public void setStage(int stage) {
         this.stage = stage;
     }
-    
+
     /**
      * Writes it's data in the saving file
      *
@@ -292,9 +314,8 @@ public class Level {
      * @param y
      */
     public void load(int x, int y) {
-      
+
     }
-    
 
     /**
      * Main tick method of the level
@@ -346,6 +367,55 @@ public class Level {
                 }
                 break;
             case Level1:
+                player.tick();
+                saving.tick();
+                if (getGame().getHealth() <= 0) {
+                    getGame().setLives(getGame().getLives() - 1);
+                    getGame().setHealth(3);
+                }
+                for (int i = 0; i < bullets.size(); i++) {
+                    Bullet bullet = bullets.get(i);
+                    //Move bullets
+                    bullet.tick();
+                    if (bullet.getX() + bullet.getWidth() >= getGame().getWidth() || bullet.getX() <= 0) {
+                        bullets.remove(i);
+                        break;
+                    }
+                    for (int j = 0; j < enemies.size(); j++) {
+                        if (bullet.intersecta(enemies.get(j))) {
+                            Assets.enemyHurt.play();
+                            enemies.remove(j);
+                            bullets.remove(i);
+                            break;
+                        }
+                    }
+                    for (int j = 0; j < rocketLaunchers.size(); j++) {
+                        if (bullet.intersecta(rocketLaunchers.get(j))) {
+                            Assets.enemyHurt.play();
+                            rocketLaunchers.remove(j);
+                            bullets.remove(i);
+                            break;
+                        }
+                    }
+                }
+                //Collision of enemy bullets with player
+                int target = player.getX() + player.getWidth() / 2;
+                for (int i = 0; i < enemyBullets.size(); i++) {
+                    Bullet bulletEnemy = enemyBullets.get(i);
+                    if (bulletEnemy.intersecta(player) && !getKeyManager().down) {
+                        if (bulletEnemy.getX() <= target && bulletEnemy.getX() >= target - 10) {
+                            getGame().setHealth(getGame().getHealth() - 1);
+                            enemyBullets.remove(i);
+                        }
+                    }
+                }
+                for (Bullet bullet : enemyBullets) {
+                    bullet.tick();
+                }
+                for (Enemy enemy : enemies) {
+                    enemy.tick();
+                }
+                break;
             case Level2:
             case Level3:
                 player.tick();
@@ -389,7 +459,7 @@ public class Level {
                 }
 
                 //Collision of enemy bullets with player
-                int target = player.getX() + player.getWidth() / 2;
+                target = player.getX() + player.getWidth() / 2;
                 for (int i = 0; i < enemyBullets.size(); i++) {
                     Bullet bulletEnemy = enemyBullets.get(i);
                     if (bulletEnemy.intersecta(player) && !getKeyManager().down) {
@@ -495,10 +565,10 @@ public class Level {
                 for (Bullet rocket : rockets) {
                     rocket.render(g);
                 }
-                if(getKeyManager().g){
+                if (getKeyManager().g) {
                     saving.setCurrTimer(0);
                 }
-                if(saving.getCurrTimer() < saving.getTimeToAnimate()){
+                if (saving.getCurrTimer() < saving.getTimeToAnimate()) {
                     g.drawImage(saving.getCurrentFrame(), 1100, 600, 150, 75, null);
                     saving.setCurrTimer(saving.getCurrTimer() + 1);
                 }

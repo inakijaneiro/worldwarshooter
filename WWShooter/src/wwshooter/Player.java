@@ -249,6 +249,11 @@ public class Player extends Item {
 
         // Collisions with the screen
         if (getX() + getWidth() >= getLevel().getGame().getWidth()) { // right
+            if(getLevel().level == Level.LevelName.Level3){
+                    if(getLevel().getStage() == 3 && getLevel().getBoss().getHealth() > 0){
+                        setX(getLevel().getGame().getWidth() - getWidth());
+                    }
+            }
             if (!getLevel().getEnemies().isEmpty()){
                 setX(getLevel().getGame().getWidth() - getWidth());
             }

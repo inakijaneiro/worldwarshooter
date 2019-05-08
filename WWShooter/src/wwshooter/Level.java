@@ -31,6 +31,7 @@ public class Level {
     private ArrayList<RocketLauncher> rocketLaunchers;
     private Animation arrowAnimation;
     private Animation saving;
+    private Tank boss;
 
     enum LevelName {
         MainMenu, Level1, Level2, Level3, Chapter1, Chapter2, Chapter3
@@ -76,6 +77,9 @@ public class Level {
                 this.rocketLaunchers.add(new RocketLauncher(width + 300, height - 350, 150, 350, this, 'l'));
                 this.rocketLaunchers.add(new RocketLauncher(-300, height - 350, 150, 350, this, 'r'));
                 this.stage = 1;
+                if(level == Level.LevelName.Level3){
+                    this.boss = new Tank(800, 150, 500, 800, this);
+                }
                 break;
 
         }
@@ -125,6 +129,10 @@ public class Level {
         this.arrowAnimation = new Animation(Assets.nextArrow, 90);
     }
 
+    public Tank getBoss() {
+        return boss;
+    }
+    
     /**
      * Get game method
      *
@@ -409,6 +417,9 @@ public class Level {
                 for (RocketLauncher rocketLauncher : rocketLaunchers) {
                     rocketLauncher.tick();
                 }
+                if(level == Level.LevelName.Level3 && stage == 3 && boss.getHealth() > 0){
+                    boss.tick();
+                }
                 break;
 //            case Level3:
 //                player.tick();
@@ -456,7 +467,13 @@ public class Level {
             case Level3:
                 g.drawImage(Assets.level1Background, 0, 0, width, height, null);
                 if (enemies.isEmpty() && rocketLaunchers.isEmpty()) {
-                    g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
+                    if(level == Level.LevelName.Level3 && stage == 3){
+                        if(boss.getHealth() <= 0){
+                            g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
+                        }
+                    }else{
+                        g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
+                    }
                 }
                 player.render(g);
                 for (int i = 0; i < bullets.size(); i++) {
@@ -481,6 +498,11 @@ public class Level {
                 if(saving.getCurrTimer() < saving.getTimeToAnimate()){
                     g.drawImage(saving.getCurrentFrame(), 1100, 600, 150, 75, null);
                     saving.setCurrTimer(saving.getCurrTimer() + 1);
+                }
+                if(level == Level.LevelName.Level3 && stage == 3){
+                    if(boss.getHealth() > 0){
+                        boss.render(g);
+                    }
                 }
                 break;
 //            case Level3:

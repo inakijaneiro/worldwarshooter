@@ -214,6 +214,7 @@ public class Game implements Runnable {
      */
     private void restart() {
         setLives(3);
+        levelNumber = 0;
         level = null;
         this.level = new Level(Level.LevelName.MainMenu, this);
     }

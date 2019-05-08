@@ -96,6 +96,7 @@ public class Assets {
         firstEnemyIdleR = new BufferedImage[8];
         firstEnemyRun = new BufferedImage[6];
         firstEnemyRunR = new BufferedImage[6];
+        firstEnemyShoot = new BufferedImage[6];
         firstEnemyShootR = new BufferedImage[6];
         nextArrow = new BufferedImage[8];
         tank = new BufferedImage[6];
@@ -132,6 +133,8 @@ public class Assets {
             firstEnemyRun[i] = ImageLoader.loadImage(path);
             path = "/enemy_sprite/Terrorist1RunR" + i + ".png";
             firstEnemyRunR[i] = ImageLoader.loadImage(path);
+            path = "/enemy_sprite/Terrorist1Shoot" + i + ".png";
+            firstEnemyShoot[i] = ImageLoader.loadImage(path);
             path = "/enemy_sprite/Terrorist1ShootR" + i + ".png";
             firstEnemyShootR[i] = ImageLoader.loadImage(path);
             

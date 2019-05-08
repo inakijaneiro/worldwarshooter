@@ -92,7 +92,7 @@ public class Enemy extends Item {
         boolean isShooting = false;
         boolean isIdle = false;
         currentAnimation.tick();
-        if (Math.abs(player.getX() - getX()) < 700 && isInBounds()) {
+        if (Math.abs(player.getX() - getX()) < 500 && isInBounds()) {
             if (player.getState() != Player.State.CROUCH){
                 if (state != State.SHOOT) {
                     if (shootingOffset){
@@ -113,7 +113,13 @@ public class Enemy extends Item {
             }
         } 
         else {
-            setX(getX() - 2);
+            if(player.getX() - getX() > 0){
+                direction = Direction.RIGHT;
+                setX(getX() + 2);
+            } else{
+                direction = Direction.LEFT;
+                setX(getX() - 2);
+            }
             isShooting = false;
             isIdle = false;
             state = State.RUN;
@@ -128,7 +134,9 @@ public class Enemy extends Item {
                     setX(getX() - (int) (originalWidth * 0.4));
                 }
                 shootingOffset = true;
-            } else {
+            } else if(direction == Direction.RIGHT){
+                currentAnimation.setFrames(Assets.firstEnemyShoot);
+            }else {
                 setWidth(originalWidth);
             }
             // Shooting with 1 second of delay
@@ -158,7 +166,12 @@ public class Enemy extends Item {
                 shootingOffset = false;
             }
             setWidth(originalWidth);
-            currentAnimation.setFrames(Assets.firstEnemyRunR);
+            if(direction == Direction.LEFT){
+                currentAnimation.setFrames(Assets.firstEnemyRunR);
+            } else {
+                currentAnimation.setFrames(Assets.firstEnemyRun);
+            }
+            
         }
 
     }

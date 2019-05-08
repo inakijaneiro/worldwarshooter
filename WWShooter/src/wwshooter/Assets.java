@@ -48,6 +48,7 @@ public class Assets {
     public static BufferedImage chapter2;
     public static BufferedImage chapter3;
     public static BufferedImage tank[];
+    public static BufferedImage notSaved;
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -83,6 +84,7 @@ public class Assets {
         chapter1 = ImageLoader.loadImage("/chapters/ChapterI.png");
         chapter2 = ImageLoader.loadImage("/chapters/ChapterII.png");
         chapter3 = ImageLoader.loadImage("/chapters/ChapterIII.png");
+        notSaved = ImageLoader.loadImage("/images/notSaved.png");
 
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];

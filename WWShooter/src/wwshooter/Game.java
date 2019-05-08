@@ -433,10 +433,10 @@ public class Game implements Runnable {
             save();
         }
         
-        // Loads a game
-        if (getKeyManager().c) {
-            changeLevel();
-        }
+//        // Loads a game
+//        if (getKeyManager().c) {
+//            changeLevel();
+//        }
         
         // Restarts the game
 //        if (getKeyManager().r) {

@@ -34,14 +34,16 @@ public class Enemy extends Item {
     };
     private State state;
     private Direction direction;
+
     /**
      * Main constructor of enemy
+     *
      * @param x
      * @param y
      * @param width
      * @param height
      * @param level
-     * @param direction 
+     * @param direction
      */
     public Enemy(int x, int y, int width, int height, Level level, char direction) {
         super(x, y, width, height);
@@ -54,14 +56,16 @@ public class Enemy extends Item {
         this.direction = direction == 'l' ? Direction.LEFT : Direction.RIGHT;
         this.shootingOffset = false;
     }
+
     /**
      * Get's the level the enemy is in
-     * @return 
+     *
+     * @return
      */
     public Level getLevel() {
         return this.level;
     }
-    
+
     /**
      * Creates a Circle object and simulates the "hit box" of the ball
      *
@@ -70,13 +74,14 @@ public class Enemy extends Item {
     public Rectangle getHitbox() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-    
+
     /**
      * Checks if the enemy is inside the stage
+     *
      * @return if enemy inbounds
      */
-    public boolean isInBounds(){
-        
+    public boolean isInBounds() {
+
         if (getX() + getWidth() <= getLevel().getGame().getWidth()) {
             if (getX() >= 0) {
                 return true;
@@ -84,56 +89,55 @@ public class Enemy extends Item {
         }
         return false;
     }
+
     /**
      * Main tick method of the enemy
      */
     @Override
     public void tick() {
-        boolean isShooting = false;
-        boolean isIdle = false;
         currentAnimation.tick();
-        if (Math.abs(player.getX() - getX()) < 700 && isInBounds()) {
-            if (player.getState() != Player.State.CROUCH){
+        if (Math.abs(player.getX() - getX()) < 500 && isInBounds()) {
+            if (player.getX() - getX() > 0) {
+                direction = Direction.RIGHT;
+            } else {
+                direction = Direction.LEFT;
+            }
+
+            if (player.getState() != Player.State.CROUCH) {
                 if (state != State.SHOOT) {
-                    if (shootingOffset){
+                    if (direction == Direction.LEFT) {
                         setX(getX() - (int) (originalWidth * 0.4));
                     }
-                    currentAnimation.setIndex(0);
-                }
-                setWidth(originalWidth + (int) (originalWidth * 0.4));
-                state = State.SHOOT;
-                isShooting = true;
-            } 
-            else {
-                if (state == State.SHOOT) {
-                    setWidth(originalWidth);
-                }
-                isShooting = false;
-                isIdle = true;
-            }
-        } 
-        else {
-            setX(getX() - 2);
-            isShooting = false;
-            isIdle = false;
-            state = State.RUN;
-        }
-
-        if (isShooting) {
-            state = State.SHOOT;
-            if (direction == Direction.LEFT) {
-                currentAnimation.setFrames(Assets.firstEnemyShootR);
-                if (!shootingOffset) {
                     setWidth(originalWidth + (int) (originalWidth * 0.4));
-                    setX(getX() - (int) (originalWidth * 0.4));
+                    currentAnimation.setIndex(0);
+                    shootingOffset = true;
+                    state = State.SHOOT;
                 }
-                shootingOffset = true;
             } else {
-                setWidth(originalWidth);
+                if (shootingOffset) {
+                    setWidth(originalWidth);
+                    if (direction == Direction.LEFT) {
+                        setX(getX() + (int) (originalWidth * 0.4));
+                    }
+                    shootingOffset = false;
+                }
+                if (direction == Direction.RIGHT) {
+                    currentAnimation.setFrames(Assets.firstEnemyIdle);
+                } else {
+                    currentAnimation.setFrames(Assets.firstEnemyIdleR);
+                }
+                state = State.IDLE;
             }
-            // Shooting with 1 second of delay
+
+            if (state == State.SHOOT) {
+                if (direction == Direction.RIGHT) {
+                    currentAnimation.setFrames(Assets.firstEnemyShoot);
+                } else {
+                    currentAnimation.setFrames(Assets.firstEnemyShootR);
+                }
+            }
             long timeNow = System.currentTimeMillis();
-            if ((System.currentTimeMillis() - lastShot >= 1000)) {
+            if ((System.currentTimeMillis() - lastShot >= 1000) && state == State.SHOOT) {
                 lastShot = timeNow;
                 if (direction == Direction.RIGHT) {
                     getLevel().getEnemyBullets().add(new Bullet(getX() + getWidth() - 50, getY() + getHeight() / 2, 7, 7, 5, getLevel(), Bullet.Direction.RIGHT));
@@ -142,29 +146,30 @@ public class Enemy extends Item {
                 }
 
             }
-            isShooting = false;
-        } 
-        else if (isIdle) {
-            
-            if (state == State.SHOOT) {
-                currentAnimation.setIndex(0);
-                setX(getX() + (int) (originalWidth * 0.4));
-            } 
-            state = State.IDLE;
-            currentAnimation.setFrames(Assets.firstEnemyIdleR);
+
         } else {
             if (shootingOffset) {
-                setX(getX() + (int) (originalWidth * 0.4));
+                setWidth(originalWidth);
+                if (direction == Direction.LEFT) {
+                    setX(getX() + (int) (originalWidth * 0.4));
+                }
                 shootingOffset = false;
             }
-            setWidth(originalWidth);
-            currentAnimation.setFrames(Assets.firstEnemyRunR);
+            if (direction == Direction.RIGHT) {
+                currentAnimation.setFrames(Assets.firstEnemyRun);
+                setX(getX() + 2);
+            } else {
+                currentAnimation.setFrames(Assets.firstEnemyRunR);
+                setX(getX() - 2);
+            }
+            state = State.RUN;
         }
-
     }
+
     /**
      * Render method of the enemy
-     * @param g 
+     *
+     * @param g
      */
     @Override
     public void render(Graphics g) {

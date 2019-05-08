@@ -145,6 +145,9 @@ public class Level {
                 Assets.backgroundMusic.setLooping(true);
                 Assets.backgroundMusic.play();
                 this.player = new Player(150, height - 350, 150, 350, 5, this);
+                if(level == Level.LevelName.Level3){
+                    this.boss = new Tank(800, 150, 500, 800, this);
+                }
                 break;
         }
         this.settingsMenu = false;

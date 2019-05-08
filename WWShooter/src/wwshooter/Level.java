@@ -126,6 +126,10 @@ public class Level {
         this.arrowAnimation = new Animation(Assets.nextArrow, 90);
     }
 
+    public Tank getBoss() {
+        return boss;
+    }
+    
     /**
      * Get game method
      *

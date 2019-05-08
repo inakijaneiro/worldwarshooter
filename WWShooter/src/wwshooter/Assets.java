@@ -27,6 +27,7 @@ public class Assets {
     public static BufferedImage playerShoot[];
     public static BufferedImage playerShootR[];
     public static BufferedImage playerCrouch[];
+    public static BufferedImage playerCrouchR[];
     public static BufferedImage firstEnemyRun[];
     public static BufferedImage firstEnemyRunR[];
     public static BufferedImage firstEnemyShoot[];
@@ -38,6 +39,7 @@ public class Assets {
     public static BufferedImage musicController;
     public static BufferedImage volumePill;
     public static BufferedImage lives;
+    public static BufferedImage pause;
 
     public static SoundClip menuMusic;
     public static SoundClip backgroundMusic;
@@ -66,6 +68,7 @@ public class Assets {
         musicController = ImageLoader.loadImage("/images/MusicController.png");
         volumePill = ImageLoader.loadImage("/images/VolumePill.png");
         lives = ImageLoader.loadImage("/images/helmet.png");
+        pause = ImageLoader.loadImage("/images/pause.png");
 
         playerIdle = new BufferedImage[8];
         playerIdleR = new BufferedImage[8];
@@ -74,6 +77,7 @@ public class Assets {
         playerShoot = new BufferedImage[6];
         playerShootR = new BufferedImage[6];
         playerCrouch = new BufferedImage[1];
+        playerCrouchR = new BufferedImage[1];
         firstEnemyIdle = new BufferedImage[8];
         firstEnemyIdleR = new BufferedImage[8];
         firstEnemyRun = new BufferedImage[6];
@@ -81,6 +85,7 @@ public class Assets {
         firstEnemyShootR = new BufferedImage[6];
 
         playerCrouch[0] = ImageLoader.loadImage("/player_sprite/Crouch1.png");
+        playerCrouchR[0] = ImageLoader.loadImage("/player_sprite/CrouchR1.png");
 
         for (int i = 0; i < 8; i++) {
             //player
@@ -121,5 +126,14 @@ public class Assets {
         selectSound = new SoundClip("/sounds/selectSound.wav");
         shotSound = new SoundClip("/sounds/shotSound.wav");
         enemyHurt = new SoundClip("/sounds/enemyHurt.wav");
+    }
+    
+    public static void setVolume(float volume){
+        menuMusic.setVolume(volume);
+        backgroundMusic.setVolume(volume);
+        selectorSound.setVolume(volume);
+        selectSound.setVolume(volume);
+        shotSound.setVolume(volume);
+        enemyHurt.setVolume(volume);
     }
 }

@@ -32,6 +32,7 @@ public class KeyManager implements KeyListener {
 
     public KeyManager() {
         keys = new boolean[256];
+        
         this.pressable = true;
     }
 
@@ -49,17 +50,22 @@ public class KeyManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // set true to every key pressed
-        keys[e.getKeyCode()] = true;
-        movement = true;
+        // set true to every key pressed if a key isnt being pressed
+        if(!movement){
+            keys[e.getKeyCode()] = true;
+            movement = true;
+        } 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // set false to every key released
-        keys[e.getKeyCode()] = false;
-        movement = false;
-        setPressable(true);
+        // set false to a key only if was pressed 
+        if(movement && keys[e.getKeyCode()]){
+            keys[e.getKeyCode()] = false;
+            movement = false;
+            setPressable(true);
+        }  
+        
     }
     
     /**
@@ -78,5 +84,4 @@ public class KeyManager implements KeyListener {
         space = keys[KeyEvent.VK_SPACE];
         enter = keys[KeyEvent.VK_ENTER];
     }
-    
 }

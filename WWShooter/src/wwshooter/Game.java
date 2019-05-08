@@ -42,7 +42,7 @@ public class Game implements Runnable {
     private Scanner scanner;                // to store the scanner to read a game file
     private boolean win;                    // when the player won the game
     private Level level;
-    private int volume;
+    private float volume;
 
     
     /**
@@ -59,7 +59,7 @@ public class Game implements Runnable {
         this.running = false;
         this.keyManager = new KeyManager();
         this.lives = 3;
-        this.volume = 10;
+        this.volume = -10;
     }
 
     /**
@@ -149,15 +149,16 @@ public class Game implements Runnable {
      * Gets the volume of the game
      * @return 
      */
-    public int getVolume() {
+    public float getVolume() {
         return volume;
     }
     /**
      * Sets the volume of the game
      * @param volume 
      */
-    public void setVolume(int volume) {
+    public void setVolume(float volume) {
         this.volume = volume;
+        Assets.setVolume(volume);
     }
     /**
      * Method to change level
@@ -225,7 +226,7 @@ public class Game implements Runnable {
         Assets.init();
         this.level = new Level(Level.LevelName.MainMenu, this);
         setScore(0);
-
+        Assets.setVolume(-10);
     }
 
     @Override
@@ -266,7 +267,7 @@ public class Game implements Runnable {
     private void tick() {
         keyManager.tick();
         // Sets the game paused and unpaused
-        if (getKeyManager().p && getKeyManager().isPressable()) {
+        if (getKeyManager().p && getKeyManager().isPressable() && level.level != Level.LevelName.MainMenu) {
             setPause(!isPaused());
             getKeyManager().setPressable(false);
         }
@@ -296,7 +297,25 @@ public class Game implements Runnable {
             }
         }
         
-       
+       if(isPaused()){
+           if (getKeyManager().right && getKeyManager().isPressable()) {
+                    if (getVolume() >= 0) {
+                        setVolume(0);
+                    } else {
+                        setVolume(getVolume() + 2);
+                    }
+                    getKeyManager().setPressable(false);
+                }
+
+                if (getKeyManager().left && getKeyManager().isPressable()) {
+                    if (getVolume() <= -20) {
+                        setVolume(-20);
+                    } else {
+                        setVolume(getVolume() - 2);
+                    }
+                    getKeyManager().setPressable(false);
+                }
+       }
         
             
         // When the game ends, sets the flags to true or false, and waits for
@@ -329,10 +348,13 @@ public class Game implements Runnable {
             // Draws background, score and limit
             level.render(g);
             
-            /* Mover a Level
-            for (int i = 0; i < bullets.size(); i++) {
-                bullets.get(i).render(g);
-            }*/
+            if (isPaused()) {
+                g.drawImage(Assets.pause, 0, 0, 1280, 720, null);
+                g.drawImage(Assets.musicController, width / 2 - 200, 380, 400, 100, null);
+                for (int i = 0; i < 10 - getVolume() / -2; i++) {
+                    g.drawImage(Assets.volumePill, width / 2 - 159 + i * 32, 440, 30, 30, null);
+                }
+            }
 
             bs.show();
             g.dispose();

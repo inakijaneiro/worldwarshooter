@@ -18,6 +18,7 @@ public class Animation {
     private long lastTime;  // to save the previous time of the animation
     private long timer;     // to acumulate the time of the animation
     private BufferedImage[] frames; // to store every image - frame
+    private int size;
     private boolean start;
     public boolean ended;
     private int timeToAnimate;
@@ -37,6 +38,7 @@ public class Animation {
         lastTime = System.currentTimeMillis(); // getting the initial time
         this.currTimer = 0;
         this.timeToAnimate = 0;
+        this.size = frames.length;
     }
 
     /**
@@ -48,12 +50,19 @@ public class Animation {
         return this.frames[index];
     }
 
+    public int getSize(){
+        return this.size;
+    }
     /**
      * Sets the frames from Assets package
      * @param BufferedImage[]
      */
     public void setFrames(BufferedImage[] frames) {
         this.frames = frames;
+        this.size = frames.length;
+        if(getIndex() >= getSize()){
+            setIndex(0);
+        }
     }
     /**
      * Get's the index of the animation

@@ -141,6 +141,7 @@ public class Enemy extends Item {
 
             if (player.getState() != Player.State.CROUCH) {
                 if (state != State.SHOOT) {
+                    currentAnimation.setIndex(0);
                     if (direction == Direction.LEFT) {
                         setX(getX() - (int) (originalWidth * 0.4));
                     }
@@ -151,6 +152,7 @@ public class Enemy extends Item {
                 }
             } else {
                 if (shootingOffset) {
+                    currentAnimation.setIndex(0);
                     setWidth(originalWidth);
                     if (direction == Direction.LEFT) {
                         setX(getX() + (int) (originalWidth * 0.4));

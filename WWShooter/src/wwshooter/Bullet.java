@@ -17,6 +17,7 @@ public class Bullet extends Item{
     private Level level;
     private int speed;
     private boolean visible;
+    private char type;
     public enum Direction {
         LEFT, RIGHT
     }
@@ -37,6 +38,15 @@ public class Bullet extends Item{
         this.speed = speed;
         this.visible = false;
         this.direction = direction;
+    }
+    
+    public Bullet(int x, int y,int width, int height, int speed, Level level, Direction direction, char type){
+        super(x, y, width, height);
+        this.level = level;
+        this.speed = speed;
+        this.visible = false;
+        this.direction = direction;
+        this.type = type;
     }
     /**
      * Method to check if the bullet is visible
@@ -105,7 +115,15 @@ public class Bullet extends Item{
      */
     @Override
     public void render(Graphics g) {
-            g.drawImage(Assets.bullet, getX(),getY(), getWidth(), getHeight(), null); 
+        if (type == 'r'){
+            if(direction == Direction.LEFT){
+                g.drawImage(Assets.rocketR, getX(), getY(), getWidth(), getHeight(), null);
+            }else {
+                g.drawImage(Assets.rocket, getX(), getY(), getWidth(), getHeight(), null);
+            }
+        }else{
+          g.drawImage(Assets.bullet, getX(),getY(), getWidth(), getHeight(), null);  
+        }
     }
     
 }

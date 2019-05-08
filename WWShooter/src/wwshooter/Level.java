@@ -25,7 +25,9 @@ public class Level {
     private boolean settingsMenu;
     private LinkedList<Bullet> bullets;
     private LinkedList<Bullet> enemyBullets;
+    private LinkedList<Bullet> rockets;
     private ArrayList<Enemy> enemies;
+    private ArrayList<RocketLauncher> rocketLaunchers;
     private Animation arrowAnimation;
 
     enum LevelName {
@@ -48,6 +50,8 @@ public class Level {
         this.bullets = new LinkedList<Bullet>();
         this.enemyBullets = new LinkedList<Bullet>();
         this.enemies = new ArrayList<Enemy>();
+        this.rocketLaunchers = new ArrayList<RocketLauncher>();
+        this.rockets = new LinkedList<Bullet>();
         switch (levelName) {
             case MainMenu:
                 Assets.menuMusic.setLooping(true);
@@ -67,6 +71,8 @@ public class Level {
                 for (int i = 1; i <= 5; i++) {
                     enemies.add(new Enemy(width + 300 * i, height - 350, 150, 350, this, 'l'));
                 }
+                this.rocketLaunchers.add(new RocketLauncher(width+300, height - 350, 150, 350, this, 'l'));
+                this.rocketLaunchers.add(new RocketLauncher(-300, height-350, 150, 350, this, 'r'));
                 this.stage = 1;
                 break;
 //            case Level3:
@@ -100,6 +106,15 @@ public class Level {
         return bullets;
     }
 
+    /**
+     * Method to get the rockets of the level
+     *
+     * @return <code>LikedList</code> bullets
+     */
+    public LinkedList<Bullet> getRockets() {
+        return rockets;
+    }
+    
     /**
      * Method to get the enemy bullets
      *
@@ -278,6 +293,14 @@ public class Level {
                         }
                     }
                 }
+                for(int i = 0; i < rockets.size(); i++){
+                    Bullet rocket = rockets.get(i);
+                    rocket.tick();
+                    if (rocket.getX() + rocket.getWidth() >= getGame().getWidth() || rocket.getX() <= 0) {
+                        rockets.remove(i);
+                        break;
+                    }
+                }
 
                 //Collision of enemy bullets with player
                 int target = player.getX() + player.getWidth() / 2;
@@ -300,6 +323,9 @@ public class Level {
                 }
                 for (Enemy enemy : enemies) {
                     enemy.tick();
+                }
+                for(RocketLauncher rocketLauncher : rocketLaunchers){
+                    rocketLauncher.tick();
                 }
                 break;
 //            case Level3:
@@ -347,7 +373,7 @@ public class Level {
             case Level2:
             case Level3:
                 g.drawImage(Assets.level1Background, 0, 0, width, height, null);
-                if (enemies.isEmpty()) {
+                if (enemies.isEmpty() && rocketLaunchers.isEmpty()) {
                     g.drawImage(arrowAnimation.getCurrentFrame(), 1000, 300, 200, 200, null);
                 }
                 player.render(g);
@@ -360,6 +386,12 @@ public class Level {
                 }
                 for (Bullet bullet : enemyBullets) {
                     bullet.render(g);
+                }
+                for(RocketLauncher rocketLauncher : rocketLaunchers){
+                    rocketLauncher.render(g);
+                }
+                for(Bullet rocket : rockets){
+                    rocket.render(g);
                 }
                 break;
 //            case Level3:

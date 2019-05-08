@@ -20,6 +20,7 @@ public class Assets {
     public static BufferedImage backButton;     // to store the back button
     public static BufferedImage selector;       // to store the settings button
     public static BufferedImage title;          // to store the title
+    
     public static BufferedImage playerIdle[];
     public static BufferedImage playerIdleR[];
     public static BufferedImage playerRun[];
@@ -28,13 +29,25 @@ public class Assets {
     public static BufferedImage playerShootR[];
     public static BufferedImage playerCrouch[];
     public static BufferedImage playerCrouchR[];
+    
     public static BufferedImage firstEnemyRun[];
     public static BufferedImage firstEnemyRunR[];
     public static BufferedImage firstEnemyShoot[];
     public static BufferedImage firstEnemyShootR[];
     public static BufferedImage firstEnemyIdle[];
     public static BufferedImage firstEnemyIdleR[];
+    
+    public static BufferedImage rocketLauncherIdle[];
+    public static BufferedImage rocketLauncherIdleR[];
+    public static BufferedImage rocketLauncherRun[];
+    public static BufferedImage rocketLauncherRunR[];
+    public static BufferedImage rocketLauncherShoot[];
+    public static BufferedImage rocketLauncherShootR[];
+    
     public static BufferedImage bullet;
+    public static BufferedImage rocket;
+    public static BufferedImage rocketR;
+    
     public static BufferedImage level1Background;
     public static BufferedImage musicController;
     public static BufferedImage volumePill;
@@ -73,7 +86,10 @@ public class Assets {
         backButton = ImageLoader.loadImage("/images/Back.png");
         selector = ImageLoader.loadImage("/images/Selector.png");
         title = ImageLoader.loadImage("/images/Title.png");
+        
         bullet = ImageLoader.loadImage("/images/bullet2.png");
+        rocket = ImageLoader.loadImage("/images/rocket.png");
+        rocketR = ImageLoader.loadImage("/images/rocketR.png");
         musicController = ImageLoader.loadImage("/images/MusicController.png");
         volumePill = ImageLoader.loadImage("/images/VolumePill.png");
         lives = ImageLoader.loadImage("/images/helmet.png");
@@ -94,18 +110,26 @@ public class Assets {
         playerShootR = new BufferedImage[6];
         playerCrouch = new BufferedImage[1];
         playerCrouchR = new BufferedImage[1];
+        
         firstEnemyIdle = new BufferedImage[8];
         firstEnemyIdleR = new BufferedImage[8];
         firstEnemyRun = new BufferedImage[6];
         firstEnemyRunR = new BufferedImage[6];
         firstEnemyShoot = new BufferedImage[6];
         firstEnemyShootR = new BufferedImage[6];
+        
+        rocketLauncherIdle = new BufferedImage[8];
+        rocketLauncherIdleR = new BufferedImage[8];
+        rocketLauncherRun = new BufferedImage[6];
+        rocketLauncherRunR = new BufferedImage[6];
+        rocketLauncherShoot = new BufferedImage[6];
+        rocketLauncherShootR = new BufferedImage[6];
+        
         nextArrow = new BufferedImage[8];
         tank = new BufferedImage[6];
 
         playerCrouch[0] = ImageLoader.loadImage("/player_sprite/Crouch1.png");
         playerCrouchR[0] = ImageLoader.loadImage("/player_sprite/CrouchR1.png");
-
         for (int i = 0; i < 8; i++) {
             //player
             String path = "/player_sprite/Idle" + i + ".png";
@@ -118,6 +142,12 @@ public class Assets {
             firstEnemyIdle[i] = ImageLoader.loadImage(path);
             path = "/enemy_sprite/Terrorist1IdleR" + i + ".png";
             firstEnemyIdleR[i] = ImageLoader.loadImage(path);
+            
+            // RocketLauncher
+            path = "/enemyLauncher_sprite/Terrorist2Idle" + i + ".png";
+            rocketLauncherIdle[i] = ImageLoader.loadImage(path);
+            path = "/enemyLauncher_sprite/Terrorist2IdleR" + i + ".png";
+            rocketLauncherIdleR[i] = ImageLoader.loadImage(path);
         }
 
         for (int i = 0; i < 6; i++) {
@@ -139,6 +169,16 @@ public class Assets {
             firstEnemyShoot[i] = ImageLoader.loadImage(path);
             path = "/enemy_sprite/Terrorist1ShootR" + i + ".png";
             firstEnemyShootR[i] = ImageLoader.loadImage(path);
+            
+            // Rocket launcher
+            path = "/enemyLauncher_sprite/Terrorist2Run" + i + ".png";
+            rocketLauncherRun[i] = ImageLoader.loadImage(path);
+            path = "/enemyLauncher_sprite/Terrorist2RunR" + i + ".png";
+            rocketLauncherRunR[i] = ImageLoader.loadImage(path);
+            path = "/enemyLauncher_sprite/Terrorist2Shoot" + i + ".png";
+            rocketLauncherShoot[i] = ImageLoader.loadImage(path);
+            path = "/enemyLauncher_sprite/Terrorist2ShootR" + i + ".png";
+            rocketLauncherShootR[i] = ImageLoader.loadImage(path);
             
             //Tank
             path = "/tank/tank" + i +".png";
